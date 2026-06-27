@@ -25,6 +25,7 @@ disable-model-invocation: true
 - 目录：`docs/vX.Y.Z/prd/summarized/`
 - 命名：与 `origin/` 同名（如 `origin/user-profile.md` → `summarized/user-profile.md`）
 - 模板：[summarized-prd-template.md](references/summarized-prd-template.md)
+- 状态：初次产出为 `DRAFT`；用户确认后标记为 `ACTIVE`
 
 ## Workflow
 
@@ -32,7 +33,7 @@ disable-model-invocation: true
 2. 列出 `origin/*.md` 与 `ui/*`（若有），建立 UI → 页面/板块映射表。
 3. 逐份 origin PRD 生成 summarized；有 UI 稿的页面必须对照设计稿。
 4. 按 Done Checklist 自检。
-5. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认。
+5. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认；确认后将对应 summarized 状态更新为 `ACTIVE`。
 
 ## Rules
 
@@ -42,6 +43,7 @@ disable-model-invocation: true
 4. **非目标明确**：origin 模糊时，主动收窄范围并写入「非目标」。
 5. **UI 优先**：有设计稿时以稿为准；与 origin 冲突时列入 open questions，不擅自裁决。
 6. **架构对齐**：与 `technical-architecture.md` 冲突的需求标注为 open question 或「待确认」。
+7. **状态明确**：summarized 作为下游输入前必须是 `ACTIVE`；有阻塞 open questions 时保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## UI Mapping
 
@@ -68,14 +70,15 @@ disable-model-invocation: true
 | 列表/表单/详情 | 覆盖空态、加载态、错误态、无权限态 |
 | 迭代改需求 | 覆盖对应 summarized，文首标注「更新于」及变更摘要 |
 | origin 与 UI 冲突 | open questions 列出差异，交用户确认 |
+| origin 更新 | 将对应 summarized 及下游 design / plan / review 标记为 `STALE`，写明原因 |
 
 ## Done Checklist
 
-- [ ] `summarized/` 存在
-- [ ] 每个 origin 有同名 summarized
-- [ ] 含：页面/模块、用户流程、状态与交互、边界情况、非目标、验收标准
+- [ ] 每个 origin 有同名 summarized，且含状态头
+- [ ] summarized 覆盖页面/模块、用户流程、状态与交互、边界情况、非目标、验收标准
 - [ ] UI 已映射或 open questions 已列出
 - [ ] 未引入 origin 外功能
+- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
 
 ## References
 

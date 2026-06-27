@@ -19,6 +19,7 @@ docs/
     ├── design/                    # 步骤 2 产出
     ├── plans/                     # 步骤 3 产出
     ├── review/                    # 步骤 6 产出
+    ├── progress.md                # 迭代进度与 resume 事实源
     └── test-report.md             # 步骤 5 产出
 ```
 
@@ -42,7 +43,9 @@ docs/
 
 ## Resume Detection
 
-按顺序检查产出目录，第一个不满足 Step Gates 的步骤即为 resume 起点：
+优先读取 `docs/vX.Y.Z/progress.md`。从第一个 `pending` / `in_progress` / `blocked` 的 step 或 task 继续；若存在 `blocked`，先报告阻塞项。
+
+`progress.md` 缺失、损坏或与文件系统明显不一致时，按顺序检查产出目录，第一个不满足 Step Gates 的步骤即为 resume 起点：
 
 1. `prd/summarized/` 不完整 → step 1
 2. `design/` 不完整 → step 2
@@ -51,3 +54,9 @@ docs/
 5. 无 test-report 或测试未过 → step 5
 6. `review/` 缺失或有 🔴 → step 6
 7. 否则 → step 7
+
+推断完成后，创建或修复 `progress.md`，并向用户说明哪些状态是自动推断的。
+
+## Document Status
+
+`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。`DRAFT`、`STALE`、`BLOCKED` 文档不能作为下游输入。详见 [document-status.md](document-status.md)。

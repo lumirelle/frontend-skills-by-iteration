@@ -5,7 +5,12 @@
 ```markdown
 # vX.Y.Z 测试报告
 
-> 日期：YYYY-MM-DD | 范围：[页面/功能列表]
+> Status: DRAFT
+> Version: vX.Y.Z
+> Source: plans/*.md, progress.md
+> Updated: YYYY-MM-DD
+> Scope: [页面/功能列表]
+> Stale reason:
 
 ## 摘要
 

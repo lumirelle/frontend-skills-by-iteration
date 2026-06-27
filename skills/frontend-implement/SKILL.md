@@ -18,6 +18,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/plans/*.md` | 是 | 实施计划与任务边界 |
 | `docs/vX.Y.Z/design/*.md` | 是 | 方案细节，plan 不清时查阅 |
 | `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收标准，行为边界 |
+| `docs/vX.Y.Z/progress.md` | 是 | 当前 step / task 状态、TDD 证据与阻塞项 |
 | 现有代码库 | 是 | 遵循既有模式与风格 |
 
 缺失必需项 → **停止**，报告缺什么，不写代码。
@@ -31,11 +32,12 @@ disable-model-invocation: true
 ## Workflow
 
 1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认无未关闭 open questions。
-2. 确定执行范围：全部 plan 或用户指定的 plan / task。
-3. **按任务顺序执行 TDD**：RED → GREEN → REFACTOR → VERIFY → 询问是否提交 → 通过后再下一任务。
-4. 每完成一个 task：汇报 RED/GREEN/REFACTOR 证据与验证结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
-5. 全部 task 完成后按 Done Checklist 自检。
-6. 向用户展示摘要（变更文件、未覆盖风险、待步骤 5 验证项），等待确认。
+2. 读取 `progress.md`，确定执行范围：全部 plan、用户指定 plan / task，或 resume 的首个未完成 task。
+3. 将当前 step / task 标为 `in_progress`。
+4. **按任务顺序执行 TDD**：RED → GREEN → REFACTOR → VERIFY → 询问是否提交 → 通过后再下一任务。
+5. 每完成一个 task：把 RED/GREEN/REFACTOR/VERIFY 证据与 commit 状态写入 `progress.md`，汇报结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
+6. 全部 task 完成后按 Done Checklist 与 `frontend-iteration` 的 step gate 自检。
+7. 向用户展示摘要（变更文件、未覆盖风险、待步骤 5 验证项），等待确认。
 
 ## Rules
 
@@ -48,6 +50,8 @@ disable-model-invocation: true
 7. **单任务验证**：每个 task 完成后执行其「验证」项；失败则在本 task 内修复，不带着失败进入下一 task。
 8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
 9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
+10. **进度落盘**：不得只在聊天中记录 TDD 证据；`progress.md` 是 resume 与 step 5 的输入。
+11. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` plan / design / summarized；发现后停止并回上游。
 
 ## Commit Message
 
@@ -91,9 +95,10 @@ VERIFY：运行 task 验证命令
 | 场景 | 处理 |
 |------|------|
 | 多份 plan | 按 plan 依赖与执行顺序逐个完成；共享文件注意合并冲突 |
-| 从 Task N 续做 | 确认 Task 1…N-1 已完成且验证通过 |
+| 从 Task N 续做 | 优先读取 `progress.md`；确认 Task 1…N-1 已完成且验证通过 |
 | API 用 mock | 仅按 design/plan 约定接入 mock，不擅自改契约 |
 | 类型/API 与后端不一致 | 停止，回 design 或列 open question |
+| plan / design / summarized 为 STALE | 停止，回对应上游步骤更新 |
 | 验证命令不存在 | 从 technical-architecture 查找等价命令；仍无则停止 |
 | 实现需新增 plan 外文件 | 停止，回 plan 补充任务后再做 |
 | 测试失败 | 在当前 task 内修，不跳过 |
@@ -104,15 +109,11 @@ VERIFY：运行 task 验证命令
 ## Done Checklist
 
 - [ ] 所有目标 task 已完成
-- [ ] 每个行为 task 已观察到正确 RED 失败
-- [ ] 每个行为 task 已完成 GREEN 并通过相关测试
-- [ ] REFACTOR 后测试仍通过（如有 refactor）
-- [ ] 每个 task 的验证项已执行且通过
+- [ ] 输入 plan / design / summarized 状态均为 `ACTIVE`
+- [ ] 每个行为 task 的 RED / GREEN / REFACTOR / VERIFY 已执行并写入 `progress.md`
 - [ ] 改动范围 ⊆ plan 文件边界
-- [ ] 遵循 `technical-architecture.md` 与项目既有模式
 - [ ] 无 plan 外重构、无未解释的新抽象
-- [ ] 行为与 summarized 验收标准一致（实现层面）
-- [ ] API/类型与 design 一致
+- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
 
 ## Handoff to Step 5
 

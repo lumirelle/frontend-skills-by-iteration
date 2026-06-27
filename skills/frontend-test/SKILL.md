@@ -18,6 +18,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/plans/*.md` | 是 | 测试矩阵与验证项 |
 | `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收标准 |
 | `docs/vX.Y.Z/design/*.md` | 否 | 测试策略参考 |
+| `docs/vX.Y.Z/progress.md` | 是 | 步骤 4 的 TDD 证据与验证记录 |
 | 已实现代码 | 是 | 步骤 4 产出 |
 
 缺失必需项或实现未完成 → **停止**，报告缺什么，不进入 review。
@@ -32,12 +33,13 @@ disable-model-invocation: true
 
 1. 读取 `technical-architecture.md`，确认单元 / 集成 / E2E 命令与环境。
 2. 读取 [test-writing-guide.md](references/test-writing-guide.md)，用测试维度检查 plans 测试矩阵。
-3. 读取 plans 测试矩阵、summarized 验收标准、步骤 4 的 TDD 证据，列出待执行项。
+3. 读取 plans 测试矩阵、summarized 验收标准、`progress.md` 中步骤 4 的 TDD 证据，列出待执行项。
 4. 对照矩阵检查测试是否已存在；缺失则记录缺口并回到 `frontend-implement`，不在本步顺手补。
 5. 分层执行全量回归：单元 → 集成 → E2E；失败则记录并回到 `frontend-implement` 修复，不进入下一层。
-6. 生成 `test-report.md`（命令、结果、覆盖映射、未覆盖风险）。
-7. 按 Done Checklist 自检。
-8. 向用户展示摘要，等待确认。
+6. 将实际运行命令、exit code 与结果写入 `progress.md` 的 Verification Log。
+7. 生成 `test-report.md`（命令、结果、覆盖映射、未覆盖风险）。
+8. 按 Done Checklist 自检。
+9. 向用户展示摘要，等待确认。
 
 ## Rules
 
@@ -49,6 +51,8 @@ disable-model-invocation: true
 6. **失败不推进**：任一相关命令失败 → 停留本步记录失败，回到 `frontend-implement` 修复，不进入 `frontend-review`。
 7. **不写 test-report 前不宣称完成**：报告须含每条验收标准的覆盖情况。
 8. **框架用法不过度沉淀**：具体测试 API、mock、locator、异步等待等用法从项目既有示例或当前官方文档获取，不写死在 Skill 中。
+9. **证据来源明确**：TDD 证据以 `progress.md` 为准；聊天摘要不能替代落盘记录。
+10. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` plan / summarized / design；发现后停止并回上游。
 
 ## Test Layers
 
@@ -66,6 +70,7 @@ disable-model-invocation: true
 |------|------|
 | 步骤 4 已跑过 task 验证 | 纳入报告，避免重复；未覆盖项按需重跑 |
 | 缺测试用例 | 记录缺口，回到 `frontend-implement` 用 TDD 补 |
+| plan / summarized 为 STALE | 停止，回对应上游步骤更新并重跑相关实现或验证 |
 | 单元过、集成失败 | 记录失败，回到 `frontend-implement` 修复后重跑 |
 | E2E 环境未就绪 | 标注阻塞项；与用户确认是否降级为手动验收 |
 | Flaky 测试 | 重跑 1 次；仍失败则按失败处理并记录 |
@@ -76,13 +81,11 @@ disable-model-invocation: true
 ## Done Checklist
 
 - [ ] `test-report.md` 已生成
+- [ ] 输入 plan / summarized / design（若使用）状态均为 `ACTIVE`
 - [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR）
-- [ ] 单元测试覆盖 plan 标注的核心逻辑
-- [ ] 集成测试覆盖 API / 模块协作（若适用）
-- [ ] E2E 覆盖关键用户路径（若适用）
+- [ ] 实际运行命令与 exit code 已写入 `progress.md`
 - [ ] 报告含：执行命令、结果、验收标准映射、未覆盖风险
-- [ ] 所有相关测试命令 exit 0（或已记录的手动验收通过）
-- [ ] 无未修复的失败用例
+- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
 
 ## Handoff to Step 6
 

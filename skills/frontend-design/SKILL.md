@@ -26,15 +26,17 @@ disable-model-invocation: true
 - 目录：`docs/vX.Y.Z/design/`
 - 命名：与 `summarized/` 同名（如 `summarized/user-profile.md` → `design/user-profile.md`）
 - 模板：[technical-design-template.md](references/technical-design-template.md)
+- 状态：初次产出为 `DRAFT`；用户确认后标记为 `ACTIVE`
 
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
-2. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
-3. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
-4. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
-5. 按 Done Checklist 自检。
-6. 向用户展示摘要（每页方案选型、改动文件清单、风险、open questions），等待确认。
+2. 读取 summarized 状态；仅 `ACTIVE` summarized 可作为输入，`DRAFT` / `STALE` / `BLOCKED` 须停止。
+3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
+4. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
+5. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
+6. 按 Done Checklist 自检。
+7. 向用户展示摘要（每页方案选型、改动文件清单、风险、open questions），等待确认；确认后将对应 design 状态更新为 `ACTIVE`。
 
 ## Rules
 
@@ -46,6 +48,7 @@ disable-model-invocation: true
 6. **可追溯**：每条设计决策能对应到 summarized 的某项需求或验收标准。
 7. **测试前置**：方案须包含测试策略（单元/集成/E2E 各覆盖什么），供步骤 3 拆解。
 8. **不写代码**：本步产出设计文档，不落实现代码（伪代码/接口签名可用）。
+9. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` summarized；有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## Design Coverage
 
@@ -78,16 +81,15 @@ disable-model-invocation: true
 | 改动影响现有功能 | 列出受影响模块与回归测试范围 |
 | summarized 有 open questions | 设计中标注「依赖确认」，给出默认假设方案 |
 | summarized 与现有架构冲突 | 列为 open question，给出兼容/改造两套思路 |
+| summarized 更新 | 将对应 design 及下游 plan / review 标记为 `STALE`，写明原因 |
 
 ## Done Checklist
 
-- [ ] `design/` 存在且非空
-- [ ] 每份 summarized 有同名 design
-- [ ] 每份含：方案选型、组件结构、数据流、接口契约、错误处理、兼容性、测试策略、风险回滚
-- [ ] 涉及文件（新增/修改）已列出
-- [ ] 与 `technical-architecture.md` 无冲突，或冲突已标注待确认
-- [ ] 未夹带无关重构
-- [ ] 已选最小可行方案，或无充分理由说明为何选更复杂方案
+- [ ] 每份 summarized 有同名 design，且含状态头
+- [ ] design 覆盖方案选型、组件结构、数据流、接口契约、错误处理、兼容性、测试策略、风险回滚
+- [ ] 涉及文件已列出，且未夹带无关重构
+- [ ] 已选最小可行方案，或充分说明为何选更复杂方案
+- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
 
 ## References
 

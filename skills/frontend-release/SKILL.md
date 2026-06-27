@@ -18,6 +18,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/test-report.md` | 是 | 测试结果与未覆盖风险 |
 | `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 需求摘要，写变更说明用 |
 | `docs/vX.Y.Z/plans/*.md` | 是 | 变更范围 |
+| `docs/vX.Y.Z/progress.md` | 是 | step gate 与阻塞项 |
 | 代码变更 / git 历史 | 是 | 提交记录与改动文件 |
 
 审查未通过（存在未解决 🔴）→ **停止**，回 `frontend-review` 或上游修复。
@@ -30,7 +31,7 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. 确认 review 结论无未解决 🔴，test-report 无阻塞项。
+1. 确认 review 结论无未解决 🔴，test-report 无阻塞项，输入文档状态均为 `ACTIVE`。
 2. 汇总本迭代变更：从 summarized、plans、git 历史归纳。
 3. 写 / 追加 CHANGELOG vX.Y.Z 条目（用户视角，分类列出）。
 4. 生成 PR 描述（背景、改动摘要、测试说明、风险、关联文档）。
@@ -47,6 +48,7 @@ disable-model-invocation: true
 5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
 6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现。
 7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
+8. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` review / test-report / summarized / plan；`progress.md` 有 blocker 时不得发布。
 
 ## Changelog Convention
 
@@ -61,6 +63,7 @@ disable-model-invocation: true
 |------|------|
 | review 有条件通过（仅 🟡） | 可发布；PR 中列出 🟡 待办与计划 |
 | 存在未解决 🔴 | 停止，不发布 |
+| 上游文档为 STALE 或 BLOCKED | 停止，回对应上游步骤 |
 | 项目无 CHANGELOG | 创建，或按项目约定改用 release notes |
 | 多 plan / 多页面 | CHANGELOG 合并归类；PR 描述分模块列出 |
 | 后端未就绪用了 mock | 在风险/已知问题中标注切换点 |
@@ -72,6 +75,8 @@ disable-model-invocation: true
 
 - [ ] review 结论无未解决 🔴
 - [ ] test-report 无阻塞项，关键命令 exit 0
+- [ ] review / test-report / summarized / plan 状态均为 `ACTIVE`
+- [ ] `progress.md` 无 blocker
 - [ ] CHANGELOG vX.Y.Z 条目已添加
 - [ ] PR 描述完整（背景 / 改动 / 测试 / 风险 / 关联文档）
 - [ ] 提交信息符合 Conventional Commits（仅英文）
@@ -84,6 +89,7 @@ disable-model-invocation: true
 - [ ] PR 描述已生成
 - [ ] Pre-Merge Checklist 全部满足
 - [ ] 文档与代码一致
+- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
 - [ ] 合并 / push / tag 仅在用户确认后执行
 
 ## References

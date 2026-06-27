@@ -5,7 +5,11 @@
 ```markdown
 # [页面/功能名] 技术方案
 
-> 版本：vX.Y.Z | 来源：prd/summarized/<name>.md
+> Status: DRAFT
+> Version: vX.Y.Z
+> Source: prd/summarized/<name>.md
+> Updated: YYYY-MM-DD
+> Stale reason:
 
 ## 方案选型
 

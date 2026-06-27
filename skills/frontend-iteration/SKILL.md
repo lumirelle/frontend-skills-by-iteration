@@ -46,10 +46,24 @@ disable-model-invocation: true
 
 1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。
 2. **一步一确认**：每步产出完成后，向用户展示摘要并等待确认（用户说「继续」或指定下一步）。
-3. **resume 逻辑**：扫描 `docs/vX.Y.Z/` 各步骤产出目录，从第一个缺失产出的步骤继续。
-4. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
-5. **子 Skill 未安装**：提示 `npx skills add <repo> --skill <name>`，停止。
-6. **产出校验**：每步结束前对照 references/step-gates.md 逐项核对，在向用户展示的摘要中列出核对结果（通过 / 未通过项）。
+3. **显式加载 sub-skill**：执行任一步骤前，必须先读取并遵循对应的 `skills/<sub-skill>/SKILL.md`。不得凭记忆执行；文件不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
+4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。
+5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。
+6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
+7. **产出校验**：每步结束前对照 `references/step-gates.md` 逐项核对，在 `docs/vX.Y.Z/progress.md` 记录结果，并向用户展示通过 / 未通过项。
+8. **工作流所有权**：通过 `frontend-iteration` 调用时，本 workflow 拥有需求、设计、计划、实现、测试、审查、发布生命周期；除非用户显式要求，不再额外调用通用 planning / TDD / verification / review skill 来重复编排。
+
+## Sub-skill Loading
+
+| Step | Sub-skill | 必须先读取 |
+|------|-----------|------------|
+| 1 | `frontend-requirements` | `skills/frontend-requirements/SKILL.md` |
+| 2 | `frontend-design` | `skills/frontend-design/SKILL.md` |
+| 3 | `frontend-plan` | `skills/frontend-plan/SKILL.md` |
+| 4 | `frontend-implement` | `skills/frontend-implement/SKILL.md` |
+| 5 | `frontend-test` | `skills/frontend-test/SKILL.md` |
+| 6 | `frontend-review` | `skills/frontend-review/SKILL.md` |
+| 7 | `frontend-release` | `skills/frontend-release/SKILL.md` |
 
 ## Step Gates
 
@@ -68,9 +82,9 @@ disable-model-invocation: true
 ```
 读取版本号 → 校验 Prerequisites
     ↓
-确定起始步骤（step N 或 resume）
+确定起始步骤（step N 或 resume；优先读取 progress.md）
     ↓
-加载对应 sub-skill → 执行 → 产出文件
+读取对应 sub-skill → 执行 → 更新产出与 progress.md
     ↓
 校验产出 → 向用户摘要 → 等待确认
     ↓
@@ -83,10 +97,10 @@ disable-model-invocation: true
 |------|------|
 | 新迭代，仅有 origin PRD | 从步骤 1 开始 |
 | 设计已完成，要开始编码 | `step 4`，确认 plan 存在 |
-| 中途改需求 | 回到步骤 1 或 2，标记受影响 downstream 产出待更新 |
+| 中途改需求 | 回到步骤 1 或 2，将受影响 downstream 产出标记为 `STALE` |
 | 无 UI 稿 | 步骤 1 标注 open questions；步骤 2 基于 PRD 或项目已有类似设计推断并列出假设 |
 | 多页面迭代 | 每页独立 summarized / design / plan 文件，文件名与 origin 一致；`test-report.md` 单文件汇总，`review/` 按 plan 分文件 |
-| Bugfix 小改 | 可 `step 4` 起，但须有一份精简 plan（范围 + 回归测试），缺则先补 `step 3` |
+| Bugfix 小改 | 可从 `step 3` 生成 minimal plan，再进入 `step 4`；若已有精简 plan，确认有效后可从 `step 4` 继续 |
 | 测试失败 | 停留步骤 5，修复后重跑，不进入 review |
 | 审查有 🔴 | 回步骤 4 或 5 修复，重新 review |
 
@@ -95,10 +109,13 @@ disable-model-invocation: true
 1. 确认版本号与起始步骤。
 2. 读取 `docs/technical-architecture.md`。
 3. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
-4. 报告 Prerequisites 状态。
-5. 进入第一步或用户指定步骤。
+4. 读取或创建 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
+5. 报告 Prerequisites 与 progress 状态。
+6. 读取目标 step 的 sub-skill 后进入执行。
 
 ## References
 
 - 步骤门禁细则：[step-gates.md](references/step-gates.md)
 - 版本与目录约定：[version-convention.md](references/version-convention.md)
+- 进度记录约定：[progress-convention.md](references/progress-convention.md)
+- 文档状态约定：[document-status.md](references/document-status.md)

@@ -5,7 +5,12 @@
 ```markdown
 # [页面/功能名]
 
-> 版本：vX.Y.Z | 来源：prd/origin/<name>.md | UI 稿：[有/无]
+> Status: DRAFT
+> Version: vX.Y.Z
+> Source: prd/origin/<name>.md
+> Updated: YYYY-MM-DD
+> UI: 有 / 无
+> Stale reason:
 
 ## 概述
 

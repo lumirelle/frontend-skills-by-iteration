@@ -5,7 +5,11 @@
 ```markdown
 # [页面/功能名] 实施计划
 
-> 版本：vX.Y.Z | 来源：design/<name>.md
+> Status: DRAFT
+> Version: vX.Y.Z
+> Source: design/<name>.md
+> Updated: YYYY-MM-DD
+> Stale reason:
 
 ## 目标
 

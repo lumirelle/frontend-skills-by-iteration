@@ -19,6 +19,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/design/*.md` | 是 | 技术方案 |
 | `docs/vX.Y.Z/plans/*.md` | 是 | 改动边界 |
 | `docs/vX.Y.Z/test-report.md` | 是 | 测试结果与未覆盖风险 |
+| `docs/vX.Y.Z/progress.md` | 是 | step / task 状态与 TDD 证据 |
 | 代码变更 | 是 | 实现 diff / 变更文件 |
 
 缺失必需项或 test-report 结论为「阻塞」→ **停止**，不产出 review 通过结论。
@@ -32,12 +33,13 @@ disable-model-invocation: true
 ## Workflow
 
 1. 读取 summarized、design、plans，明确预期行为与改动边界。
-2. 读取 `test-report.md`，确认测试结论与未覆盖风险。
+2. 读取 `progress.md` 与 `test-report.md`，确认 task 状态、TDD 证据、测试结论与未覆盖风险。
 3. 审查代码变更（diff），对照 plan 文件边界与 design 方案。
 4. 按 Review Dimensions 逐项检查，记录问题并分级。
 5. 生成 `review/*.md`，给出结论：**通过** / **有条件通过** / **不通过**。
-6. 按 Done Checklist 自检。
-7. 向用户展示摘要（结论、🔴/🟡/🟢 统计、建议动作），等待确认。
+6. 将 review gate 结果写入 `progress.md`。
+7. 按 Done Checklist 自检。
+8. 向用户展示摘要（结论、🔴/🟡/🟢 统计、建议动作），等待确认。
 
 ## Rules
 
@@ -48,6 +50,8 @@ disable-model-invocation: true
 5. **🔴 阻断**：存在未解决 🔴 → 结论为「不通过」，不进入 `frontend-release`。
 6. **最小改动视角**：标记 plan 外改动、多余抽象、可合并的重复逻辑。
 7. **测试交叉验证**：test-report 声称通过但代码审查发现明显缺口 → 标为 🔴 或 🟡。
+8. **进度交叉验证**：`progress.md` 中未完成、blocked 或缺少 VERIFY 的 task，不得给出「通过」结论。
+9. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` summarized / design / plan / test-report；发现后停止并回上游。
 
 ## Review Dimensions
 
@@ -79,6 +83,8 @@ disable-model-invocation: true
 | 实现偏离 design 但更优 | 标 🟡，建议回 design 补记录或回滚实现 |
 | plan 外文件被修改 | 标 🔴，除非 plan 已同步更新 |
 | test-report 有未覆盖风险 | 在 review 中引用，评估是否阻塞发布 |
+| progress 与 test-report 不一致 | 标 🔴 或 open question，要求回步骤 4/5 补齐证据 |
+| 上游文档为 STALE | 停止，回对应上游步骤更新，不产出通过结论 |
 | 仅 🟡/🟢 | 结论「有条件通过」，列待办 |
 | 有 🔴 | 结论「不通过」，指明回步骤 4 或 5 |
 | 多份 plan | 每份 plan 对应 review，或汇总 + 分文件 |
@@ -87,11 +93,13 @@ disable-model-invocation: true
 ## Done Checklist
 
 - [ ] `review/` 含审查记录
+- [ ] 输入 summarized / design / plan / test-report 状态均为 `ACTIVE`
 - [ ] 问题已分级：🔴 / 🟡 / 🟢
-- [ ] 每条问题有位置与说明
 - [ ] 结论明确：通过 / 有条件通过 / 不通过
 - [ ] 无未解决 🔴（通过或有条件通过时）
 - [ ] 与 test-report、plan、design 交叉核对完成
+- [ ] 与 `progress.md` 的 task 状态和 TDD 证据交叉核对完成
+- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
 
 ## Handoff to Step 7
 
