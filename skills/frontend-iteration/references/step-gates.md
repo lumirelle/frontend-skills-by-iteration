@@ -8,6 +8,7 @@
 - [ ] 输入文档没有 `STALE`、`BLOCKED` 状态
 - [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 步骤 1→2→3 可消费本轮编排草稿
 - [ ] 当前 step 的 gate result 已记录到 `docs/vX.Y.Z/progress.md`
+- [ ] 已按 [progress-convention.md](progress-convention.md) → **Per-Step Minimal Update** 完成本步落盘（不得只在聊天汇报）
 
 ## Step 1 — 需求理解
 

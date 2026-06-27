@@ -10,6 +10,26 @@ disable-model-invocation: true
 
 按版本推进前端迭代，从需求归纳到发布材料。
 
+## Relationship to Superpowers Skills
+
+通过本工作流推进迭代时，**由本编排器与 sub-skill 接管全生命周期**；不得并行叠加 Superpowers 通用 skill 重复编排同一步骤。
+
+| Superpowers skill | 本工作流中的角色 | 何时仍可用 |
+|-------------------|-----------------|------------|
+| `brainstorming` | 由步骤 1–2（`frontend-requirements` / `frontend-design`）覆盖 | 仅在本工作流**开始前**探索方向；进入 `/frontend-iteration` 后不再调用 |
+| `writing-plans` | 由步骤 3（`frontend-plan`）覆盖 | **禁止**叠加 |
+| `executing-plans` | 由步骤 4（`frontend-implement`）覆盖 | **禁止**叠加 |
+| `test-driven-development` | 由步骤 3–4（plan + implement 的 RED/GREEN/REFACTOR）覆盖 | **禁止**叠加 |
+| `verification-before-completion` | 由步骤 5（`frontend-test`）覆盖 | **禁止**在步骤 5 用其替代 test-report 产出 |
+| `requesting-code-review` / `code-reviewer` subagent | 由步骤 6（`frontend-review`）覆盖 | **禁止**叠加；外部人工 review 反馈可用 `receiving-code-review` |
+| `finishing-a-development-branch` | 由步骤 7（`frontend-release`）部分覆盖 | 仅在步骤 7 之后、用户询问如何合并/清理时 |
+| `systematic-debugging` | 不属编排步骤 | 步骤 4–5 测试失败、blocked 时可用 |
+| `using-git-worktrees` | 不属编排步骤 | 迭代开始前隔离分支时可用 |
+| `subagent-driven-development` | 与逐步确认冲突 | 本工作流进行中**禁止** |
+| `dispatching-parallel-agents` | 与顺序门禁冲突 | 本工作流进行中**禁止** |
+
+**原则**：同一 step 只遵循一个 skill 来源——本工作流 sub-skill 优先；`progress.md` 落盘以 [progress-convention.md](references/progress-convention.md) 为准，不以 Superpowers 通用 checklist 替代。
+
 ## Scope
 
 1. 需求理解 → `frontend-requirements`
@@ -97,8 +117,8 @@ disable-model-invocation: true
 4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。
 5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 步骤 1→2→3 的编排草稿。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
-7. **产出校验**：每步结束前对照 `references/step-gates.md` 核对，在 `docs/vX.Y.Z/progress.md` 记录结果，并向用户展示通过 / 未通过项。
-8. **工作流所有权**：通过 `frontend-iteration` 调用时，本工作流接管需求、设计、计划、实现、测试、审查、发布生命周期。除非用户显式要求，不额外调用通用 planning / TDD / verification / review skill 重复编排。fast 步骤 1–3 的确认由编排器批量接管，sub-skill 的「等待确认」与「仅消费 ACTIVE」规则在编排草稿范围内暂不触发。
+7. **产出校验**：每步结束前对照 `references/step-gates.md` 核对，并按 `references/progress-convention.md` → **Per-Step Minimal Update** 落盘 `docs/vX.Y.Z/progress.md`，向用户展示通过 / 未通过项。
+8. **工作流所有权**：通过 `frontend-iteration` 调用时，本工作流接管需求、设计、计划、实现、测试、审查、发布生命周期。遵循上文 **Relationship to Superpowers Skills**；除非用户显式要求，不额外调用被禁止的 Superpowers skill。fast 步骤 1–3 的确认由编排器批量接管，sub-skill 的「等待确认」与「仅消费 ACTIVE」规则在编排草稿范围内暂不触发。
 
 ## Sub-skill Loading
 
@@ -160,7 +180,7 @@ strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
 2. **Bootstrap**（缺失则自动创建，并告知用户）：
    - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制到 `docs/`。
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制到 `docs/vX.Y.Z/`，并将 `progress.md` 内 `vX.Y.Z` 替换为实际版本号。
-3. 读取 `docs/technical-architecture.md`；若仍是模板占位或缺少项目事实（技术栈、命令、目录、测试配置），停止并提示用户补齐。空项目可先调用 `frontend-project-init`。
+3. 读取 `docs/technical-architecture.md`；若仍是模板占位或缺少项目事实（技术栈、命令、目录、测试配置），停止并提示用户补齐后再继续。Bootstrap（上一步）已创建脚手架，**无需**再调 `frontend-project-init`。
 4. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
 5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
 6. 报告 Bootstrap 结果、模式、Prerequisites 与 progress 状态。

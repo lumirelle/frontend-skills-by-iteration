@@ -69,6 +69,22 @@ docs/vX.Y.Z/progress.md
 
 **勿与文档生命周期混淆**：`test-report.md` 文首的 `DRAFT`/`ACTIVE`/`STALE`/`BLOCKED` 是另一套；Step 5 `passed` 时须 `test-report.md` 文首为 `ACTIVE` 且摘要结论为 `可进入 review`。
 
+## Per-Step Minimal Update
+
+每步结束前**必须**落盘以下字段（3–5 行）；不得只在聊天汇报。
+
+| Step | 最小更新清单 |
+|------|-------------|
+| **1** requirements | ① `Current step` → `1` ② Step 1 → `in_progress` → 完成则 `passed` ③ `Gate result` 写明 summarized 文件与 ACTIVE/DRAFT ④ `Updated` 日期 ⑤ Blockers 有则写入，无则 `None` |
+| **2** design | ① `Current step` → `2` ② Step 2 状态与 `Gate result`（design 文件列表）③ Step 1 保持 `passed` ④ `Updated` ⑤ Blockers |
+| **3** plan | ① `Current step` → `3` ② Step 3 状态与 `Gate result`（plan 文件列表）③ fast 批量确认后：将 summarized/design/plan 标 `ACTIVE` ④ `Updated` ⑤ Blockers |
+| **4** implement | ① `Current step` → `4` ② Step 4 → `in_progress` ③ **每个 task 一行**：Plan Task Status 填 RED/GREEN/REFACTOR/VERIFY/Commit ④ Verification Log 追加该 task 验证命令与 exit ⑤ task 全完 → Step 4 `passed` |
+| **5** test | ① `Current step` → `5` ② Step 5 状态；失败 → `blocked` ③ Verification Log 追加全量命令与 exit ④ 同步 `test-report.md` 文首 Status 与摘要结论 ⑤ Blockers 有失败项则列出 |
+| **6** review | ① `Current step` → `6` ② Step 6 状态与 `Gate result`（结论、🔴 数）③ 有未解决 🔴 → Step 6 `blocked` ④ `Updated` ⑤ Blockers |
+| **7** release | ① `Current step` → `7` ② Step 7 状态与 `Gate result`（release 文件已生成）③ 全部 step `passed` 时迭代完成 ④ `Updated` ⑤ Blockers 清为 `None` |
+
+**Resume 时**：先读 Step Status 与 Plan Task Status 表，再读 Blockers；缺行按上表补全后再继续。
+
 ## Update Rules
 
 1. 每个 step 开始时，将对应 Step Status 标为 `in_progress`。

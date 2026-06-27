@@ -32,8 +32,8 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 
 | Skill | 说明 |
 |-------|------|
-| `frontend-project-init` | 初始化 `docs/` 脚手架与版本目录 |
-| `frontend-iteration` | 主编排器（含模板、路径解析、黄金路径样例） |
+| `frontend-iteration` | 主编排器（含 Bootstrap、`docs/` 模板、路径解析、黄金路径样例） |
+| `frontend-project-init` | 可选别名：仅脚手架、不进入迭代（正常请直接用 `frontend-iteration`） |
 | `frontend-requirements` | 步骤 1：需求理解 |
 | `frontend-design` | 步骤 2：技术方案 |
 | `frontend-plan` | 步骤 3：TDD 实施计划 |
