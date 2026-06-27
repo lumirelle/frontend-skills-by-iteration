@@ -45,13 +45,13 @@ disable-model-invocation: true
 
 1. **以 plan 为准**：测试范围不超过 plan 测试矩阵与 summarized 验收标准。
 2. **只做全量验证**：本步不新增测试、不改业务逻辑；发现缺口回到 `frontend-implement` 用 TDD 补。
-3. **核对 TDD 证据**：报告须记录关键 task 是否观察到 RED、GREEN、REFACTOR。
+3. **核对 TDD 证据**：报告须记录关键 task 是否观察到 RED、GREEN、REFACTOR（来源：`progress.md`）。
 4. **真实执行**：必须实际运行命令，用 exit code 与输出作为结果依据，不臆断通过。
 5. **分层门禁**：单元未全过不跑集成；集成未全过不跑 E2E（无该层则跳过）。
-6. **失败不推进**：任一相关命令失败 → 停留本步记录失败，回到 `frontend-implement` 修复，不进入 `frontend-review`。
-7. **不写 test-report 前不宣称完成**：报告须含每条验收标准的覆盖情况。
-8. **框架用法不过度沉淀**：具体测试 API、mock、locator、异步等待等用法从项目既有示例或当前官方文档获取，不写死在 Skill 中。
-9. **证据来源明确**：TDD 证据以 `progress.md` 为准；聊天摘要不能替代落盘记录。
+6. **失败不推进**：任一相关命令失败 → 停留本步；`test-report` 文首 `Status` 为 `DRAFT` 或 `BLOCKED`，`结论` 为 `阻塞`；Step 5 标 `blocked`。
+7. **状态一致**：用户确认通过后，文首 `Status` → `ACTIVE`，`结论` → `可进入 review`，Step 5 → `passed`（见 document-status「test-report 专约」）。
+8. **框架用法不过度沉淀**：具体测试 API 从项目既有示例或官方文档获取。
+9. **证据来源明确**：TDD 证据与命令结果以 `progress.md` 为准；test-report 汇总引用。
 10. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` plan / summarized / design；发现后停止并回上游。
 
 ## Test Layers

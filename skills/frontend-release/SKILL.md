@@ -48,7 +48,7 @@ disable-model-invocation: true
 5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
 6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现。
 7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
-8. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` review / test-report / summarized / plan；`progress.md` 有 blocker 时不得发布。
+8. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` review / test-report / summarized / plan；`progress.md` 有 blocker 或 Step 5 为 `blocked` 时不得发布。
 
 ## Changelog Convention
 

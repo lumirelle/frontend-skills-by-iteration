@@ -72,8 +72,10 @@
 
 | 章节 | 要求 |
 |------|------|
-| 摘要 | 一眼可见能否进 review |
-| 执行命令 | 写实际运行的完整命令 |
-| TDD Evidence | 记录关键 task 是否观察到 RED、GREEN、REFACTOR |
+| 文首 `Status` | **文档生命周期**（`DRAFT`/`ACTIVE`/`STALE`/`BLOCKED`），非执行进度；下游 review 仅消费 `ACTIVE` |
+| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`；与文首 `Status` 须一致（见 document-status「test-report 专约」） |
+| `阻塞项` | 非空时文首 `Status` 为 `BLOCKED` 或 `DRAFT`，且 `结论` 为 `阻塞` |
+| 执行命令 | 写实际运行的完整命令；同步写入 `progress.md` Verification Log |
+| TDD Evidence | 引用 `progress.md` 记录，不替代落盘 |
 | 验收标准覆盖 | 每条 summarized 验收标准至少一行 |
 | 未覆盖风险 | 诚实列出；有阻塞项则结论为「阻塞」 |

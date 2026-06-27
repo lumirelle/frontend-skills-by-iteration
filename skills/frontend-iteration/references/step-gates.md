@@ -47,12 +47,15 @@
 
 ## Step 5 — 全量自测
 
-- [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR）
-- [ ] test-report 状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
+- [ ] `docs/vX.Y.Z/test-report.md` 存在
+- [ ] test-report **文首 Status** 为 `ACTIVE` 或等待确认的 `DRAFT`（非 `摘要.结论`）
+- [ ] test-report 文首 Status 与 `摘要.结论` 一致（`ACTIVE` ↔ `可进入 review`；`DRAFT`/`BLOCKED` ↔ `阻塞`）
+- [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR），与 `progress.md` 一致
+- [ ] `progress.md` Step 5 为 `passed` 时，test-report 文首须为 `ACTIVE`
 - [ ] 单元测试覆盖 plan 标注的核心逻辑
 - [ ] 集成测试覆盖 API / 模块协作（若适用）
 - [ ] E2E 覆盖关键用户路径（若适用）
-- [ ] `docs/vX.Y.Z/test-report.md` 含：执行命令、结果、未覆盖风险
+- [ ] test-report 含：执行命令、结果、未覆盖风险
 - [ ] 所有相关测试命令 exit 0
 
 ## Step 6 — 代码审查

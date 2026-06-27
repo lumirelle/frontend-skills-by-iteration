@@ -59,4 +59,4 @@ docs/
 
 ## Document Status
 
-`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。`DRAFT`、`STALE`、`BLOCKED` 文档不能作为下游输入。详见 [document-status.md](document-status.md)。
+`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。`DRAFT`、`STALE`、`BLOCKED` 文档不能作为下游输入。`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。
