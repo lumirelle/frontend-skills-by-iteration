@@ -30,8 +30,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与确认规则。
-- 直接调用：自行校验输入；仅消费 `ACTIVE` summarized / design，产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE`。
+- 调用契约（orchestrated / standalone）与 Workflow 变体见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）。
 - 本 skill 只处理实施计划，不修改业务代码、不运行实现步骤。
 
 ## Workflow
@@ -43,6 +42,8 @@ disable-model-invocation: true
 5. 填写测试矩阵时，参考 `frontend-test` 的 test-writing-guide 确定测试维度。
 6. 按 Done Checklist 自检。
 7. 向用户展示摘要（任务列表、文件边界、测试命令、风险），等待确认；确认后将对应 plan 状态更新为 `ACTIVE`。
+
+> **编排器调用变体（fast）**：由 `frontend-iteration` 调用时，步骤 7 的「等待确认」**不在本 skill 内单步触发**——产出保持 `DRAFT`，门禁通过后由编排器在步骤 3 末**批量确认** summarized / design / plan 并统一标 `ACTIVE`，再进入步骤 4；其间可消费本轮步骤 1–2 的编排草稿。strict 模式仍逐步确认。详见 `frontend-iteration/references/orchestrated-invocation.md` → Workflow 变体。
 
 ## Rules
 
@@ -100,7 +101,7 @@ disable-model-invocation: true
 - [ ] 每个任务含目标、文件、步骤、验证、依赖，以及 RED / GREEN / REFACTOR / VERIFY
 - [ ] 测试覆盖与 summarized 验收标准对应
 - [ ] 改动范围不超过 design 或 minimal plan 文件边界
-- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## References
 

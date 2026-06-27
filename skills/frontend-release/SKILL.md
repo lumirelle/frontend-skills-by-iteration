@@ -32,8 +32,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器 step 7、progress 更新与发布确认规则。
-- 直接调用：自行校验输入；仅消费 `ACTIVE` review / test-report / summarized / plan，并确认无 blocker。
+- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；直接调用时须确认无 blocker。
 - 本 skill 只准备发布材料；merge / push / tag 必须等待用户显式确认。
 
 ## Workflow
@@ -97,7 +96,7 @@ disable-model-invocation: true
 - [ ] `docs/vX.Y.Z/release/pr-description.md` 已生成
 - [ ] Pre-Merge Checklist 全部满足
 - [ ] 文档与代码一致
-- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
 - [ ] 合并 / push / tag 仅在用户确认后执行
 
 ## References

@@ -31,8 +31,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器 step 4、progress 更新、逐 task 验证与可选 commit 询问。
-- 直接调用：自行校验输入；仅消费 `ACTIVE` plan / design / summarized，并从 `progress.md` 或用户指定 task 确定范围。
+- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；由编排器调用时为 step 4，按其逐步确认，并保持本 skill 的逐 task 验证与可选 commit 询问。
 - 本 skill 只执行 plan 内实现；发现方案或计划缺口时停止并回上游，不现场补设计。
 
 ## Workflow
@@ -119,7 +118,7 @@ VERIFY：运行 task 验证命令
 - [ ] 每个行为 task 的 RED / GREEN / REFACTOR / VERIFY 已执行并写入 `progress.md`
 - [ ] 改动范围 ⊆ plan 文件边界
 - [ ] 无 plan 外重构、无未解释的新抽象
-- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## Handoff to Step 5
 

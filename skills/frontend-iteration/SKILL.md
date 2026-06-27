@@ -192,4 +192,5 @@ strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
 - 版本与目录约定：[version-convention.md](references/version-convention.md)
 - 进度记录约定：[progress-convention.md](references/progress-convention.md)
 - 文档状态约定：[document-status.md](references/document-status.md)
+- 编排调用契约（sub-skill 共用）：[orchestrated-invocation.md](references/orchestrated-invocation.md)
 - 黄金路径样例：[examples/README.md](examples/README.md)

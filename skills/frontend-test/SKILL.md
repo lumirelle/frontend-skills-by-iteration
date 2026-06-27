@@ -31,8 +31,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器 step 5、progress 更新与确认规则。
-- 直接调用：自行校验输入；仅消费 `ACTIVE` plan / summarized / design（若使用），并确认步骤 4 已完成。
+- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；直接调用时须确认步骤 4 已完成。
 - 本 skill 只做验证与报告；发现测试缺口或实现问题时停止并回 `frontend-implement`，不得在本步改代码。
 
 ## Workflow
@@ -91,7 +90,7 @@ disable-model-invocation: true
 - [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR）
 - [ ] 实际运行命令与 exit code 已写入 `progress.md`
 - [ ] 报告含：执行命令、结果、验收标准映射、未覆盖风险
-- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## Handoff to Step 6
 

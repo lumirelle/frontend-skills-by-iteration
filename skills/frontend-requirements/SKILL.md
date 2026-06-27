@@ -29,8 +29,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与确认规则。
-- 直接调用：自行校验输入；产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE`。
+- 调用契约（orchestrated / standalone）与 Workflow 变体见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）。
 - 本 skill 只处理需求归纳，不执行设计、计划、实现、测试、审查或发布。
 
 ## Workflow
@@ -41,6 +40,8 @@ disable-model-invocation: true
 4. 逐份 origin PRD 生成 summarized；有 UI 稿的页面必须对照设计稿。
 5. 按 Done Checklist 自检。
 6. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认；确认后将对应 summarized 状态更新为 `ACTIVE`。
+
+> **编排器调用变体（fast）**：由 `frontend-iteration` 调用时，步骤 6 的「等待确认」**不在本 skill 内单步触发**——产出保持 `DRAFT`，门禁通过即由编排器进入下一步，步骤 3 后由编排器批量确认并统一标 `ACTIVE`。strict 模式仍逐步确认。详见 `frontend-iteration/references/orchestrated-invocation.md` → Workflow 变体。
 
 ## Rules
 
@@ -88,7 +89,7 @@ disable-model-invocation: true
 - [ ] summarized 覆盖页面/模块、用户流程、状态与交互、边界情况、非目标、验收标准
 - [ ] UI 已映射或 open questions 已列出
 - [ ] 未引入 origin 外功能
-- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## References
 
