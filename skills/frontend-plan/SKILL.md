@@ -15,11 +15,11 @@ disable-model-invocation: true
 | 路径 | 必需 | 说明 |
 |------|------|------|
 | `docs/technical-architecture.md` | 是 | 技术栈、目录、测试命令、工程约定 |
-| `docs/vX.Y.Z/prd/summarized/*.md` | 常规迭代：是；minimal bugfix：否 | 验收标准与需求边界；minimal bugfix 可用用户请求 / issue 作为来源 |
-| `docs/vX.Y.Z/design/*.md` | 是（常规迭代） | 技术方案与涉及文件；minimal bugfix 可用适用性判定替代 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收标准与需求边界 |
+| `docs/vX.Y.Z/design/*.md` | 是 | 技术方案与涉及文件 |
 | 现有代码库 | 是 | 确认文件路径、复用点、测试位置 |
 
-缺失必需项 → **停止**，报告缺什么，不产出 plan。仅用户明确为 minimal bugfix 且满足 [minimal-plan-template.md](references/minimal-plan-template.md) 的适用性判定时，可不要求完整 summarized / design；此时 `Source` 必须写用户请求 / issue。
+缺失必需项 → **停止**，报告缺什么，不产出 plan。
 
 ## Output
 
@@ -36,16 +36,16 @@ disable-model-invocation: true
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确认构建、测试、目录、代码风格约定。
-2. 常规迭代读取对应 summarized 与 design，按调用契约确认状态可用；minimal bugfix 则读取用户请求 / issue，并先完成 minimal plan 适用性判定。
-3. 探查现有代码路径，校正常规 design 中的文件位置与测试位置；minimal bugfix 直接确认最小文件边界。
-4. 将 design 或 minimal bugfix 范围拆成 TDD task：RED（失败测试）→ GREEN（最小实现）→ REFACTOR（保持通过下清理）→ VERIFY（验证命令）。
+2. 读取对应 summarized 与 design，按调用契约确认状态可用。
+3. 探查现有代码路径，校正 design 中的文件位置与测试位置。
+4. 将 design 范围拆成 TDD task：RED（失败测试）→ GREEN（最小实现）→ REFACTOR（保持通过下清理）→ VERIFY（验证命令）。
 5. 填写测试矩阵时，参考 `frontend-test` 的 test-writing-guide 确定测试维度。
 6. 按 Done Checklist 自检。
 7. 向用户展示摘要（任务列表、文件边界、测试命令、风险）；确认时机按调用契约处理。
 
 ## Rules
 
-1. **最小任务**：常规计划只覆盖 design 已确认的最小方案；minimal bugfix 只覆盖适用性判定通过的用户请求 / issue。不得新增 design 或 minimal plan 未提到的抽象、重构或功能。
+1. **最小任务**：计划只覆盖 design 已确认的最小方案。不得新增 design 未提到的抽象、重构或功能。
 2. **文件边界**：任务必须列出精确文件路径。未知路径先探查；仍不确定则写 open question，不猜。
 3. **可执行粒度**：每个任务应能独立完成和验证；过大的任务拆小，过细的机械步骤合并。
 4. **TDD 内置**：每个行为改动必须先写失败测试，再写最小实现；无法 TDD 的项须说明原因。
@@ -85,20 +85,18 @@ disable-model-invocation: true
 | E2E 成本高 | 只覆盖关键路径；其余用单元/集成说明 |
 | design 有 open questions | 不生成受影响任务，列为阻塞项等待确认 |
 | 发现需超出最小改动 | 停止，要求回到 design 更新方案 |
-| 小 bugfix | 用户明确为 minimal bugfix 时，可使用 [minimal-plan-template.md](references/minimal-plan-template.md) 生成精简 plan；`Source` 写用户请求 / issue，适用性判定任一项为「否」则回完整 design |
 | design 更新 | 将对应 plan、step 4 进度、test-report、review 标记为 `STALE` 或需重跑 |
 
 ## Done Checklist
 
-- [ ] 每份 design 有同名 plan，或 minimal plan 含适用性判定
+- [ ] 每份 design 有同名 plan
 - [ ] 每份 plan 含状态头
 - [ ] 每个任务含目标、文件、步骤、验证、依赖，以及 RED / GREEN / REFACTOR / VERIFY
-- [ ] 测试覆盖与 summarized 验收标准对应；minimal bugfix 则与用户请求 / issue 的复现条件和验收点对应
-- [ ] 改动范围不超过 design 或 minimal plan 文件边界
+- [ ] 测试覆盖与 summarized 验收标准对应
+- [ ] 改动范围不超过 design 文件边界
 - [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
 ## References
 
 - 产出模板：[implementation-plan-template.md](references/implementation-plan-template.md)
-- 精简计划模板：[minimal-plan-template.md](references/minimal-plan-template.md)
 - 测试维度参考：`frontend-test/references/test-writing-guide.md`

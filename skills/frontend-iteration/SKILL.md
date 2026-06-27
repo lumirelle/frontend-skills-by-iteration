@@ -36,7 +36,7 @@ disable-model-invocation: true
 /frontend-iteration v1.2.0 init             # 仅 Bootstrap 脚手架后停止，不进入任何步骤
 ```
 
-版本号必须为 `vX.Y.Z`，所有迭代产物位于 `docs/vX.Y.Z/`。常规迭代从 step 1 开始并要求 `prd/origin/*.md`；用户明确为小 bugfix 时，可从 step 3 生成 minimal plan，但进入实现前仍必须有 `ACTIVE` plan。
+版本号必须为 `vX.Y.Z`，所有迭代产物位于 `docs/vX.Y.Z/`。常规迭代从 step 1 开始并要求 `prd/origin/*.md`；进入实现前必须有 `ACTIVE` plan。
 
 ## Mode
 
@@ -71,11 +71,11 @@ disable-model-invocation: true
 | 文件 / 目录 | 必需 | 说明 |
 |-------------|------|------|
 | `docs/technical-architecture.md` | 是 | Bootstrap 可从内置模板自动创建；须填写项目事实 |
-| `docs/vX.Y.Z/prd/origin/*.md` | 常规迭代：是；minimal bugfix：否 | 常规迭代的原始 PRD。minimal bugfix 可用用户请求 / issue 作为 minimal plan 来源 |
+| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD |
 | `docs/vX.Y.Z/progress.md` | 自动 | Bootstrap 从内置模板创建 |
 | `docs/vX.Y.Z/ui/*`（任意常见图片格式） | 否 | 有则必须对照；无则标注「无 UI 稿」 |
 
-常规迭代缺失 `origin` PRD 时停止。minimal bugfix 可无 `origin` PRD，但 plan 的 `Source` 必须写用户请求 / issue，并通过适用性判定。
+缺失 `origin` PRD 时停止。
 
 ## Orchestration Rules
 
@@ -111,7 +111,7 @@ strict 或 step 4–7 等待逐步确认
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制到 `docs/vX.Y.Z/`，并将 `progress.md` 内 `vX.Y.Z` 替换为实际版本号。
 3. `init` 模式完成 Bootstrap 后停止，提示补齐 `technical-architecture` 与 `prd/origin/*.md`。
 4. 读取 `technical-architecture.md`；若仍是模板或缺少技术栈、命令、目录、测试配置，停止。
-5. 常规迭代列出 `prd/origin/*.md` 与 `ui/*`；minimal bugfix 记录用户请求 / issue 来源。
+5. 列出 `prd/origin/*.md` 与 `ui/*`。
 6. 读取或修复 `progress.md`，报告起点、blocker、Draft Batch 状态。
 7. 读取目标 sub-skill；产出格式存疑时参考 [examples/README.md](examples/README.md) 与黄金路径样例。
 

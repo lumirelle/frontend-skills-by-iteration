@@ -16,12 +16,12 @@ disable-model-invocation: true
 |------|------|------|
 | `docs/technical-architecture.md` | 是 | 技术栈、目录、构建/测试命令、代码约定 |
 | `docs/vX.Y.Z/plans/*.md` | 是 | 实施计划与任务边界 |
-| `docs/vX.Y.Z/design/*.md` | 常规迭代：是；minimal bugfix：否 | 方案细节，plan 不清时查阅；minimal bugfix 以 plan 适用性判定与 Source 为准 |
-| `docs/vX.Y.Z/prd/summarized/*.md` | 常规迭代：是；minimal bugfix：否 | 验收标准，行为边界；minimal bugfix 以用户请求 / issue 的复现条件和验收点为准 |
+| `docs/vX.Y.Z/design/*.md` | 是 | 方案细节，plan 不清时查阅 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收标准，行为边界 |
 | `docs/vX.Y.Z/progress.md` | 是 | 当前 step / task 状态、TDD 证据与阻塞项 |
 | 现有代码库 | 是 | 遵循既有模式与风格 |
 
-缺失必需项 → **停止**，报告缺什么，不写代码。minimal bugfix 可不要求 design / summarized，但必须有 `ACTIVE` minimal plan，且其适用性判定均为「是」。
+缺失必需项 → **停止**，报告缺什么，不写代码。
 
 ## Output
 
@@ -36,7 +36,7 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认 plan 为 `ACTIVE` 且无未关闭 open questions；minimal bugfix 还须确认适用性判定仍全部为「是」。
+1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认 plan 为 `ACTIVE` 且无未关闭 open questions。
 2. 读取 `progress.md`，确定执行范围：全部 plan、用户指定 plan / task，或 resume 的首个未完成 task。
 3. 将当前 step / task 标为 `in_progress`。
 4. **按任务顺序执行 TDD**：RED → GREEN → REFACTOR → VERIFY → 询问是否提交 → 通过后再下一任务。
@@ -49,14 +49,14 @@ disable-model-invocation: true
 1. **严守 plan**：只改 plan 列出的文件；不新增 plan 外文件，除非任务明确要求。
 2. **最小改动**：能改现有实现就不新建；能局部改就不重构；不为「顺手优化」扩大范围。
 3. **TDD 铁律**：行为变更必须先写失败测试并观察到正确失败；没有 RED 不写生产代码。
-4. **不重新设计**：实现中发现 plan/design 不足（或 minimal plan 适用性不再成立）→ **停止**，说明缺口，回上游修正，不边写边改方案。
+4. **不重新设计**：实现中发现 plan/design 不足 → **停止**，说明缺口，回上游修正，不边写边改方案。
 5. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致。
 6. **测试先行**：写测试参考 `frontend-test` 的 test-writing-guide；确认 RED 正确失败后才进入 GREEN。
 7. **单任务验证**：每个 task 完成后执行其「验证」项；失败则在本 task 内修复，不带着失败进入下一 task。
 8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
 9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
 10. **进度落盘**：不得只在聊天中记录 TDD 证据；`progress.md` 是 resume 与 step 5 的输入。
-11. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；常规迭代输入 plan / design / summarized 不可用时停止并回上游；minimal bugfix plan 不可用或适用性判定失败时停止。
+11. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 plan / design / summarized 不可用时停止并回上游。
 
 ## Commit Message
 
@@ -100,7 +100,6 @@ VERIFY：运行 task 验证命令
 | 场景 | 处理 |
 |------|------|
 | 多份 plan | 按 plan 依赖与执行顺序逐个完成；共享文件注意合并冲突 |
-| minimal bugfix plan | 可无 design / summarized；严格按 `ACTIVE` minimal plan 的文件边界、复现条件和验收点执行 |
 | 从 Task N 续做 | 优先读取 `progress.md`；确认 Task 1…N-1 已完成且验证通过 |
 | 类型/API 与后端不一致 | 停止，回 design 或列 open question |
 | plan / design / summarized 为 STALE | 停止，回对应上游步骤更新 |
@@ -112,7 +111,7 @@ VERIFY：运行 task 验证命令
 ## Done Checklist
 
 - [ ] 所有目标 task 已完成
-- [ ] 常规迭代输入 plan / design / summarized 状态均为 `ACTIVE`；minimal bugfix 输入 minimal plan 为 `ACTIVE` 且适用性判定均为「是」
+- [ ] 输入 plan / design / summarized 状态均为 `ACTIVE`
 - [ ] 每个行为 task 的 RED / GREEN / REFACTOR / VERIFY 已执行并写入 `progress.md`
 - [ ] 改动范围 ⊆ plan 文件边界
 - [ ] 无 plan 外重构、无未解释的新抽象

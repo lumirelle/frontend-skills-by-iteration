@@ -31,7 +31,7 @@
 
 - [ ] `docs/vX.Y.Z/plans/` 存在且非空
 - [ ] 每份 plan 状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
-- [ ] 常规 plan 对应 design；minimal bugfix plan 的适用性判定均为「是」
+- [ ] 每份 plan 对应 design
 - [ ] 任务粒度：每个任务可独立完成与验证（约 2–6 个可执行步骤，见 `frontend-plan` → Task Shape）
 - [ ] 每项含：目标文件路径、改动说明、测试点
 - [ ] 每个行为任务含 RED / GREEN / REFACTOR / VERIFY 步骤
