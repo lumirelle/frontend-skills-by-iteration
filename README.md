@@ -1,11 +1,11 @@
-# frontend-workflow
+# frontend-skills-by-iteration
 
 可分发的前端迭代 Agent Skills 工作流：版本化需求、设计、计划、实现、测试、审查与发布。
 
 ## Install
 
 ```bash
-npx skills add <your-org>/frontend-workflow --skill '*'
+npx skills add lumirelle/frontend-skills-by-iteration --skill '*'
 ```
 
 安装后 `frontend-iteration` 会在启动时自动 Bootstrap `docs/` 脚手架，无需手动复制模板。
