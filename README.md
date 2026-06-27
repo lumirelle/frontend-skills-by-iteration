@@ -9,6 +9,7 @@ npx skills add <your-org>/frontend-workflow --skill frontend-iteration
 npx skills add <your-org>/frontend-workflow --skill frontend-requirements
 npx skills add <your-org>/frontend-workflow --skill frontend-design
 npx skills add <your-org>/frontend-workflow --skill frontend-plan
+npx skills add <your-org>/frontend-workflow --skill frontend-implement
 ```
 
 ## Skills
@@ -19,7 +20,7 @@ npx skills add <your-org>/frontend-workflow --skill frontend-plan
 | `frontend-requirements` | ✅ | 步骤 1：需求理解 |
 | `frontend-design` | ✅ | 步骤 2：技术方案 |
 | `frontend-plan` | ✅ | 步骤 3：实施计划 |
-| `frontend-implement` | 待建 | 步骤 4：代码实现 |
+| `frontend-implement` | ✅ | 步骤 4：代码实现 |
 | `frontend-test` | 待建 | 步骤 5：自测 |
 | `frontend-review` | 待建 | 步骤 6：代码审查 |
 | `frontend-release` | 待建 | 步骤 7：发布 |

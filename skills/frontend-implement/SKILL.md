@@ -1,0 +1,117 @@
+---
+name: frontend-implement
+description: Use when implementing frontend code for a versioned iteration (vX.Y.Z) according to approved plans. Requires docs/technical-architecture.md and docs/vX.Y.Z/plans/*.md. Produces code changes within plan boundaries. Invoked by frontend-iteration step 4 or directly.
+disable-model-invocation: true
+---
+
+# Frontend Implement
+
+## Goal
+
+严格按 plan 执行前端代码实现，改动范围不超出已确认方案。
+
+## Input
+
+| 路径 | 必需 | 说明 |
+|------|------|------|
+| `docs/technical-architecture.md` | 是 | 技术栈、目录、构建/测试命令、代码约定 |
+| `docs/vX.Y.Z/plans/*.md` | 是 | 实施计划与任务边界 |
+| `docs/vX.Y.Z/design/*.md` | 是 | 方案细节，plan 不清时查阅 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收标准，行为边界 |
+| 现有代码库 | 是 | 遵循既有模式与风格 |
+
+缺失必需项 → **停止**，报告缺什么，不写代码。
+
+## Output
+
+- 代码变更：仅限 plan「文件边界」与任务列出的文件
+- 测试代码：plan 要求的部分一并提交
+- 无额外设计/计划文档；偏离须先回到 `frontend-design` 或 `frontend-plan`
+
+## Workflow
+
+1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认无未关闭 open questions。
+2. 确定执行范围：全部 plan 或用户指定的 plan / task。
+3. **按任务顺序执行**：读步骤 → 改代码 → 跑该任务验证 → 询问是否提交 → 通过后再下一任务。
+4. 每完成一个 task：汇报改动与验证结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
+5. 全部 task 完成后按 Done Checklist 自检。
+6. 向用户展示摘要（变更文件、未覆盖风险、待步骤 5 验证项），等待确认。
+
+## Rules
+
+1. **严守 plan**：只改 plan 列出的文件；不新增 plan 外文件，除非任务明确要求。
+2. **最小改动**：能改现有实现就不新建；能局部改就不重构；不为「顺手优化」扩 scope。
+3. **不重新设计**：实现中发现 plan/design 不足 → **停止**，说明缺口，回上游修正，不边写边改方案。
+4. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致。
+5. **测试随行**：plan 要求测试的任务，实现与测试同批完成，不留给步骤 5 补写（步骤 5 负责跑全量与补漏）。
+6. **单任务验证**：每个 task 完成后执行其「验证」项；失败则在本 task 内修复，不带着失败进入下一 task。
+7. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
+8. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
+
+## Commit Message
+
+- 语言：**仅英文**
+- 格式：[Conventional Commits](https://www.conventionalcommits.org/) — `<type>(<scope>): <description>`
+- `type`：`feat` / `fix` / `refactor` / `style` / `test` / `docs` / `chore` / `perf` / `build` / `ci`
+- `scope`：可选，用页面/模块名（如 `user-profile`）
+- `description`：祈使语气、小写开头、不加句号；概括该 task 目标
+- 跨 task 不混提交；body / footer 按需，保持简洁
+
+示例：
+
+```
+feat(user-profile): add avatar upload field
+fix(login): handle empty token response
+test(user-profile): cover avatar validation rules
+```
+
+## Per-Task Execution
+
+对每个 task：
+
+```
+读目标与依赖 → 确认前置 task 已完成
+    ↓
+只打开 task 列出的文件
+    ↓
+按步骤实现（最小 diff）
+    ↓
+运行 task 验证命令
+    ↓
+通过 → 汇报 → 询问是否提交 → 用户确认后 commit（可选）
+    ↓
+进入下一 task；失败 → 修复或停止并说明
+```
+
+## Common Scenarios
+
+| 场景 | 处理 |
+|------|------|
+| 多份 plan | 按 plan 依赖与执行顺序逐个完成；共享文件注意合并冲突 |
+| 从 Task N 续做 | 确认 Task 1…N-1 已完成且验证通过 |
+| API 用 mock | 仅按 design/plan 约定接入 mock，不擅自改契约 |
+| 类型/API 与后端不一致 | 停止，回 design 或列 open question |
+| 验证命令不存在 | 从 technical-architecture 查找等价命令；仍无则停止 |
+| 实现需新增 plan 外文件 | 停止，回 plan 补充任务后再做 |
+| 测试失败 | 在当前 task 内修，不跳过 |
+| 用户暂不提交 | 记录未提交状态，继续前告知后续 task 将与当前变更混合 |
+| 发现 dead code 想清理 | 不清理，除非 plan 明确包含 |
+| 样式/交互与 UI 稿偏差 | 以 summarized + design 为准；稿有则对照 ui/ |
+
+## Done Checklist
+
+- [ ] 所有目标 task 已完成
+- [ ] 每个 task 的验证项已执行且通过
+- [ ] 改动范围 ⊆ plan 文件边界
+- [ ] 遵循 `technical-architecture.md` 与项目既有模式
+- [ ] 无 plan 外重构、无未解释的新抽象
+- [ ] 行为与 summarized 验收标准一致（实现层面）
+- [ ] API/类型与 design 一致
+
+## Handoff to Step 5
+
+实现完成后交给 `frontend-test`：
+
+- 全量测试命令（来自 technical-architecture）
+- plan 测试矩阵中尚未执行的项
+- 已知未覆盖风险
