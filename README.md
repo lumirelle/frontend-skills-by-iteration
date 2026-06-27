@@ -5,14 +5,7 @@
 ## Install
 
 ```bash
-npx skills add <your-org>/frontend-workflow --skill frontend-iteration
-npx skills add <your-org>/frontend-workflow --skill frontend-requirements
-npx skills add <your-org>/frontend-workflow --skill frontend-design
-npx skills add <your-org>/frontend-workflow --skill frontend-plan
-npx skills add <your-org>/frontend-workflow --skill frontend-implement
-npx skills add <your-org>/frontend-workflow --skill frontend-test
-npx skills add <your-org>/frontend-workflow --skill frontend-review
-npx skills add <your-org>/frontend-workflow --skill frontend-release
+npx skills add <your-org>/frontend-workflow --skill '*'
 ```
 
 ## Skills
@@ -45,6 +38,7 @@ npx skills add <your-org>/frontend-workflow --skill frontend-release
 ## Templates
 
 - `templates/docs/technical-architecture.md`：项目技术架构模板，包含 Testing 章节；只记录框架、命令、目录和项目约定，具体框架 API 由 Agent 查询官方文档。
+- `templates/docs/version/`：单次迭代的目录脚手架，复制为 `docs/vX.Y.Z/` 后放入 `prd/origin/*.md` 与 `ui/*`。
 
 ## Testing Guidance
 

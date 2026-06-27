@@ -33,8 +33,9 @@ disable-model-invocation: true
 2. 读取对应 summarized 与 design，确认需求、验收标准、推荐方案、涉及文件。
 3. 探查现有代码路径，校正 design 中的文件位置与测试位置。
 4. 将 design 拆成任务：先测试/类型/数据契约，再 UI/交互，再集成与回归。
-5. 按 Done Checklist 自检。
-6. 向用户展示摘要（任务列表、文件边界、测试命令、风险），等待确认。
+5. 填写测试矩阵时，参考 `frontend-test` 的 test-writing-guide 确定测试维度。
+6. 按 Done Checklist 自检。
+7. 向用户展示摘要（任务列表、文件边界、测试命令、风险），等待确认。
 
 ## Rules
 
@@ -86,3 +87,4 @@ disable-model-invocation: true
 ## References
 
 - 产出模板：[implementation-plan-template.md](references/implementation-plan-template.md)
+- 测试维度参考：`frontend-test` 的 `references/test-writing-guide.md`

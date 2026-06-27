@@ -44,7 +44,7 @@ disable-model-invocation: true
 
 ## Orchestration Rules
 
-1. **顺序执行**：不得跳步；当前步骤未通过门禁不得进入下一步。
+1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。
 2. **一步一确认**：每步产出完成后，向用户展示摘要并等待确认（用户说「继续」或指定下一步）。
 3. **resume 逻辑**：扫描 `docs/vX.Y.Z/` 各步骤产出目录，从第一个缺失产出的步骤继续。
 4. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
@@ -85,8 +85,8 @@ disable-model-invocation: true
 | 设计已完成，要开始编码 | `step 4`，确认 plan 存在 |
 | 中途改需求 | 回到步骤 1 或 2，标记受影响 downstream 产出待更新 |
 | 无 UI 稿 | 步骤 1 标注 open questions；步骤 2 基于 PRD 或项目已有类似设计推断并列出假设 |
-| 多页面迭代 | 每页独立 summarized / design / plan 文件，文件名与 origin 一致 |
-| Bugfix 小改 | 可 `step 4` 起，但须在 plan 中说明范围与回归测试 |
+| 多页面迭代 | 每页独立 summarized / design / plan 文件，文件名与 origin 一致；`test-report.md` 单文件汇总，`review/` 按 plan 分文件 |
+| Bugfix 小改 | 可 `step 4` 起，但须有一份精简 plan（范围 + 回归测试），缺则先补 `step 3` |
 | 测试失败 | 停留步骤 5，修复后重跑，不进入 review |
 | 审查有 🔴 | 回步骤 4 或 5 修复，重新 review |
 
