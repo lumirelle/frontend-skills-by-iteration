@@ -32,7 +32,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；直接调用时须确认步骤 4–5 已完成。
+- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准；直接调用时须确认步骤 4–5 已完成。
 - 本 skill 只产出审查记录；发现问题时给出回到 `frontend-implement` 或 `frontend-test` 的建议，不擅自修代码。
 
 ## Workflow
@@ -56,7 +56,7 @@ disable-model-invocation: true
 6. **最小改动视角**：标记 plan 外改动、多余抽象、可合并的重复逻辑。
 7. **测试交叉验证**：test-report 声称通过但代码审查发现明显缺口 → 标为 🔴 或 🟡。
 8. **进度交叉验证**：`progress.md` 中未完成、blocked 或缺少 VERIFY 的 task，不得给出「通过」结论。
-9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 summarized / design / plan / test-report 不可用时停止；`progress.md` Step 4 task 未完成或 Step 5 为 `blocked` 时不得给出「通过」结论。
+9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 summarized / design / plan / test-report 不可用时停止；Step 4 task 未完成或 Step 5 `blocked` 时不得给出「通过」。
 
 ## Review Dimensions
 
@@ -90,9 +90,7 @@ disable-model-invocation: true
 | test-report 有未覆盖风险 | 在 review 中引用，评估是否阻塞发布 |
 | progress 与 test-report 不一致 | 标 🔴 或 open question，要求回步骤 4/5 补齐证据 |
 | 上游文档为 STALE | 停止，回对应上游步骤更新，不产出通过结论 |
-| 仅 🟡/🟢 | 结论「有条件通过」，列待办 |
 | 有 🔴 | 结论「不通过」，指明回步骤 4 或 5 |
-| 多份 plan | 每份 plan 对应 review，或汇总 + 分文件 |
 | 审查中发现需求歧义 | 标 open question，不擅自扩大范围 |
 
 ## Done Checklist
@@ -104,7 +102,7 @@ disable-model-invocation: true
 - [ ] 无未解决 🔴（通过或有条件通过时）
 - [ ] 与 test-report、plan、design 交叉核对完成
 - [ ] 与 `progress.md` 的 task 状态和 TDD 证据交叉核对完成
-- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
 ## Handoff to Step 7
 

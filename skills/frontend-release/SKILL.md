@@ -32,7 +32,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；直接调用时须确认无 blocker。
+- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准；直接调用时须确认无 blocker。
 - 本 skill 只准备发布材料；merge / push / tag 必须等待用户显式确认。
 
 ## Workflow
@@ -55,7 +55,7 @@ disable-model-invocation: true
 5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
 6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现。
 7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
-8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 review / test-report / summarized / plan 不可用时停止；`progress.md` 有 blocker 或 Step 5 为 `blocked` 时不得发布。
+8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 review / test-report / summarized / plan 不可用时停止；`progress.md` 有 blocker 或 Step 5 `blocked` 时不得发布。
 
 ## Changelog Convention
 
@@ -72,11 +72,9 @@ disable-model-invocation: true
 | 存在未解决 🔴 | 停止，不发布 |
 | 上游文档为 STALE 或 BLOCKED | 停止，回对应上游步骤 |
 | 项目无 CHANGELOG | 仍生成 `release/changelog-entry.md`；是否创建根 CHANGELOG 需用户确认 |
-| 多 plan / 多页面 | CHANGELOG 合并归类；PR 描述分模块列出 |
 | 后端未就绪用了 mock | 在风险/已知问题中标注切换点 |
 | E2E 降级为手动验收 | 在测试说明中如实写明 |
 | 用户要求打 tag / 发布 | 确认后用 Conventional Commits 规范执行 |
-| 仅文档迭代 | CHANGELOG 用 `Docs`，PR 标注无运行时影响 |
 
 ## Pre-Merge Checklist
 
@@ -96,7 +94,7 @@ disable-model-invocation: true
 - [ ] `docs/vX.Y.Z/release/pr-description.md` 已生成
 - [ ] Pre-Merge Checklist 全部满足
 - [ ] 文档与代码一致
-- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 - [ ] 合并 / push / tag 仅在用户确认后执行
 
 ## References

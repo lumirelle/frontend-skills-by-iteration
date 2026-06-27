@@ -31,7 +31,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；由编排器调用时为 step 4，按其逐步确认，并保持本 skill 的逐 task 验证与可选 commit 询问。
+- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准；step 4 始终保留逐 task 验证与可选 commit 询问。
 - 本 skill 只执行 plan 内实现；发现方案或计划缺口时停止并回上游，不现场补设计。
 
 ## Workflow
@@ -56,7 +56,7 @@ disable-model-invocation: true
 8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
 9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
 10. **进度落盘**：不得只在聊天中记录 TDD 证据；`progress.md` 是 resume 与 step 5 的输入。
-11. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：常规迭代输入 plan / design / summarized 不可用时停止并回上游；minimal bugfix 输入 plan 不可用或适用性判定失败时停止。
+11. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；常规迭代输入 plan / design / summarized 不可用时停止并回上游；minimal bugfix plan 不可用或适用性判定失败时停止。
 
 ## Commit Message
 
@@ -102,15 +102,12 @@ VERIFY：运行 task 验证命令
 | 多份 plan | 按 plan 依赖与执行顺序逐个完成；共享文件注意合并冲突 |
 | minimal bugfix plan | 可无 design / summarized；严格按 `ACTIVE` minimal plan 的文件边界、复现条件和验收点执行 |
 | 从 Task N 续做 | 优先读取 `progress.md`；确认 Task 1…N-1 已完成且验证通过 |
-| API 用 mock | 仅按 design/plan 约定接入 mock，不擅自改契约 |
 | 类型/API 与后端不一致 | 停止，回 design 或列 open question |
 | plan / design / summarized 为 STALE | 停止，回对应上游步骤更新 |
 | 验证命令不存在 | 从 technical-architecture 查找等价命令；仍无则停止 |
 | 实现需新增 plan 外文件 | 停止，回 plan 补充任务后再做 |
-| 测试失败 | 在当前 task 内修，不跳过 |
 | 用户暂不提交 | 记录未提交状态，继续前告知后续 task 将与当前变更混合 |
 | 发现 dead code 想清理 | 不清理，除非 plan 明确包含 |
-| 样式/交互与 UI 稿偏差 | 以 summarized + design 为准；稿有则对照 ui/ |
 
 ## Done Checklist
 
@@ -119,7 +116,7 @@ VERIFY：运行 task 验证命令
 - [ ] 每个行为 task 的 RED / GREEN / REFACTOR / VERIFY 已执行并写入 `progress.md`
 - [ ] 改动范围 ⊆ plan 文件边界
 - [ ] 无 plan 外重构、无未解释的新抽象
-- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
 ## Handoff to Step 5
 

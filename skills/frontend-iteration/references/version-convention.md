@@ -39,7 +39,7 @@ docs/
 
 ## UI Mapping
 
-UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requirements` 为权威：见其 `SKILL.md` → **UI Mapping** 与 `references/ui-reading-guide.md`（路径见 `frontend-iteration` → Skill Path Resolution）。
+UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requirements` 为权威：见其 `SKILL.md` → **UI Mapping** 与 `references/ui-reading-guide.md`。
 
 ## Resume Detection
 

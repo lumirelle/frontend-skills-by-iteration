@@ -31,7 +31,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 调用契约（orchestrated / standalone）见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）；直接调用时须确认步骤 4 已完成。
+- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准；直接调用时须确认步骤 4 已完成。
 - 本 skill 只做验证与报告；发现测试缺口或实现问题时停止并回 `frontend-implement`，不得在本步改代码。
 
 ## Workflow
@@ -57,7 +57,7 @@ disable-model-invocation: true
 7. **状态一致**：用户确认通过后，文首 `Status` → `ACTIVE`，`结论` → `可进入 review`，Step 5 → `passed`（见 document-status「test-report 专约」）。
 8. **框架用法不过度沉淀**：具体测试 API 从项目既有示例或官方文档获取。
 9. **证据来源明确**：TDD 证据与命令结果以 `progress.md` 为准；test-report 汇总引用。
-10. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 plan / summarized / design 不可用时停止并回上游。
+10. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 plan / summarized / design 不可用时停止并回上游。
 
 ## Test Layers
 
@@ -73,14 +73,12 @@ disable-model-invocation: true
 
 | 场景 | 处理 |
 |------|------|
-| 步骤 4 已跑过 task 验证 | 纳入报告，避免重复；未覆盖项按需重跑 |
 | 缺测试用例 | 记录缺口，回到 `frontend-implement` 用 TDD 补 |
 | plan / summarized 为 STALE | 停止，回对应上游步骤更新并重跑相关实现或验证 |
 | 单元过、集成失败 | 记录失败，回到 `frontend-implement` 修复后重跑 |
 | E2E 环境未就绪 | 标注阻塞项；与用户确认是否降级为手动验收 |
 | Flaky 测试 | 重跑 1 次；仍失败则按失败处理并记录 |
 | 无 E2E 框架 | 报告说明；关键路径改手动验收清单 |
-| 多份 plan | 合并矩阵，统一报告 |
 | 验收标准无自动化覆盖 | 列手动步骤与结果，标注未覆盖风险 |
 
 ## Done Checklist
@@ -90,7 +88,7 @@ disable-model-invocation: true
 - [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR）
 - [ ] 实际运行命令与 exit code 已写入 `progress.md`
 - [ ] 报告含：执行命令、结果、验收标准映射、未覆盖风险
-- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
 ## Handoff to Step 6
 

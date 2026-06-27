@@ -29,7 +29,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 调用契约（orchestrated / standalone）与 Workflow 变体见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）。
+- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准。
 - 本 skill 只处理需求归纳，不执行设计、计划、实现、测试、审查或发布。
 
 ## Workflow
@@ -39,9 +39,7 @@ disable-model-invocation: true
 3. 有 UI 稿时，先读 [ui-reading-guide.md](references/ui-reading-guide.md)，按提取维度逐图读图。
 4. 逐份 origin PRD 生成 summarized；有 UI 稿的页面必须对照设计稿。
 5. 按 Done Checklist 自检。
-6. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认；确认后将对应 summarized 状态更新为 `ACTIVE`。
-
-> **编排器调用变体**：由 `frontend-iteration` 调用时，本步末「等待确认 / 仅消费 ACTIVE」按编排模式调整，**不在本 skill 内单步触发**；fast 编排草稿与批量确认规则见 `frontend-iteration/references/orchestrated-invocation.md` → Workflow 变体 / DRAFT 消费例外（路径见 Skill Path Resolution）。
+6. 向用户展示摘要（文件列表、映射表、open questions、自检结果）；确认时机按调用契约处理。
 
 ## Rules
 
@@ -51,7 +49,7 @@ disable-model-invocation: true
 4. **非目标明确**：origin 模糊时，主动收窄范围并写入「非目标」。
 5. **UI 优先**：有设计稿时以稿为准；与 origin 冲突时列入 open questions，不擅自裁决。
 6. **架构对齐**：与 `technical-architecture.md` 冲突的需求标注为 open question 或「待确认」。
-7. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：有阻塞 open questions 时 summarized 保持 `DRAFT` 或标记 `BLOCKED`。
+7. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；有阻塞 open questions 时 summarized 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## UI Mapping
 
@@ -73,12 +71,8 @@ disable-model-invocation: true
 |------|------|
 | 仅 origin，无 UI | 标注「无 UI 稿」；布局/视觉写假设或 open questions |
 | 部分页面有 UI | 有稿对照写；无稿页面单独标注 |
-| origin 一页多模块 | 一份 summarized 内分模块写，不拆文件 |
 | 多 origin 文件 | 各生成同名 summarized，不合并 |
 | origin 含糊 | 收窄为可行范围，假设与 open questions 分开写 |
-| 跨平台（Web + H5） | 在「平台差异」写明各端行为 |
-| 含权限/登录态 | 写清各角色可见性与未授权表现 |
-| 列表/表单/详情 | 覆盖空态、加载态、错误态、无权限态 |
 | 迭代改需求 | 覆盖对应 summarized，文首标注「更新于」及变更摘要 |
 | origin 与 UI 冲突 | open questions 列出差异，交用户确认 |
 | origin 更新 | 将对应 summarized 及下游 design / plan / review 标记为 `STALE`，写明原因 |
@@ -89,7 +83,7 @@ disable-model-invocation: true
 - [ ] summarized 覆盖页面/模块、用户流程、状态与交互、边界情况、非目标、验收标准
 - [ ] UI 已映射或 open questions 已列出
 - [ ] 未引入 origin 外功能
-- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
 ## References
 

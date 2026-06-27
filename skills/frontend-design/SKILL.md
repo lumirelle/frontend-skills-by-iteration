@@ -30,21 +30,19 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 调用契约（orchestrated / standalone）与 Workflow 变体见 `frontend-iteration/references/orchestrated-invocation.md`（路径见 `frontend-iteration` → Skill Path Resolution）。
+- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准。
 - 本 skill 只处理技术方案，不执行计划、实现、测试、审查或发布。
 
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
-2. 读取 summarized 状态；直接调用时仅 `ACTIVE` 可作为输入。由 `frontend-iteration fast` 步骤 2 调用时，仅可消费符合 `frontend-iteration/references/orchestrated-invocation.md` → DRAFT 消费例外的编排草稿。
+2. 读取 summarized 状态；可消费状态按调用契约判断。
 3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
-4. 有 UI 稿时，参考 `frontend-requirements` 的 ui-reading-guide（路径见 `frontend-iteration` → Skill Path Resolution），按组件清单/层级/重复单元确认组件拆分与复用。
+4. 有 UI 稿时，参考 `frontend-requirements` 的 `ui-reading-guide.md`，按组件清单/层级/重复单元确认组件拆分与复用。
 5. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
 6. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
 7. 按 Done Checklist 自检。
-8. 向用户展示摘要（每页方案选型、改动文件清单、风险、open questions），等待确认；确认后将对应 design 状态更新为 `ACTIVE`。
-
-> **编排器调用变体**：由 `frontend-iteration` 调用时，本步末「等待确认 / 仅消费 ACTIVE」按编排模式调整，**不在本 skill 内单步触发**；fast 编排草稿与批量确认规则见 `frontend-iteration/references/orchestrated-invocation.md` → Workflow 变体 / DRAFT 消费例外（路径见 Skill Path Resolution）。
+8. 向用户展示摘要（方案选型、改动文件、风险、open questions）；确认时机按调用契约处理。
 
 ## Rules
 
@@ -56,7 +54,7 @@ disable-model-invocation: true
 6. **可追溯**：每条设计决策能对应到 summarized 的某项需求或验收标准。
 7. **测试前置**：方案须包含测试策略（单元/集成/E2E 各覆盖什么），供步骤 3 拆解。
 8. **不写代码**：本步产出设计文档，不落实现代码（伪代码/接口签名可用）。
-9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
+9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## Design Coverage
 
@@ -80,15 +78,10 @@ disable-model-invocation: true
 |------|------|
 | 复用现有组件即可 | 说明复用点与改动，避免新建 |
 | 倾向过度设计 | 回退到最小改动：删多余抽象/新建文件，在方案选型中说明为何不选复杂方案 |
-| 需新建通用组件 | 设计 props/事件接口，置于约定的 shared 目录 |
-| 涉及全局状态 | 明确状态归属（全局 store vs 局部），避免滥用全局 |
 | 新增 API 依赖 | 定义前端类型与请求封装位置；后端未就绪则用 mock 并标注 |
 | 多页面迭代 | 每页独立 design；跨页公共部分抽到一份共享设计或在各 design 引用 |
-| 跨平台差异 | 在兼容性维度写明各端实现差异与适配方案 |
-| 性能敏感（长列表/大表单） | 给出虚拟化/分页/懒加载等方案与取舍 |
 | 改动影响现有功能 | 列出受影响模块与回归测试范围 |
 | summarized 有 open questions | 设计中标注「依赖确认」，给出默认假设方案 |
-| summarized 与现有架构冲突 | 列为 open question，给出兼容/改造两套思路 |
 | summarized 更新 | 将对应 design 及下游 plan / review 标记为 `STALE`，写明原因 |
 
 ## Done Checklist
@@ -97,9 +90,9 @@ disable-model-invocation: true
 - [ ] design 覆盖方案选型、组件结构、数据流、接口契约、错误处理、兼容性、测试策略、风险回滚
 - [ ] 涉及文件已列出，且未夹带无关重构
 - [ ] 已选最小可行方案，或充分说明为何选更复杂方案
-- [ ] 完整门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` → Done Checklist（通用项）完成（路径见 `frontend-iteration` → Skill Path Resolution）
+- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
 ## References
 
 - 产出模板：[technical-design-template.md](references/technical-design-template.md)
-- UI 读图指引：`frontend-requirements` 的 `references/ui-reading-guide.md`（路径见 `frontend-iteration` → Skill Path Resolution）
+- UI 读图指引：`frontend-requirements/references/ui-reading-guide.md`
