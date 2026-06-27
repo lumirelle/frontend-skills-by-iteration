@@ -1,0 +1,94 @@
+---
+name: frontend-design
+description: Use when designing the frontend technical solution for a versioned iteration (vX.Y.Z). Requires docs/technical-architecture.md and docs/vX.Y.Z/prd/summarized/*.md. Produces docs/vX.Y.Z/design/*.md. Invoked by frontend-iteration step 2 or directly.
+disable-model-invocation: true
+---
+
+# Frontend Design
+
+## Goal
+
+将 summarized 需求转化为可落地的前端技术方案，明确改动范围与测试策略。
+
+## Input
+
+| 路径 | 必需 | 说明 |
+|------|------|------|
+| `docs/technical-architecture.md` | 是 | 技术栈、目标平台、目录与约定 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 步骤 1 产出，一对一处理 |
+| `docs/vX.Y.Z/ui/*` | 否 | 设计稿，用于确认组件拆分与交互 |
+| 现有代码库 | 是 | 复用现有组件/模式，遵循既有结构 |
+
+缺失必需项 → **停止**，报告缺什么，不产出 design。
+
+## Output
+
+- 目录：`docs/vX.Y.Z/design/`
+- 命名：与 `summarized/` 同名（如 `summarized/user-profile.md` → `design/user-profile.md`）
+- 模板：[technical-design-template.md](references/technical-design-template.md)
+
+## Workflow
+
+1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
+2. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
+3. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
+4. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
+5. 按 Done Checklist 自检。
+6. 向用户展示摘要（每页方案选型、改动文件清单、风险、open questions），等待确认。
+
+## Rules
+
+1. **最小改动**：默认选改动文件最少、侵入最低、不新增抽象层的方案。能改现有文件就不新建；能内联就不抽 hook/工具；能局部 state 就不用全局 store；能直接调用就不加中间层。不为「以后可能用到」做通用化或预留扩展；若确需超出最小方案，须说明理由。
+2. **先比选后定案**：非平凡处给 2–3 选项，**其中必须含一个最小改动方案**；优先推荐最小改动方案，除非有明确理由选复杂方案。
+3. **架构对齐**：遵循 `technical-architecture.md` 与现有代码模式；冲突须显式标注。
+4. **复用优先**：先找现有组件/hooks/工具，再考虑新建；说明为何不复用。
+5. **范围可控**：仅设计满足 summarized 所需的改动，不夹带无关重构。
+6. **可追溯**：每条设计决策能对应到 summarized 的某项需求或验收标准。
+7. **测试前置**：方案须包含测试策略（单元/集成/E2E 各覆盖什么），供步骤 3 拆解。
+8. **不写代码**：本步产出设计文档，不落实现代码（伪代码/接口签名可用）。
+
+## Design Coverage
+
+每份 design 至少覆盖：
+
+| 维度 | 内容 |
+|------|------|
+| 方案选型 | 备选方案、权衡、推荐理由 |
+| 组件结构 | 组件树/拆分、职责、复用 vs 新建 |
+| 数据流 | 状态归属、props/事件、全局 vs 局部状态 |
+| 接口契约 | 调用的 API、入参/返回、前端类型定义 |
+| 路由 | 新增/变更路由、参数、守卫/权限 |
+| 错误处理 | 加载/空/错/无权限态的实现策略 |
+| 兼容性 | 平台差异、响应式、浏览器/版本约束 |
+| 测试策略 | 单元/集成/E2E 各测什么 |
+| 风险与回滚 | 主要风险、降级/回滚方式 |
+
+## Common Scenarios
+
+| 场景 | 处理 |
+|------|------|
+| 复用现有组件即可 | 说明复用点与改动，避免新建 |
+| 倾向过度设计 | 回退到最小改动：删多余抽象/新建文件，在方案选型中说明为何不选复杂方案 |
+| 需新建通用组件 | 设计 props/事件接口，置于约定的 shared 目录 |
+| 涉及全局状态 | 明确状态归属（全局 store vs 局部），避免滥用全局 |
+| 新增 API 依赖 | 定义前端类型与请求封装位置；后端未就绪则用 mock 并标注 |
+| 多页面迭代 | 每页独立 design；跨页公共部分抽到一份共享设计或在各 design 引用 |
+| 跨平台差异 | 在兼容性维度写明各端实现差异与适配方案 |
+| 性能敏感（长列表/大表单） | 给出虚拟化/分页/懒加载等方案与取舍 |
+| 改动影响现有功能 | 列出受影响模块与回归测试范围 |
+| summarized 有 open questions | 设计中标注「依赖确认」，给出默认假设方案 |
+| summarized 与现有架构冲突 | 列为 open question，给出兼容/改造两套思路 |
+
+## Done Checklist
+
+- [ ] `design/` 存在且非空
+- [ ] 每份 summarized 有同名 design
+- [ ] 每份含：方案选型、组件结构、数据流、接口契约、错误处理、兼容性、测试策略、风险回滚
+- [ ] 涉及文件（新增/修改）已列出
+- [ ] 与 `technical-architecture.md` 无冲突，或冲突已标注待确认
+- [ ] 未夹带无关重构
+- [ ] 已选最小可行方案，或无充分理由说明为何选更复杂方案
+
+## References
+
+- 产出模板：[technical-design-template.md](references/technical-design-template.md)
