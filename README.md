@@ -13,7 +13,8 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 ## Usage
 
 ```
-/frontend-iteration v1.2.0
+/frontend-iteration v1.2.0              # fast（默认）：文档步骤 1–3 连续，之后逐步确认
+/frontend-iteration v1.2.0 strict       # 每步均须确认
 /frontend-iteration v1.2.0 step 3
 /frontend-iteration v1.2.0 resume
 ```

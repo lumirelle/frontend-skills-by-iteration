@@ -23,12 +23,34 @@ disable-model-invocation: true
 ## Invocation
 
 ```
-/frontend-iteration v1.2.0           # 从步骤 1 开始
-/frontend-iteration v1.2.0 step 3    # 从指定步骤继续
-/frontend-iteration v1.2.0 resume    # 自动检测上次未完成步骤
+/frontend-iteration v1.2.0                  # fast（默认）：步骤 1–3 连续，步骤 4–7 逐步确认
+/frontend-iteration v1.2.0 strict           # 每步均须确认
+/frontend-iteration v1.2.0 fast             # 显式 fast
+/frontend-iteration v1.2.0 step 3           # 从指定步骤继续（默认 fast）
+/frontend-iteration v1.2.0 strict step 3    # 指定步骤 + strict
+/frontend-iteration v1.2.0 resume           # 自动检测上次未完成步骤（默认 fast）
 ```
 
 版本号格式：`vX.Y.Z`（如 `v1.2.0`）。所有路径使用 `docs/vX.Y.Z/`。
+
+## Interaction Mode
+
+未指定时默认 **`fast`**。从 invocation 解析：`strict` → strict；否则 → fast。
+
+| 模式 | 步骤 1–3（文档类） | 步骤 4–7（实现 / 测试 / 审查 / 发布） |
+|------|-------------------|----------------------------------------|
+| **fast**（默认） | 连续执行，不在每步后等待确认；步骤 3 门禁通过后**一次性**展示 1–3 摘要，用户确认后再进入步骤 4 | 每步完成后展示摘要并**等待确认** |
+| **strict** | 每步完成后展示摘要并**等待确认** | 同左 |
+
+**fast 模式细则**
+
+1. 步骤 1–3 产出保持 `DRAFT`，不在各 sub-skill 内单独等用户确认；门禁通过后自动进入下一步。
+2. 步骤 3 全部完成后：汇总 summarized / design / plan 列表、open questions、门禁结果；**等待用户确认**；确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
+3. 步骤 4 仍遵循 `frontend-implement` 的 per-task 验证与可选 commit 询问；步骤 5–7 每步结束等待确认。
+4. `STALE` / `BLOCKED`、门禁失败、open questions 阻塞实现 → **不论模式均停止**，不自动推进。
+5. 用户可在任意确认点说 `strict`，后续改按 strict 执行。
+
+**strict 模式**：等同原「一步一确认」，每步完成后等待用户说「继续」或指定下一步。
 
 ## Skill Path Resolution
 
@@ -69,13 +91,13 @@ disable-model-invocation: true
 ## Orchestration Rules
 
 1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。
-2. **一步一确认**：每步产出完成后，向用户展示摘要并等待确认（用户说「继续」或指定下一步）。
+2. **交互模式**：按 Interaction Mode 执行。默认 **fast**；用户指定 `strict` 时每步均须确认。fast 下步骤 1–3 连续执行，步骤 3 结束后批量确认一次；步骤 4–7 逐步确认。
 3. **显式加载 sub-skill**：执行任一步骤前，必须先按 Skill Path Resolution 读取并遵循对应 sub-skill 的 `SKILL.md`。不得凭记忆执行；均不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
 4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。
 5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
 7. **产出校验**：每步结束前对照 `references/step-gates.md` 逐项核对，在 `docs/vX.Y.Z/progress.md` 记录结果，并向用户展示通过 / 未通过项。
-8. **工作流所有权**：通过 `frontend-iteration` 调用时，本 workflow 拥有需求、设计、计划、实现、测试、审查、发布生命周期；除非用户显式要求，不再额外调用通用 planning / TDD / verification / review skill 来重复编排。
+8. **工作流所有权**：通过 `frontend-iteration` 调用时，本 workflow 拥有需求、设计、计划、实现、测试、审查、发布生命周期；除非用户显式要求，不再额外调用通用 planning / TDD / verification / review skill 来重复编排。fast 模式下步骤 1–3 的确认由编排器批量接管，sub-skill 内「等待确认」在步骤 1–3 间暂不触发。
 
 ## Sub-skill Loading
 
@@ -104,13 +126,14 @@ disable-model-invocation: true
 ## Execution Flow
 
 ```
-读取版本号 → 校验 Prerequisites
+读取版本号 → 解析模式（默认 fast）→ 校验 Prerequisites
     ↓
 确定起始步骤（step N 或 resume；优先读取 progress.md）
     ↓
 读取对应 sub-skill → 执行 → 更新产出与 progress.md
     ↓
-校验产出 → 向用户摘要 → 等待确认
+fast 且步骤 1–3：门禁通过 → 自动下一步（步骤 3 完成后批量摘要 → 等待确认 → ACTIVE）
+strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
     ↓
 下一步 / 结束
 ```
@@ -119,6 +142,8 @@ disable-model-invocation: true
 
 | 场景 | 处理 |
 |------|------|
+| 默认启动（fast） | 步骤 1→2→3 连续；步骤 3 后批量确认文档，再进入 4 |
+| 需要每步把关 | invocation 加 `strict` |
 | 新迭代，仅有 origin PRD | 从步骤 1 开始 |
 | 设计已完成，要开始编码 | `step 4`，确认 plan 存在 |
 | 中途改需求 | 回到步骤 1 或 2，将受影响 downstream 产出标记为 `STALE` |
@@ -130,14 +155,14 @@ disable-model-invocation: true
 
 ## On Start
 
-1. 确认版本号与起始步骤；解析本 skill 根目录（Skill Path Resolution）。
+1. 确认版本号、**交互模式**（默认 fast）与起始步骤；解析本 skill 根目录（Skill Path Resolution）。
 2. **Bootstrap**（缺失则自动创建，并告知用户）：
    - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制到 `docs/`。
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制到 `docs/vX.Y.Z/`，并将 `progress.md` 内 `vX.Y.Z` 替换为实际版本号。
 3. 读取 `docs/technical-architecture.md`。
 4. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
 5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
-6. 报告 Bootstrap 结果、Prerequisites 与 progress 状态。
+6. 报告 Bootstrap 结果、模式、Prerequisites 与 progress 状态。
 7. 按 Skill Path Resolution 读取目标 step 的 sub-skill；对产出格式存疑时读取 [examples/README.md](examples/README.md) 中对应步骤成品。
 
 ## References
