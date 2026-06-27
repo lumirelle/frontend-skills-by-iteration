@@ -33,4 +33,4 @@ npx skills add <your-org>/frontend-workflow --skill frontend-iteration
 
 - `docs/technical-architecture.md`
 - `docs/vX.Y.Z/prd/origin/*.md`
-- `docs/vX.Y.Z/ui/*.<image_format>`（可选）
+- `docs/vX.Y.Z/ui/*`可选，任意常见图片格式

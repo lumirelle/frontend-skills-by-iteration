@@ -30,14 +30,14 @@ docs/
 | summarized | 与 origin 同名 | `user-profile.md` |
 | design | 与 summarized 同名 | `user-profile.md` |
 | plan | 与 summarized 同名 | `user-profile.md` |
-| UI 图 | 页面或板块名 | `user-profile.<image_format>`、`user-profile-header.<image_format>` |
+| UI 图 | 页面或板块名 | `user-profile.*`、`user-profile-header.*`（任意常见图片格式） |
 
 多文件迭代：一个功能/页面一套 origin → summarized → design → plan，禁止混在一个文件里。
 
 ## UI Mapping
 
-- `page-name.<image_format>` → 整页
-- `page-name-section.<image_format>` → 该页某板块
+- `page-name.*`（任意常见图片格式） → 整页
+- `page-name-section.*`（任意常见图片格式） → 该页某板块
 - 无法从文件名推断 → 在 summarized 中列为 open question
 
 ## Resume Detection

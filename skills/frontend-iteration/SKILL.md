@@ -38,7 +38,7 @@ disable-model-invocation: true
 |-------------|------|------|
 | `docs/technical-architecture.md` | 是 | 技术栈、环境、目标平台、项目约定 |
 | `docs/vX.Y.Z/prd/origin/*.md` | 是 | 本迭代原始 PRD |
-| `docs/vX.Y.Z/ui/*.<image_format>` | 否 | 有则必须对照；无则标注「无 UI 稿」 |
+| `docs/vX.Y.Z/ui/*`（任意常见图片格式） | 否 | 有则必须对照；无则标注「无 UI 稿」 |
 
 缺失必需项 → **停止**，提示用户补齐，不进入任何步骤。
 
@@ -49,6 +49,7 @@ disable-model-invocation: true
 3. **resume 逻辑**：扫描 `docs/vX.Y.Z/` 各步骤产出目录，从第一个缺失产出的步骤继续。
 4. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
 5. **子 Skill 未安装**：提示 `npx skills add <repo> --skill <name>`，停止。
+6. **产出校验**：每步结束前对照 references/step-gates.md 逐项核对，在向用户展示的摘要中列出核对结果（通过 / 未通过项）。
 
 ## Step Gates
 
