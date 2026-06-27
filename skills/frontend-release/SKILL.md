@@ -55,7 +55,7 @@ disable-model-invocation: true
 5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
 6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现。
 7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
-8. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；review / test-report / summarized / plan 不可用时停止。`progress.md` 有 blocker 或 Step 5 为 `blocked` 时不得发布。
+8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 review / test-report / summarized / plan 不可用时停止；`progress.md` 有 blocker 或 Step 5 为 `blocked` 时不得发布。
 
 ## Changelog Convention
 

@@ -54,7 +54,7 @@ disable-model-invocation: true
 5. **顺序明确**：标出依赖关系；能并行的任务可标注，但默认顺序执行。
 6. **不重新设计**：发现 design 缺口或不合理时，停止并回到 `frontend-design` 修正，不在 plan 中暗改方案。
 7. **不写代码**：本步只写实施计划，不改业务代码。
-8. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`。直接调用时不得消费不可用 summarized 或 design；由 `frontend-iteration fast` 调用时，仅步骤 1→2→3 的编排草稿例外可用。有阻塞 open questions 的 plan 保持 `DRAFT` 或标记 `BLOCKED`。
+8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：有阻塞 open questions 的 plan 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## Task Shape
 

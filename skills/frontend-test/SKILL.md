@@ -57,7 +57,7 @@ disable-model-invocation: true
 7. **状态一致**：用户确认通过后，文首 `Status` → `ACTIVE`，`结论` → `可进入 review`，Step 5 → `passed`（见 document-status「test-report 专约」）。
 8. **框架用法不过度沉淀**：具体测试 API 从项目既有示例或官方文档获取。
 9. **证据来源明确**：TDD 证据与命令结果以 `progress.md` 为准；test-report 汇总引用。
-10. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；plan / summarized / design 不可用时停止并回上游。
+10. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 plan / summarized / design 不可用时停止并回上游。
 
 ## Test Layers
 

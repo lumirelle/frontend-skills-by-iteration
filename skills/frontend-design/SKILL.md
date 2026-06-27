@@ -56,7 +56,7 @@ disable-model-invocation: true
 6. **可追溯**：每条设计决策能对应到 summarized 的某项需求或验收标准。
 7. **测试前置**：方案须包含测试策略（单元/集成/E2E 各覆盖什么），供步骤 3 拆解。
 8. **不写代码**：本步产出设计文档，不落实现代码（伪代码/接口签名可用）。
-9. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`。直接调用时不得消费不可用 summarized；由 `frontend-iteration fast` 调用时，仅步骤 1→2 的编排草稿例外可用。有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
+9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## Design Coverage
 

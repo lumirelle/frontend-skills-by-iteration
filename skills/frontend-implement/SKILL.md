@@ -56,7 +56,7 @@ disable-model-invocation: true
 8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
 9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
 10. **进度落盘**：不得只在聊天中记录 TDD 证据；`progress.md` 是 resume 与 step 5 的输入。
-11. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；plan / design / summarized 不可用时停止并回上游。
+11. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 plan / design / summarized 不可用时停止并回上游。
 
 ## Commit Message
 

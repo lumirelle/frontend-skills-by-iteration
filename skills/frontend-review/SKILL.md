@@ -56,7 +56,7 @@ disable-model-invocation: true
 6. **最小改动视角**：标记 plan 外改动、多余抽象、可合并的重复逻辑。
 7. **测试交叉验证**：test-report 声称通过但代码审查发现明显缺口 → 标为 🔴 或 🟡。
 8. **进度交叉验证**：`progress.md` 中未完成、blocked 或缺少 VERIFY 的 task，不得给出「通过」结论。
-9. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；summarized / design / plan / test-report 不可用时停止。`progress.md` Step 4 task 未完成或 Step 5 为 `blocked` 时不得给出「通过」结论。
+9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：输入 summarized / design / plan / test-report 不可用时停止；`progress.md` Step 4 task 未完成或 Step 5 为 `blocked` 时不得给出「通过」结论。
 
 ## Review Dimensions
 

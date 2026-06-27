@@ -51,7 +51,7 @@ disable-model-invocation: true
 4. **非目标明确**：origin 模糊时，主动收窄范围并写入「非目标」。
 5. **UI 优先**：有设计稿时以稿为准；与 origin 冲突时列入 open questions，不擅自裁决。
 6. **架构对齐**：与 `technical-architecture.md` 冲突的需求标注为 open question 或「待确认」。
-7. **状态明确**：summarized 作为下游输入前必须是 `ACTIVE`；有阻塞 open questions 时保持 `DRAFT` 或标记 `BLOCKED`。
+7. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md` → 状态门禁（通用）（路径见 `frontend-iteration` → Skill Path Resolution）。本 step 特异：有阻塞 open questions 时 summarized 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## UI Mapping
 
