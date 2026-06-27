@@ -44,10 +44,20 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 
 - `templates/docs/technical-architecture.md`
 - `templates/docs/version/` → Bootstrap 复制为 `docs/vX.Y.Z/`
+- `examples/` → 黄金路径成品样例（只读参照）
 - `references/`：step-gates、progress、document-status、version 约定
 - `scripts/validate-iteration.ps1`
 
 路径解析见 `frontend-iteration` → **Skill Path Resolution**（兼容 `.agents/skills/` 与 `skills/` 两种布局）。
+
+## Examples
+
+黄金路径内置于 `frontend-iteration` skill，安装后位于：
+
+- `.agents/skills/frontend-iteration/examples/feedback-form-v0.1.0/`（消费方）
+- `skills/frontend-iteration/examples/feedback-form-v0.1.0/`（源码仓库）
+
+说明见 skill 内 [`examples/README.md`](skills/frontend-iteration/examples/README.md)。
 
 ## Validation
 

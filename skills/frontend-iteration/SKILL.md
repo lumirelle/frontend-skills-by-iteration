@@ -40,12 +40,18 @@ disable-model-invocation: true
 | sub-skill `<name>` | `.agents/skills/<name>/SKILL.md` | `skills/<name>/SKILL.md` |
 | 编排器 references | `.agents/skills/frontend-iteration/references/<file>` | `skills/frontend-iteration/references/<file>` |
 | 其他 sub-skill references | `.agents/skills/<name>/references/<file>` | `skills/<name>/references/<file>` |
+| 黄金路径样例 | `.agents/skills/frontend-iteration/examples/` | `skills/frontend-iteration/examples/` |
 
 **本 skill 根目录** = 本 `SKILL.md` 所在目录。内置资源均相对该目录：
 
 - `templates/docs/technical-architecture.md`
 - `templates/docs/version/`（复制为 `docs/vX.Y.Z/`）
+- `examples/`（黄金路径成品样例，只读参照，不复制到项目 `docs/`）
 - `scripts/validate-iteration.ps1`
+
+## Golden Path Examples
+
+对某步产出格式、粒度或字段存疑时，先读 `<skill-root>/examples/README.md`，再打开对应步骤的成品文件（当前样例：`examples/feedback-form-v0.1.0/docs/`）。样例只作参照，不得复制进当前项目 `docs/`。
 
 ## Prerequisites (HARD GATE)
 
@@ -132,7 +138,7 @@ disable-model-invocation: true
 4. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
 5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
 6. 报告 Bootstrap 结果、Prerequisites 与 progress 状态。
-7. 按 Skill Path Resolution 读取目标 step 的 sub-skill 后进入执行。
+7. 按 Skill Path Resolution 读取目标 step 的 sub-skill；对产出格式存疑时读取 [examples/README.md](examples/README.md) 中对应步骤成品。
 
 ## References
 
@@ -140,3 +146,4 @@ disable-model-invocation: true
 - 版本与目录约定：[version-convention.md](references/version-convention.md)
 - 进度记录约定：[progress-convention.md](references/progress-convention.md)
 - 文档状态约定：[document-status.md](references/document-status.md)
+- 黄金路径样例：[examples/README.md](examples/README.md)

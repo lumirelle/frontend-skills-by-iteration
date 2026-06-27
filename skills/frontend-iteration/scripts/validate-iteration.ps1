@@ -124,8 +124,12 @@ foreach ($doc in $generatedDocs) {
 
 if (Test-Path $progressPath) {
     $progress = Get-Content -Path $progressPath -Raw
-    if ($progress -match '(?im)^\s*-\s+(?!None\b).+') {
-        $issues += Add-Issue "WARN" "progress.md may contain blockers; inspect Blockers section"
+    # 只解析 ## Blockers 段落，到下一个标题或文件结束为止
+    if ($progress -match '(?ms)^##\s+Blockers\s*\r?\n(.*?)(?=^##\s|\z)') {
+        $blockerSection = $Matches[1]
+        if ($blockerSection -match '(?im)^\s*-\s+(?!None\b).+') {
+            $issues += Add-Issue "WARN" "progress.md Blockers section is not empty; inspect blockers"
+        }
     }
 }
 
