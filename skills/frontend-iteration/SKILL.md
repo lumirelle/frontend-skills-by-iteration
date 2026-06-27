@@ -66,7 +66,7 @@ disable-model-invocation: true
 **fast 模式细则**
 
 1. 步骤 1–3 产出保持 `DRAFT`，不在 sub-skill 内单步确认；门禁通过后自动进入下一步。
-2. **编排草稿例外**：仅在 fast 步骤 1→2→3 链式执行中，允许消费本轮刚生成、尚未批量确认的 `DRAFT`。直接调用 sub-skill 或进入步骤 4 后不适用。
+2. **编排草稿例外**：仅在 fast 步骤 1→2→3 链式执行中，允许消费本轮（同一会话）刚生成、尚未批量确认的 `DRAFT`。直接调用 sub-skill、进入步骤 4 后、或跨会话遗留 `DRAFT`（见 Rule 1）均不适用。
 3. 步骤 3 完成后，汇总 summarized / design / plan、open questions 与门禁结果；等待用户确认。确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
 4. 步骤 4 仍遵循 `frontend-implement` 的 per-task 验证与可选 commit 询问；步骤 5–7 每步结束等待确认。
 5. `STALE` / `BLOCKED`、门禁失败、open questions 阻塞实现 → **不论模式均停止**，不自动推进。
@@ -112,11 +112,11 @@ disable-model-invocation: true
 
 ## Orchestration Rules
 
-1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。**遗留 DRAFT 转正**：若目标步骤的上游产出已存在但仍为 `DRAFT`（上一会话 fast 未批量确认，或本次跳步进入），先一次性向用户展示这些 `DRAFT` 并请求批量确认；确认后统一标 `ACTIVE` 再进入目标步骤，用户不确认则停止。**编排草稿例外仅限同一会话**：fast 步骤 1→2→3 链式消费的「本轮编排草稿」指本次运行内刚生成的 `DRAFT`；跨会话遗留的 `DRAFT` 不属本轮，须先按本条转正。
+1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。**遗留 DRAFT 转正**：目标步骤上游已存在但仍为 `DRAFT`（上一会话未批量确认或跳步进入，不属同一会话编排草稿）时，先一次性展示并请用户批量确认 → 标 `ACTIVE` 再进入；不确认则停止。
 2. **交互模式**：按 Interaction Mode 执行。默认 **fast**；用户指定 `strict` 时每步均须确认。fast 下步骤 1–3 连续执行，步骤 3 结束后批量确认一次；步骤 4–7 逐步确认。
 3. **显式加载 sub-skill**：执行任一步骤前，必须先按 Skill Path Resolution 读取并遵循对应 sub-skill 的 `SKILL.md`。不得凭记忆执行；均不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
 4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。resume 命中的起点步骤若其上游文档为上一会话遗留的 `DRAFT`，按 Rule 1「遗留 DRAFT 转正」先批量确认转 `ACTIVE`，不得直接消费跨会话 `DRAFT`。
-5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 步骤 1→2→3 的**本轮（同一会话）**编排草稿（跨会话遗留 `DRAFT` 按 Rule 1 转正）。
+5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外见 Interaction Mode 细则 #2 与 Rule 1。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
 7. **产出校验**：每步结束前对照 `references/step-gates.md` 核对，并按 `references/progress-convention.md` → **Per-Step Minimal Update** 落盘 `docs/vX.Y.Z/progress.md`，向用户展示通过 / 未通过项。
 8. **工作流所有权**：通过 `frontend-iteration` 调用时，本工作流接管需求、设计、计划、实现、测试、审查、发布生命周期。遵循上文 **Relationship to Superpowers Skills**；除非用户显式要求，不额外调用被禁止的 Superpowers skill。fast 步骤 1–3 的确认由编排器批量接管，sub-skill 的「等待确认」与「仅消费 ACTIVE」规则在编排草稿范围内暂不触发。
