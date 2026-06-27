@@ -41,7 +41,7 @@ disable-model-invocation: true
 5. 按 Done Checklist 自检。
 6. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认；确认后将对应 summarized 状态更新为 `ACTIVE`。
 
-> **编排器调用变体（fast）**：由 `frontend-iteration` 调用时，步骤 6 的「等待确认」**不在本 skill 内单步触发**——产出保持 `DRAFT`，门禁通过即由编排器进入下一步，步骤 3 后由编排器批量确认并统一标 `ACTIVE`。strict 模式仍逐步确认。详见 `frontend-iteration/references/orchestrated-invocation.md` → Workflow 变体。
+> **编排器调用变体（fast）**：由 `frontend-iteration fast` 调用时，本步「等待确认」**不在本 skill 内单步触发**——产出保持 `DRAFT`，门禁通过即由编排器进入下一步，步骤 3 末由编排器**批量确认** summarized / design / plan 并统一标 `ACTIVE`；其间可消费本轮（同一会话）编排草稿，跨会话遗留 `DRAFT` 须先转正。strict 仍逐步确认。权威定义见 `frontend-iteration/references/orchestrated-invocation.md` → Workflow 变体 / DRAFT 消费例外（路径见 `frontend-iteration` → Skill Path Resolution）。
 
 ## Rules
 

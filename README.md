@@ -17,6 +17,7 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 /frontend-iteration v1.2.0 strict       # 每步均须确认
 /frontend-iteration v1.2.0 step 3
 /frontend-iteration v1.2.0 resume
+/frontend-iteration v1.2.0 init         # 仅初始化 docs/ 脚手架后停止
 ```
 
 ## 你需要准备的
@@ -32,8 +33,7 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 
 | Skill | 说明 |
 |-------|------|
-| `frontend-iteration` | 主编排器（含 Bootstrap、`docs/` 模板、路径解析、黄金路径样例） |
-| `frontend-project-init` | 可选别名：仅脚手架、不进入迭代（正常请直接用 `frontend-iteration`） |
+| `frontend-iteration` | 主编排器（含 Bootstrap、`docs/` 模板、路径解析、黄金路径样例；`init` flag 可只建脚手架不进入迭代） |
 | `frontend-requirements` | 步骤 1：需求理解 |
 | `frontend-design` | 步骤 2：技术方案 |
 | `frontend-plan` | 步骤 3：TDD 实施计划 |

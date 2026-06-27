@@ -22,7 +22,7 @@
 | 1 requirements / 2 design / 3 plan | **不在 sub-skill 内单步等待确认**；产出保持 `DRAFT`，门禁通过即由编排器自动进入下一步；步骤 3 后由编排器**批量确认**并统一标 `ACTIVE` | 每步完成后由编排器等待确认 |
 | 4 implement / 5 test / 6 review / 7 release | 按编排器**逐步确认**（implement 仍逐 task 验证 + 可选 commit 询问） | 同左 |
 
-**DRAFT 消费例外**：仅在 `frontend-iteration fast` 步骤 1→2→3 链式执行中，下游 sub-skill 可消费本轮刚生成、尚未批量确认的 `DRAFT`（编排草稿）。直接调用、或进入步骤 4 之后，一律只消费 `ACTIVE`。
+**DRAFT 消费例外（唯一权威定义）**：仅在 `frontend-iteration fast` 步骤 1→2→3 链式执行中，下游 sub-skill 可消费**本轮（同一会话内）**刚生成、尚未批量确认的 `DRAFT`（编排草稿）。**跨会话遗留的 `DRAFT` 不属本轮**——resume 或跳步进入时须先按 `frontend-iteration` → Orchestration Rules Rule 1「遗留 DRAFT 转正」批量确认转 `ACTIVE`。直接调用、或进入步骤 4 之后，一律只消费 `ACTIVE`。本仓库其他位置出现的「编排草稿例外」均以本段为准。
 
 > **只读单个 sub-skill 时注意**：sub-skill Workflow 写的「等待确认 / 仅消费 ACTIVE」是 **standalone 默认**。由编排器调用时以本表为准——**fast 步骤 1–3** 不要因为上游是编排草稿 `DRAFT`、或本步未单步确认而停止；**步骤 4–7** 仍须在编排器层面逐步确认后再推进。
 

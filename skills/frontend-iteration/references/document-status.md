@@ -60,7 +60,7 @@
 | 读到的状态 | 默认动作 | 例外 |
 |------------|----------|------|
 | `ACTIVE` | 可作为下游输入继续执行 | 无 |
-| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | `frontend-iteration fast` 的步骤 1→2→3 可消费本轮编排草稿；步骤 3 批量确认前不得进入步骤 4 |
+| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | `frontend-iteration fast` 步骤 1→2→3 可消费本轮（同一会话）编排草稿，步骤 3 批量确认前不得进入步骤 4；跨会话遗留 `DRAFT` 须先转正。权威定义见 [orchestrated-invocation.md](orchestrated-invocation.md) → DRAFT 消费例外 |
 | `STALE` | 停止，回到对应上游步骤更新，并传播下游失效状态 | 无 |
 | `BLOCKED` | 停止，报告阻塞项，等待用户处理或回上游修复 | 无 |
 

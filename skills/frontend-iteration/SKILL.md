@@ -49,6 +49,7 @@ disable-model-invocation: true
 /frontend-iteration v1.2.0 step 3           # 从指定步骤继续（默认 fast）
 /frontend-iteration v1.2.0 strict step 3    # 指定步骤 + strict
 /frontend-iteration v1.2.0 resume           # 自动检测上次未完成步骤（默认 fast）
+/frontend-iteration v1.2.0 init             # 仅 Bootstrap 脚手架后停止，不进入任何步骤
 ```
 
 版本号格式：`vX.Y.Z`（如 `v1.2.0`）。所有路径使用 `docs/vX.Y.Z/`。
@@ -90,7 +91,7 @@ disable-model-invocation: true
 - `templates/docs/technical-architecture.md`
 - `templates/docs/version/`（复制为 `docs/vX.Y.Z/`）
 - `examples/`（黄金路径成品样例，只读参照，不复制到项目 `docs/`）
-- `scripts/validate-iteration.ps1`
+- `scripts/validate-iteration.ps1`（仅供仓库维护自检；迭代执行流程中不调用，agent 按 `references/step-gates.md` 自检即可）
 
 ## Golden Path Examples
 
@@ -111,11 +112,11 @@ disable-model-invocation: true
 
 ## Orchestration Rules
 
-1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。
+1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。**遗留 DRAFT 转正**：若目标步骤的上游产出已存在但仍为 `DRAFT`（上一会话 fast 未批量确认，或本次跳步进入），先一次性向用户展示这些 `DRAFT` 并请求批量确认；确认后统一标 `ACTIVE` 再进入目标步骤，用户不确认则停止。**编排草稿例外仅限同一会话**：fast 步骤 1→2→3 链式消费的「本轮编排草稿」指本次运行内刚生成的 `DRAFT`；跨会话遗留的 `DRAFT` 不属本轮，须先按本条转正。
 2. **交互模式**：按 Interaction Mode 执行。默认 **fast**；用户指定 `strict` 时每步均须确认。fast 下步骤 1–3 连续执行，步骤 3 结束后批量确认一次；步骤 4–7 逐步确认。
 3. **显式加载 sub-skill**：执行任一步骤前，必须先按 Skill Path Resolution 读取并遵循对应 sub-skill 的 `SKILL.md`。不得凭记忆执行；均不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
-4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。
-5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 步骤 1→2→3 的编排草稿。
+4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。resume 命中的起点步骤若其上游文档为上一会话遗留的 `DRAFT`，按 Rule 1「遗留 DRAFT 转正」先批量确认转 `ACTIVE`，不得直接消费跨会话 `DRAFT`。
+5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 步骤 1→2→3 的**本轮（同一会话）**编排草稿（跨会话遗留 `DRAFT` 按 Rule 1 转正）。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
 7. **产出校验**：每步结束前对照 `references/step-gates.md` 核对，并按 `references/progress-convention.md` → **Per-Step Minimal Update** 落盘 `docs/vX.Y.Z/progress.md`，向用户展示通过 / 未通过项。
 8. **工作流所有权**：通过 `frontend-iteration` 调用时，本工作流接管需求、设计、计划、实现、测试、审查、发布生命周期。遵循上文 **Relationship to Superpowers Skills**；除非用户显式要求，不额外调用被禁止的 Superpowers skill。fast 步骤 1–3 的确认由编排器批量接管，sub-skill 的「等待确认」与「仅消费 ACTIVE」规则在编排草稿范围内暂不触发。
@@ -176,11 +177,12 @@ strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
 
 ## On Start
 
-1. 确认版本号、**交互模式**（默认 fast）与起始步骤；解析本 skill 根目录（Skill Path Resolution）。
+1. 确认版本号、**交互模式**（默认 fast）、起始步骤，以及是否为 `init`（仅脚手架）；解析本 skill 根目录（Skill Path Resolution）。
 2. **Bootstrap**（缺失则自动创建，并告知用户）：
    - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制到 `docs/`。
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制到 `docs/vX.Y.Z/`，并将 `progress.md` 内 `vX.Y.Z` 替换为实际版本号。
-3. 读取 `docs/technical-architecture.md`；若仍是模板占位或缺少项目事实（技术栈、命令、目录、测试配置），停止并提示用户补齐后再继续。Bootstrap（上一步）已创建脚手架，**无需**再调 `frontend-project-init`。
+3. 读取 `docs/technical-architecture.md`；若仍是模板占位或缺少项目事实（技术栈、命令、目录、测试配置），停止并提示用户补齐后再继续。
+   - **`init` 模式**：完成 Bootstrap 后即停止——汇报创建/保留的文件，并提示用户「补齐 `technical-architecture` → 放入 `prd/origin/*.md` → 重新 `/frontend-iteration vX.Y.Z`」，不进入任何步骤。
 4. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
 5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
 6. 报告 Bootstrap 结果、模式、Prerequisites 与 progress 状态。

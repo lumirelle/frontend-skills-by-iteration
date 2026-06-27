@@ -122,6 +122,33 @@ foreach ($doc in $generatedDocs) {
     }
 }
 
+if (Test-Path $testReportPath) {
+    $report = Get-Content -Path $testReportPath -Raw
+
+    $reportStatus = $null
+    if ($report -match '(?m)^>\s*Status:\s*(ACTIVE|DRAFT|STALE|BLOCKED)\b') {
+        $reportStatus = $Matches[1]
+    }
+
+    $reportConclusion = $null
+    if ($report -match '结论[：:]\s*\*{0,2}\s*(可进入 review|阻塞)\s*\*{0,2}') {
+        $reportConclusion = $Matches[1]
+    }
+
+    if ($null -eq $reportConclusion) {
+        $issues += Add-Issue "WARN" "test-report.md missing or unrecognized 摘要.结论 (expected 可进入 review / 阻塞)"
+    }
+    elseif ($null -ne $reportStatus) {
+        # 文首 Status 与 摘要.结论 必须一致：ACTIVE ↔ 可进入 review；DRAFT/BLOCKED ↔ 阻塞
+        if ($reportStatus -eq "ACTIVE" -and $reportConclusion -ne "可进入 review") {
+            $issues += Add-Issue "ERROR" "test-report.md Status=ACTIVE but 结论=$reportConclusion (expected 可进入 review)"
+        }
+        elseif (($reportStatus -eq "DRAFT" -or $reportStatus -eq "BLOCKED") -and $reportConclusion -ne "阻塞") {
+            $issues += Add-Issue "ERROR" "test-report.md Status=$reportStatus but 结论=$reportConclusion (expected 阻塞)"
+        }
+    }
+}
+
 if (Test-Path $progressPath) {
     $progress = Get-Content -Path $progressPath -Raw
     # 只解析 ## Blockers 段落，到下一个标题或文件结束为止

@@ -39,9 +39,7 @@ docs/
 
 ## UI Mapping
 
-- `page-name.*`（任意常见图片格式） → 整页
-- `page-name-section.*`（任意常见图片格式） → 该页某板块
-- 无法从文件名推断 → 在 summarized 中列为 open question
+UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requirements` 为权威：见其 `SKILL.md` → **UI Mapping** 与 `references/ui-reading-guide.md`（路径见 `frontend-iteration` → Skill Path Resolution）。
 
 ## Resume Detection
 

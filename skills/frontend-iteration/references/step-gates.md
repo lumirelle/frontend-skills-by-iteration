@@ -6,7 +6,7 @@
 
 - [ ] 已按 Skill Path Resolution 读取当前 step 的 sub-skill `SKILL.md`
 - [ ] 输入文档没有 `STALE`、`BLOCKED` 状态
-- [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 步骤 1→2→3 可消费本轮编排草稿
+- [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 步骤 1→2→3 可消费本轮（同一会话）编排草稿（权威定义见 [orchestrated-invocation.md](orchestrated-invocation.md) → DRAFT 消费例外）
 - [ ] 当前 step 的 gate result 已记录到 `docs/vX.Y.Z/progress.md`
 - [ ] 已按 [progress-convention.md](progress-convention.md) → **Per-Step Minimal Update** 完成本步落盘（不得只在聊天汇报）
 
@@ -32,7 +32,7 @@
 - [ ] `docs/vX.Y.Z/plans/` 存在且非空
 - [ ] 每份 plan 状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
 - [ ] 常规 plan 对应 design；minimal bugfix plan 的适用性判定均为「是」
-- [ ] 任务粒度：单步 2–5 分钟可完成
+- [ ] 任务粒度：每个任务可独立完成与验证（约 2–6 个可执行步骤，见 `frontend-plan` → Task Shape）
 - [ ] 每项含：目标文件路径、改动说明、测试点
 - [ ] 每个行为任务含 RED / GREEN / REFACTOR / VERIFY 步骤
 - [ ] 测试矩阵每条验收标准含测试维度与覆盖方式
