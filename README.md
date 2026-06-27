@@ -1,0 +1,36 @@
+# frontend-workflow
+
+可分发的前端迭代 Agent Skills 工作流。
+
+## Install
+
+```bash
+npx skills add <your-org>/frontend-workflow --skill frontend-iteration
+```
+
+## Skills
+
+| Skill | 状态 | 说明 |
+|-------|------|------|
+| `frontend-iteration` | ✅ | 主编排器 |
+| `frontend-requirements` | 待建 | 步骤 1：需求理解 |
+| `frontend-design` | 待建 | 步骤 2：技术方案 |
+| `frontend-plan` | 待建 | 步骤 3：实施计划 |
+| `frontend-implement` | 待建 | 步骤 4：代码实现 |
+| `frontend-test` | 待建 | 步骤 5：自测 |
+| `frontend-review` | 待建 | 步骤 6：代码审查 |
+| `frontend-release` | 待建 | 步骤 7：发布 |
+
+## Usage
+
+```
+/frontend-iteration v1.2.0
+/frontend-iteration v1.2.0 step 3
+/frontend-iteration v1.2.0 resume
+```
+
+## Prerequisites
+
+- `docs/technical-architecture.md`
+- `docs/vX.Y.Z/prd/origin/*.md`
+- `docs/vX.Y.Z/ui/*.<image_format>`（可选）
