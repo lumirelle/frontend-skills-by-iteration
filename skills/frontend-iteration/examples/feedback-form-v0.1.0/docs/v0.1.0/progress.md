@@ -24,6 +24,12 @@
 | plans/feedback-form.md | Task 2 提交流程 | passed | observed | passed | verified | pass | yes | `feat(feedback-form): submit flow with states` |
 | plans/feedback-form.md | Task 3 入口与路由 | passed | observed | passed | not needed | pass | yes | `feat(profile): add feedback entry and route` |
 
+## Draft Batch
+
+| Batch | Status | Created at | Confirmed at | Files |
+|-------|--------|------------|--------------|-------|
+| fast-docs-20260627-0000 | confirmed | 2026-06-27 00:00 | 2026-06-27 00:00 | prd/summarized/feedback-form.md, design/feedback-form.md, plans/feedback-form.md |
+
 ## Verification Log
 
 | Date | Step / Task | Command | Exit | Result |

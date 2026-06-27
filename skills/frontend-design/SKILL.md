@@ -36,7 +36,7 @@ disable-model-invocation: true
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
-2. 读取 summarized 状态；直接调用时仅 `ACTIVE` 可作为输入。由 `frontend-iteration fast` 步骤 2 调用时，可消费本轮步骤 1 生成的编排草稿。
+2. 读取 summarized 状态；直接调用时仅 `ACTIVE` 可作为输入。由 `frontend-iteration fast` 步骤 2 调用时，仅可消费符合 `frontend-iteration/references/orchestrated-invocation.md` → DRAFT 消费例外的编排草稿。
 3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
 4. 有 UI 稿时，参考 `frontend-requirements` 的 ui-reading-guide（路径见 `frontend-iteration` → Skill Path Resolution），按组件清单/层级/重复单元确认组件拆分与复用。
 5. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。

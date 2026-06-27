@@ -60,11 +60,11 @@
 | 读到的状态 | 默认动作 | 例外 |
 |------------|----------|------|
 | `ACTIVE` | 可作为下游输入继续执行 | 无 |
-| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | `frontend-iteration fast` 步骤 1→2→3 可消费本轮（同一会话）编排草稿，步骤 3 批量确认前不得进入步骤 4；跨会话遗留 `DRAFT` 须先转正。权威定义见 [orchestrated-invocation.md](orchestrated-invocation.md) → DRAFT 消费例外 |
+| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | 唯一例外见 [orchestrated-invocation.md](orchestrated-invocation.md) → DRAFT 消费例外；简述：仅 `frontend-iteration fast` 步骤 1→2→3 且 `progress.md` → `Draft Batch` 为 `open` 时可消费，进入步骤 4 前必须批量确认转 `ACTIVE` |
 | `STALE` | 停止，回到对应上游步骤更新，并传播下游失效状态 | 无 |
 | `BLOCKED` | 停止，报告阻塞项，等待用户处理或回上游修复 | 无 |
 
-直接调用 sub-skill 时没有编排草稿例外：输入必须为 `ACTIVE`，否则停止。通过 `frontend-iteration` 调用时，交互模式与例外范围由编排器决定。
+直接调用 sub-skill 时没有编排草稿例外：输入必须为 `ACTIVE`，否则停止。通过 `frontend-iteration` 调用时，交互模式与例外范围由编排器按 `orchestrated-invocation.md` 决定。
 
 ## test-report.md 专约
 
@@ -84,6 +84,7 @@
 | 文首 `Status` | 固定 `ACTIVE` | 仅表示 tracker 有效；迭代是否结束看 Step 7 是否为 `passed` |
 | `Current step` | 执行进度 | 当前或最近完成的 step 编号 |
 | Step / Task 表 `Status` | 执行进度 | `pending` / `in_progress` / `passed` / `blocked` |
+| `## Draft Batch` | 编排草稿批次 | fast 步骤 1–3 的 `DRAFT` 文件清单与确认状态；仅 `open` batch 可触发 DRAFT 消费例外 |
 | `## Blockers` | 执行阻塞 | 非 `None` → 相关 step/task 标 `blocked`，停止下游 |
 | 与 test-report | — | Step 5 `passed` 要求 `test-report.md` 文首为 `ACTIVE` 且 `结论` 为 `可进入 review` |
 

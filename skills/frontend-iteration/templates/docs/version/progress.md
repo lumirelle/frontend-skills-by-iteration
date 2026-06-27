@@ -22,6 +22,12 @@
 |------|------|--------|-----|-------|----------|--------|--------|-------|
 | plans/<name>.md | Task 1 | pending | not run | not run | not needed | not run | no | |
 
+## Draft Batch
+
+| Batch | Status | Created at | Confirmed at | Files |
+|-------|--------|------------|--------------|-------|
+| fast-docs-YYYYMMDD-HHMM | none | YYYY-MM-DD HH:MM | — | — |
+
 ## Verification Log
 
 | Date | Step / Task | Command | Exit | Result |
@@ -40,9 +46,9 @@
 
 | Step | 落盘清单（3–5 行） |
 |------|-------------------|
-| 1 | `Current step`、Step 1 状态 + Gate result、summarized 路径、Updated、Blockers |
-| 2 | `Current step`、Step 2 状态 + Gate result、design 路径、Updated、Blockers |
-| 3 | `Current step`、Step 3 状态 + Gate result、fast 确认后标 ACTIVE、Updated、Blockers |
+| 1 | `Current step`、Step 1 状态 + Gate result、summarized 路径、fast 时更新 Draft Batch、Updated、Blockers |
+| 2 | `Current step`、Step 2 状态 + Gate result、design 路径、fast 时追加 Draft Batch、Updated、Blockers |
+| 3 | `Current step`、Step 3 状态 + Gate result、plan 路径、fast 确认后标 ACTIVE 并将 Draft Batch 标 `confirmed`、Updated、Blockers |
 | 4 | 每 task 更新 Plan Task Status（RED/GREEN/REFACTOR/VERIFY/Commit）+ Verification Log 一行；Step 4 完成后 `passed` |
 | 5 | Step 5 状态、Verification Log 全量命令、test-report Status/结论 同步、Blockers |
 | 6 | Step 6 状态 + Gate result（结论/🔴 数）、有 🔴 则 `blocked`、Updated、Blockers |

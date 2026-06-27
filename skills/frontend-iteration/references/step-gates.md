@@ -6,7 +6,7 @@
 
 - [ ] 已按 Skill Path Resolution 读取当前 step 的 sub-skill `SKILL.md`
 - [ ] 输入文档没有 `STALE`、`BLOCKED` 状态
-- [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 步骤 1→2→3 可消费本轮（同一会话）编排草稿（权威定义见 [orchestrated-invocation.md](orchestrated-invocation.md) → DRAFT 消费例外）
+- [ ] 输入文档没有 `DRAFT` 状态；唯一例外见 [orchestrated-invocation.md](orchestrated-invocation.md) → DRAFT 消费例外（fast 步骤 1→2→3 且 `progress.md` → `Draft Batch` 为 `open`）
 - [ ] 当前 step 的 gate result 已记录到 `docs/vX.Y.Z/progress.md`
 - [ ] 已按 [progress-convention.md](progress-convention.md) → **Per-Step Minimal Update** 完成本步落盘（不得只在聊天汇报）
 

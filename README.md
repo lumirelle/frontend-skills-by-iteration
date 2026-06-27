@@ -48,7 +48,6 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 - `templates/docs/version/` → Bootstrap 复制为 `docs/vX.Y.Z/`
 - `examples/` → 黄金路径成品样例（只读参照）
 - `references/`：step-gates、progress、document-status、version、orchestrated-invocation 约定
-- `scripts/validate-iteration.ps1`：仓库自检工具；消费方工作流不依赖它
 
 路径解析见 `frontend-iteration` → **Skill Path Resolution**（兼容 `.agents/skills/` 与 `skills/` 两种布局）。
 
@@ -63,8 +62,4 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 
 ## Validation
 
-可选：维护本仓库时，用内置脚本检查样例结构。消费方项目由 agent 按 `step-gates.md` 与 `progress.md` 自检，不需要脚本门禁。
-
-```powershell
-& "skills/frontend-iteration/scripts/validate-iteration.ps1" -Version v0.1.0 -DocsRoot "skills/frontend-iteration/examples/feedback-form-v0.1.0/docs"
-```
+由 agent 按 `step-gates.md` 与 `progress.md` 自检。

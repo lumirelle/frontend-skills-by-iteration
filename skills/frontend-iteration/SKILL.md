@@ -54,6 +54,8 @@ disable-model-invocation: true
 
 版本号格式：`vX.Y.Z`（如 `v1.2.0`）。所有路径使用 `docs/vX.Y.Z/`。
 
+常规迭代从步骤 1 开始，要求 `prd/origin/*.md`。用户显式要求小 bugfix 或从 `step 3` 进入 minimal plan 时，可用用户请求 / issue 作为来源，跳过完整 PRD→design 链路，但仍须生成并确认 `ACTIVE` minimal plan 后才能进入实现。
+
 ## Interaction Mode
 
 未指定时默认 **`fast`**：只要 invocation 未出现 `strict`，即按 fast 执行。
@@ -66,7 +68,7 @@ disable-model-invocation: true
 **fast 模式细则**
 
 1. 步骤 1–3 产出保持 `DRAFT`，不在 sub-skill 内单步确认；门禁通过后自动进入下一步。
-2. **编排草稿例外**：仅在 fast 步骤 1→2→3 链式执行中，允许消费本轮（同一会话）刚生成、尚未批量确认的 `DRAFT`。直接调用 sub-skill、进入步骤 4 后、或跨会话遗留 `DRAFT`（见 Rule 1）均不适用。
+2. **编排草稿例外**：仅在 fast 步骤 1→2→3 链式执行中，允许消费 `progress.md` → `Draft Batch` 记录为 `open` 的本轮 `DRAFT`。直接调用 sub-skill、进入步骤 4 后、无 batch 记录、或 batch 已 `confirmed` / `abandoned` 均不适用。
 3. 步骤 3 完成后，汇总 summarized / design / plan、open questions 与门禁结果；等待用户确认。确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
 4. 步骤 4 仍遵循 `frontend-implement` 的 per-task 验证与可选 commit 询问；步骤 5–7 每步结束等待确认。
 5. `STALE` / `BLOCKED`、门禁失败、open questions 阻塞实现 → **不论模式均停止**，不自动推进。
@@ -91,7 +93,6 @@ disable-model-invocation: true
 - `templates/docs/technical-architecture.md`
 - `templates/docs/version/`（复制为 `docs/vX.Y.Z/`）
 - `examples/`（黄金路径成品样例，只读参照，不复制到项目 `docs/`）
-- `scripts/validate-iteration.ps1`（仅供仓库维护自检；迭代执行流程中不调用，agent 按 `references/step-gates.md` 自检即可）
 
 ## Golden Path Examples
 
@@ -104,19 +105,19 @@ disable-model-invocation: true
 | 文件 / 目录 | 必需 | 说明 |
 |-------------|------|------|
 | `docs/technical-architecture.md` | 是 | Bootstrap 可从内置模板自动创建；须填写项目事实 |
-| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 本迭代原始 PRD（唯一须用户自备的输入） |
+| `docs/vX.Y.Z/prd/origin/*.md` | 常规迭代：是；minimal bugfix：否 | 常规迭代的原始 PRD。minimal bugfix 可用用户请求 / issue 作为 minimal plan 来源 |
 | `docs/vX.Y.Z/progress.md` | 自动 | Bootstrap 从内置模板创建 |
 | `docs/vX.Y.Z/ui/*`（任意常见图片格式） | 否 | 有则必须对照；无则标注「无 UI 稿」 |
 
-缺失 `origin` PRD → **停止**，提示用户补齐，不进入任何步骤。
+常规迭代缺失 `origin` PRD → **停止**，提示用户补齐，不进入步骤 1。用户显式选择 minimal bugfix 且从 `step 3` 或已有 minimal plan 进入时，不要求 `origin` PRD；须在 minimal plan 的 `Source` 写明用户请求 / issue，并通过适用性判定。
 
 ## Orchestration Rules
 
-1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。**遗留 DRAFT 转正**：目标步骤上游已存在但仍为 `DRAFT`（上一会话未批量确认或跳步进入，不属同一会话编排草稿）时，先一次性展示并请用户批量确认 → 标 `ACTIVE` 再进入；不确认则停止。
+1. **顺序执行**：默认不得跳步；当前步骤未通过门禁不得进入下一步。用户显式指定起始步骤（如 bugfix `step 4`）时，须确认该步骤的上游产出已存在或不适用，并经用户确认。**遗留 DRAFT 转正**：目标步骤上游已存在但仍为 `DRAFT`，且不在 `progress.md` → `Draft Batch` 的 `open` 记录内时，先一次性展示并请用户批量确认 → 标 `ACTIVE` 再进入；不确认则停止。
 2. **交互模式**：按 Interaction Mode 执行。默认 **fast**；用户指定 `strict` 时每步均须确认。fast 下步骤 1–3 连续执行，步骤 3 结束后批量确认一次；步骤 4–7 逐步确认。
 3. **显式加载 sub-skill**：执行任一步骤前，必须先按 Skill Path Resolution 读取并遵循对应 sub-skill 的 `SKILL.md`。不得凭记忆执行；均不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
-4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。resume 命中的起点步骤若其上游文档为上一会话遗留的 `DRAFT`，按 Rule 1「遗留 DRAFT 转正」先批量确认转 `ACTIVE`，不得直接消费跨会话 `DRAFT`。
-5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外见 Interaction Mode 细则 #2 与 Rule 1。
+4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态、阻塞项与 `Draft Batch`；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。resume 命中的起点若存在 `open` batch，可继续 fast 步骤 1–3 或进入步骤 3 的批量确认点；进入步骤 4 前必须将 batch 文件转 `ACTIVE` 并把 batch 标为 `confirmed`。
+5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外见 `frontend-iteration/references/orchestrated-invocation.md` → DRAFT 消费例外。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
 7. **产出校验**：每步结束前对照 `references/step-gates.md` 核对，并按 `references/progress-convention.md` → **Per-Step Minimal Update** 落盘 `docs/vX.Y.Z/progress.md`，向用户展示通过 / 未通过项。
 8. **工作流所有权**：通过 `frontend-iteration` 调用时，本工作流接管需求、设计、计划、实现、测试、审查、发布生命周期。遵循上文 **Relationship to Superpowers Skills**；除非用户显式要求，不额外调用被禁止的 Superpowers skill。fast 步骤 1–3 的确认由编排器批量接管，sub-skill 的「等待确认」与「仅消费 ACTIVE」规则在编排草稿范围内暂不触发。
@@ -171,7 +172,7 @@ strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
 | 中途改需求 | 回到步骤 1 或 2，将受影响 downstream 产出标记为 `STALE` |
 | 无 UI 稿 | 步骤 1 标注 open questions；步骤 2 基于 PRD 或项目已有类似设计推断并列出假设 |
 | 多页面迭代 | 每页独立 summarized / design / plan 文件，文件名与 origin 一致；`test-report.md` 单文件汇总，`review/` 按 plan 分文件 |
-| Bugfix 小改 | 可从 `step 3` 生成 minimal plan，再进入 `step 4`；若已有精简 plan，确认有效后可从 `step 4` 继续 |
+| Bugfix 小改 | 用户明确为 minimal bugfix 时，可无 origin PRD，从 `step 3` 生成 minimal plan（Source=用户请求 / issue）再进入 `step 4`；若已有 `ACTIVE` minimal plan，确认适用性仍有效后可从 `step 4` 继续 |
 | 测试失败 | 停留步骤 5，修复后重跑，不进入 review |
 | 审查有 🔴 | 回步骤 4 或 5 修复，重新 review |
 
@@ -183,8 +184,8 @@ strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制到 `docs/vX.Y.Z/`，并将 `progress.md` 内 `vX.Y.Z` 替换为实际版本号。
 3. 读取 `docs/technical-architecture.md`；若仍是模板占位或缺少项目事实（技术栈、命令、目录、测试配置），停止并提示用户补齐后再继续。
    - **`init` 模式**：完成 Bootstrap 后即停止——汇报创建/保留的文件，并提示用户「补齐 `technical-architecture` → 放入 `prd/origin/*.md` → 重新 `/frontend-iteration vX.Y.Z`」，不进入任何步骤。
-4. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
-5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
+4. 常规迭代列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）；minimal bugfix 则记录用户请求 / issue 来源，并说明跳过 origin PRD 的理由。
+5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中 Step Status、Plan Task Status、Blockers 与 Draft Batch 判断起点。
 6. 报告 Bootstrap 结果、模式、Prerequisites 与 progress 状态。
 7. 按 Skill Path Resolution 读取目标 step 的 sub-skill；对产出格式存疑时读取 [examples/README.md](examples/README.md) 中对应步骤成品。
 

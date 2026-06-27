@@ -8,7 +8,7 @@
 
 | 调用方式 | 规则 |
 |----------|------|
-| **由 `frontend-iteration` 调用**（orchestrated） | 遵循编排器的 fast / strict 模式、`progress.md` 更新与确认规则。**fast 步骤 1–3**：不在 sub-skill 内单步等待确认，产出保持 `DRAFT` 直至步骤 3 末批量确认。**步骤 4–7**：由编排器逐步确认（implement 仍逐 task 验证 + 可选 commit 询问）。`DRAFT` 消费范围见 **Workflow 变体** |
+| **由 `frontend-iteration` 调用**（orchestrated） | 遵循编排器的 fast / strict 模式、`progress.md` 更新与确认规则。**fast 步骤 1–3**：不在 sub-skill 内单步等待确认，产出保持 `DRAFT` 并记录到 `progress.md` → `Draft Batch`，直至步骤 3 末批量确认。**步骤 4–7**：由编排器逐步确认（implement 仍逐 task 验证 + 可选 commit 询问）。`DRAFT` 消费范围见 **Workflow 变体** |
 | **直接调用**（standalone） | 自行校验输入；仅消费 `ACTIVE` 上游文档；产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE` |
 
 各 sub-skill 仅需在自身 Invocation Contract 补「本 skill 的职责边界」一句（处理什么、不处理什么）。
@@ -22,7 +22,15 @@
 | 1 requirements / 2 design / 3 plan | **不在 sub-skill 内单步等待确认**；产出保持 `DRAFT`，门禁通过即由编排器自动进入下一步；步骤 3 后由编排器**批量确认**并统一标 `ACTIVE` | 每步完成后由编排器等待确认 |
 | 4 implement / 5 test / 6 review / 7 release | 按编排器**逐步确认**（implement 仍逐 task 验证 + 可选 commit 询问） | 同左 |
 
-**DRAFT 消费例外（唯一权威定义）**：仅在 `frontend-iteration fast` 步骤 1→2→3 链式执行中，下游 sub-skill 可消费**本轮（同一会话内）**刚生成、尚未批量确认的 `DRAFT`（编排草稿）。**跨会话遗留的 `DRAFT` 不属本轮**——resume 或跳步进入时须先按 `frontend-iteration` → Orchestration Rules Rule 1「遗留 DRAFT 转正」批量确认转 `ACTIVE`。直接调用、或进入步骤 4 之后，一律只消费 `ACTIVE`。本仓库其他位置出现的「编排草稿例外」均以本段为准。
+**DRAFT 消费例外（唯一权威定义）**：仅当以下条件同时满足时，下游 sub-skill 可消费 `DRAFT`：
+
+1. 调用来自 `frontend-iteration fast` 步骤 1→2→3 链式执行。
+2. 该 `DRAFT` 文件列在 `docs/vX.Y.Z/progress.md` → `Draft Batch` 中。
+3. 对应 batch 的 `Status` 为 `open`，且 `Confirmed at` 为空。
+
+进入步骤 4 前，编排器必须展示 batch 摘要并等待用户批量确认；确认后将 batch 内文件统一标为 `ACTIVE`，把 batch 标为 `confirmed`。直接调用、strict 模式、步骤 4–7、无 batch 记录、或 batch 为 `confirmed` / `abandoned` 时，一律只消费 `ACTIVE`。本仓库其他位置出现的「编排草稿例外」均以本段为准。
+
+**遗留 DRAFT 处理**：resume 或跳步时若读到 `DRAFT` 但没有 `open` batch 记录，按 `frontend-iteration` → Orchestration Rules Rule 1「遗留 DRAFT 转正」处理：先展示并请用户确认，转 `ACTIVE` 后再继续；不确认则停止。
 
 > **只读单个 sub-skill 时注意**：sub-skill Workflow 写的「等待确认 / 仅消费 ACTIVE」是 **standalone 默认**。由编排器调用时以本表为准——**fast 步骤 1–3** 不要因为上游是编排草稿 `DRAFT`、或本步未单步确认而停止；**步骤 4–7** 仍须在编排器层面逐步确认后再推进。
 
