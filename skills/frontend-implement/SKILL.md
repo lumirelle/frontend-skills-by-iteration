@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## Goal
 
-严格按 plan 执行前端代码实现，改动范围不超出已确认方案。
+严格按 plan 以 TDD 执行前端代码实现，改动范围不超出已确认方案。
 
 ## Input
 
@@ -32,8 +32,8 @@ disable-model-invocation: true
 
 1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认无未关闭 open questions。
 2. 确定执行范围：全部 plan 或用户指定的 plan / task。
-3. **按任务顺序执行**：读步骤 → 改代码 → 跑该任务验证 → 询问是否提交 → 通过后再下一任务。
-4. 每完成一个 task：汇报改动与验证结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
+3. **按任务顺序执行 TDD**：RED → GREEN → REFACTOR → VERIFY → 询问是否提交 → 通过后再下一任务。
+4. 每完成一个 task：汇报 RED/GREEN/REFACTOR 证据与验证结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
 5. 全部 task 完成后按 Done Checklist 自检。
 6. 向用户展示摘要（变更文件、未覆盖风险、待步骤 5 验证项），等待确认。
 
@@ -41,12 +41,13 @@ disable-model-invocation: true
 
 1. **严守 plan**：只改 plan 列出的文件；不新增 plan 外文件，除非任务明确要求。
 2. **最小改动**：能改现有实现就不新建；能局部改就不重构；不为「顺手优化」扩 scope。
-3. **不重新设计**：实现中发现 plan/design 不足 → **停止**，说明缺口，回上游修正，不边写边改方案。
-4. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致。
-5. **测试随行**：plan 要求测试的任务，实现与测试同批完成，不留给步骤 5 补写（步骤 5 负责跑全量与补漏）；写测试参考 `frontend-test` 的 test-writing-guide。
-6. **单任务验证**：每个 task 完成后执行其「验证」项；失败则在本 task 内修复，不带着失败进入下一 task。
-7. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
-8. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
+3. **TDD 铁律**：行为变更必须先写失败测试并观察到正确失败；没有 RED 不写生产代码。
+4. **不重新设计**：实现中发现 plan/design 不足 → **停止**，说明缺口，回上游修正，不边写边改方案。
+5. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致。
+6. **测试先行**：写测试参考 `frontend-test` 的 test-writing-guide；确认 RED 正确失败后才进入 GREEN。
+7. **单任务验证**：每个 task 完成后执行其「验证」项；失败则在本 task 内修复，不带着失败进入下一 task。
+8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
+9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
 
 ## Commit Message
 
@@ -72,11 +73,13 @@ test(user-profile): cover avatar validation rules
 ```
 读目标与依赖 → 确认前置 task 已完成
     ↓
-只打开 task 列出的文件
+RED：写最小失败测试并运行，确认失败原因正确
     ↓
-按步骤实现（最小 diff）
+GREEN：写最小生产代码让测试通过
     ↓
-运行 task 验证命令
+REFACTOR：必要时清理，保持测试通过
+    ↓
+VERIFY：运行 task 验证命令
     ↓
 通过 → 汇报 → 询问是否提交 → 用户确认后 commit（可选）
     ↓
@@ -101,6 +104,9 @@ test(user-profile): cover avatar validation rules
 ## Done Checklist
 
 - [ ] 所有目标 task 已完成
+- [ ] 每个行为 task 已观察到正确 RED 失败
+- [ ] 每个行为 task 已完成 GREEN 并通过相关测试
+- [ ] REFACTOR 后测试仍通过（如有 refactor）
 - [ ] 每个 task 的验证项已执行且通过
 - [ ] 改动范围 ⊆ plan 文件边界
 - [ ] 遵循 `technical-architecture.md` 与项目既有模式
@@ -113,5 +119,5 @@ test(user-profile): cover avatar validation rules
 实现完成后交给 `frontend-test`：
 
 - 全量测试命令（来自 technical-architecture）
-- plan 测试矩阵中尚未执行的项
+- 每个 task 的 RED/GREEN/REFACTOR 证据摘要
 - 已知未覆盖风险

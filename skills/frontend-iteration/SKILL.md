@@ -14,9 +14,9 @@ disable-model-invocation: true
 
 1. 需求理解 → `frontend-requirements`
 2. 技术方案设计 → `frontend-design`
-3. 实施计划拆解 → `frontend-plan`
-4. 代码实现 → `frontend-implement`
-5. 自测（单元 / 集成 / E2E）→ `frontend-test`
+3. TDD 实施计划拆解 → `frontend-plan`
+4. TDD 代码实现 → `frontend-implement`
+5. 全量自测（单元 / 集成 / E2E）→ `frontend-test`
 6. 代码审查 → `frontend-review`
 7. 文档 / 变更记录 / 合并发布 → `frontend-release`
 
@@ -57,9 +57,9 @@ disable-model-invocation: true
 |------|-----------|------|----------|
 | 1 | `frontend-requirements` | `docs/vX.Y.Z/prd/summarized/*.md` | 每个 origin PRD 有对应 summarized；含验收标准 |
 | 2 | `frontend-design` | `docs/vX.Y.Z/design/*.md` | 含模块划分、数据流、变更范围、测试策略 |
-| 3 | `frontend-plan` | `docs/vX.Y.Z/plans/*.md` | 任务可独立执行，含文件路径与测试点 |
-| 4 | `frontend-implement` | 代码变更 | 仅改 plan 范围内文件；遵循 technical-architecture |
-| 5 | `frontend-test` | 测试 + `docs/vX.Y.Z/test-report.md` | 单元 / 集成 / E2E 按 plan 覆盖；命令 exit 0 |
+| 3 | `frontend-plan` | `docs/vX.Y.Z/plans/*.md` | 任务可独立执行，含 RED/GREEN/REFACTOR 与测试点 |
+| 4 | `frontend-implement` | 代码变更 | 严格 TDD；仅改 plan 范围内文件；遵循 technical-architecture |
+| 5 | `frontend-test` | `docs/vX.Y.Z/test-report.md` | 全量回归；单元 / 集成 / E2E 按 plan 覆盖；命令 exit 0 |
 | 6 | `frontend-review` | `docs/vX.Y.Z/review/*.md` | 无 🔴 未解决项 |
 | 7 | `frontend-release` | CHANGELOG + PR 描述 | 文档与代码一致；合并清单完成 |
 

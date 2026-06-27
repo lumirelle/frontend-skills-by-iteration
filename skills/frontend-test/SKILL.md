@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## Goal
 
-按 plan 与 summarized 验收标准完成自测（单元 / 集成 / E2E），产出可审计的测试报告。
+按 plan 与 summarized 验收标准做全量回归与覆盖核对，产出可审计的测试报告。
 
 ## Input
 
@@ -25,7 +25,6 @@ disable-model-invocation: true
 ## Output
 
 - `docs/vX.Y.Z/test-report.md`
-- 测试代码补全（仅限 plan 测试矩阵要求且步骤 4 未覆盖的部分）
 - 模板：[test-report-template.md](references/test-report-template.md)
 - 用例指南：[test-writing-guide.md](references/test-writing-guide.md)
 
@@ -33,9 +32,9 @@ disable-model-invocation: true
 
 1. 读取 `technical-architecture.md`，确认单元 / 集成 / E2E 命令与环境。
 2. 读取 [test-writing-guide.md](references/test-writing-guide.md)，用测试维度检查 plans 测试矩阵。
-3. 读取 plans 测试矩阵与 summarized 验收标准，列出待执行项。
-4. 对照矩阵检查测试是否已存在；缺失则补写（最小范围，不改业务逻辑）。
-5. 分层执行：单元 → 集成 → E2E；失败则修复后重跑，不进入下一层。
+3. 读取 plans 测试矩阵、summarized 验收标准、步骤 4 的 TDD 证据，列出待执行项。
+4. 对照矩阵检查测试是否已存在；缺失则记录缺口并回到 `frontend-implement`，不在本步顺手补。
+5. 分层执行全量回归：单元 → 集成 → E2E；失败则记录并回到 `frontend-implement` 修复，不进入下一层。
 6. 生成 `test-report.md`（命令、结果、覆盖映射、未覆盖风险）。
 7. 按 Done Checklist 自检。
 8. 向用户展示摘要，等待确认。
@@ -43,11 +42,11 @@ disable-model-invocation: true
 ## Rules
 
 1. **以 plan 为准**：测试范围不超过 plan 测试矩阵与 summarized 验收标准。
-2. **先跑再补**：优先执行已有测试；仅补矩阵要求且缺失的用例。
-3. **测试改动最小化**：补测试时不改业务实现；需改实现则回到 `frontend-implement`。
+2. **只做全量验证**：本步不新增测试、不改业务逻辑；发现缺口回到 `frontend-implement` 用 TDD 补。
+3. **核对 TDD 证据**：报告须记录关键 task 是否观察到 RED、GREEN、REFACTOR。
 4. **真实执行**：必须实际运行命令，用 exit code 与输出作为结果依据，不臆断通过。
 5. **分层门禁**：单元未全过不跑集成；集成未全过不跑 E2E（无该层则跳过）。
-6. **失败不推进**：任一相关命令失败 → 停留本步修复，不进入 `frontend-review`。
+6. **失败不推进**：任一相关命令失败 → 停留本步记录失败，回到 `frontend-implement` 修复，不进入 `frontend-review`。
 7. **不写 test-report 前不宣称完成**：报告须含每条验收标准的覆盖情况。
 8. **框架用法不过度沉淀**：具体测试 API、mock、locator、异步等待等用法从项目既有示例或当前官方文档获取，不写死在 Skill 中。
 
@@ -65,9 +64,9 @@ disable-model-invocation: true
 
 | 场景 | 处理 |
 |------|------|
-| 步骤 4 已跑过 task 验证 | 纳入报告，避免重复；未覆盖项补跑 |
-| 缺测试用例 | 按矩阵补最小用例，不改 plan 外行为 |
-| 单元过、集成失败 | 修集成问题（实现或 mock），重跑集成 |
+| 步骤 4 已跑过 task 验证 | 纳入报告，避免重复；未覆盖项按需重跑 |
+| 缺测试用例 | 记录缺口，回到 `frontend-implement` 用 TDD 补 |
+| 单元过、集成失败 | 记录失败，回到 `frontend-implement` 修复后重跑 |
 | E2E 环境未就绪 | 标注阻塞项；与用户确认是否降级为手动验收 |
 | Flaky 测试 | 重跑 1 次；仍失败则按失败处理并记录 |
 | 无 E2E 框架 | 报告说明；关键路径改手动验收清单 |
@@ -77,6 +76,7 @@ disable-model-invocation: true
 ## Done Checklist
 
 - [ ] `test-report.md` 已生成
+- [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR）
 - [ ] 单元测试覆盖 plan 标注的核心逻辑
 - [ ] 集成测试覆盖 API / 模块协作（若适用）
 - [ ] E2E 覆盖关键用户路径（若适用）

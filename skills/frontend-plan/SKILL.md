@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## Goal
 
-将 design 拆成最小、顺序明确、可验证的前端实施计划，作为代码实现边界。
+将 design 拆成最小、顺序明确、可验证的 TDD 实施计划，作为代码实现边界。
 
 ## Input
 
@@ -32,7 +32,7 @@ disable-model-invocation: true
 1. 读取 `technical-architecture.md`，确认构建、测试、目录、代码风格约定。
 2. 读取对应 summarized 与 design，确认需求、验收标准、推荐方案、涉及文件。
 3. 探查现有代码路径，校正 design 中的文件位置与测试位置。
-4. 将 design 拆成任务：先测试/类型/数据契约，再 UI/交互，再集成与回归。
+4. 将 design 拆成 TDD task：RED（失败测试）→ GREEN（最小实现）→ REFACTOR（保持通过下清理）→ VERIFY（验证命令）。
 5. 填写测试矩阵时，参考 `frontend-test` 的 test-writing-guide 确定测试维度。
 6. 按 Done Checklist 自检。
 7. 向用户展示摘要（任务列表、文件边界、测试命令、风险），等待确认。
@@ -42,7 +42,7 @@ disable-model-invocation: true
 1. **最小任务**：计划只覆盖 design 已确认的最小方案；不得新增 design 未提到的抽象、重构或功能。
 2. **文件边界**：任务必须列出精确文件路径。未知路径先探查；仍不确定则写 open question，不猜。
 3. **可执行粒度**：每个任务应能独立完成和验证；过大的任务拆小，过细的机械步骤合并。
-4. **测试内置**：每个行为改动必须对应测试任务或明确说明为何不测。
+4. **TDD 内置**：每个行为改动必须先写失败测试，再写最小实现；无法 TDD 的项须说明原因。
 5. **顺序明确**：标出依赖关系；能并行的任务可标注，但默认顺序执行。
 6. **不重新设计**：发现 design 缺口或不合理时，停止并回到 `frontend-design` 修正，不在 plan 中暗改方案。
 7. **不写代码**：本步只写实施计划，不改业务代码。
@@ -58,6 +58,15 @@ disable-model-invocation: true
 | 步骤 | 2–6 个可执行动作 |
 | 验证 | 相关测试命令或手动验收点 |
 | 依赖 | 依赖的前置任务；无则写「无」 |
+
+每个行为 task 必须包含：
+
+| 阶段 | 要求 |
+|------|------|
+| RED | 写一个最小失败测试，并说明预期失败原因 |
+| GREEN | 写最小生产代码让该测试通过 |
+| REFACTOR | 如需清理，只做不改变行为的调整，并保持测试通过 |
+| VERIFY | 运行相关测试命令，记录通过条件 |
 
 ## Common Scenarios
 
@@ -79,6 +88,7 @@ disable-model-invocation: true
 - [ ] `plans/` 存在且非空
 - [ ] 每份 design 有同名 plan
 - [ ] 每个任务含：目标、文件、步骤、验证、依赖
+- [ ] 每个行为任务含 RED / GREEN / REFACTOR / VERIFY
 - [ ] 任务顺序能从空实现推进到可验收功能
 - [ ] 测试覆盖与 summarized 验收标准对应
 - [ ] 改动范围不超过 design 涉及文件；超出项已标注并待确认

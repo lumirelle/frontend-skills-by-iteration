@@ -22,17 +22,23 @@
 | 集成 | `npm run test:integration` | exit 0 | |
 | E2E | `npm run test:e2e` | exit 0 | |
 
+## TDD Evidence
+
+| Task | RED observed | GREEN passed | Refactor verified | 备注 |
+|------|--------------|--------------|-------------------|------|
+| Task N | yes/no | yes/no | yes/no/not needed | |
+
 ## 验收标准覆盖
 
 | 验收标准（来自 summarized） | 覆盖方式 | 对应用例/任务 | 结果 |
 |----------------------------|----------|---------------|------|
 | | 单元 / 集成 / E2E / 手动 | | 通过 |
 
-## 补写测试
+## 测试缺口
 
-| 文件 | 说明 |
-|------|------|
-| | plan 矩阵要求、步骤 4 未覆盖 |
+| 缺口 | 影响 | 处理 |
+|------|------|------|
+| | | 回到 `frontend-implement` 用 TDD 补 |
 
 （无则写「无」）
 
@@ -63,5 +69,6 @@
 |------|------|
 | 摘要 | 一眼可见能否进 review |
 | 执行命令 | 写实际运行的完整命令 |
+| TDD Evidence | 记录关键 task 是否观察到 RED、GREEN、REFACTOR |
 | 验收标准覆盖 | 每条 summarized 验收标准至少一行 |
 | 未覆盖风险 | 诚实列出；有阻塞项则结论为「阻塞」 |

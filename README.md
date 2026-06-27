@@ -15,9 +15,9 @@ npx skills add <your-org>/frontend-workflow --skill '*'
 | `frontend-iteration` | ✅ | 主编排器 |
 | `frontend-requirements` | ✅ | 步骤 1：需求理解 |
 | `frontend-design` | ✅ | 步骤 2：技术方案 |
-| `frontend-plan` | ✅ | 步骤 3：实施计划 |
-| `frontend-implement` | ✅ | 步骤 4：代码实现 |
-| `frontend-test` | ✅ | 步骤 5：自测 |
+| `frontend-plan` | ✅ | 步骤 3：TDD 实施计划 |
+| `frontend-implement` | ✅ | 步骤 4：TDD 代码实现 |
+| `frontend-test` | ✅ | 步骤 5：全量自测 |
 | `frontend-review` | ✅ | 步骤 6：代码审查 |
 | `frontend-release` | ✅ | 步骤 7：发布 |
 
