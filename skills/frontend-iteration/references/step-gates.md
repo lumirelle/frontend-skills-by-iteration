@@ -5,7 +5,8 @@
 ## Global Gates
 
 - [ ] 已按 Skill Path Resolution 读取当前 step 对应 sub-skill 的 `SKILL.md`
-- [ ] 输入文档没有 `DRAFT`、`STALE`、`BLOCKED` 状态
+- [ ] 输入文档没有 `STALE`、`BLOCKED` 状态
+- [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 的步骤 1→2→3 可消费本轮刚生成的 orchestrated draft
 - [ ] 当前 step 的 gate result 已记录到 `docs/vX.Y.Z/progress.md`
 
 ## Step 1 — 需求理解
@@ -67,7 +68,8 @@
 
 ## Step 7 — 发布
 
-- [ ] CHANGELOG 或等效变更记录已更新
-- [ ] PR 描述含：背景、改动摘要、测试说明、风险
+- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
+- [ ] `docs/vX.Y.Z/release/pr-description.md` 含：背景、改动摘要、测试说明、风险
+- [ ] 项目级 CHANGELOG / release notes 如需更新，已在用户确认后处理
 - [ ] 文档与代码一致
 - [ ] 合并前清单完成（见 sub-skill `frontend-release`）

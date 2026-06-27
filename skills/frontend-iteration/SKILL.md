@@ -45,10 +45,11 @@ disable-model-invocation: true
 **fast 模式细则**
 
 1. 步骤 1–3 产出保持 `DRAFT`，不在各 sub-skill 内单独等用户确认；门禁通过后自动进入下一步。
-2. 步骤 3 全部完成后：汇总 summarized / design / plan 列表、open questions、门禁结果；**等待用户确认**；确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
-3. 步骤 4 仍遵循 `frontend-implement` 的 per-task 验证与可选 commit 询问；步骤 5–7 每步结束等待确认。
-4. `STALE` / `BLOCKED`、门禁失败、open questions 阻塞实现 → **不论模式均停止**，不自动推进。
-5. 用户可在任意确认点说 `strict`，后续改按 strict 执行。
+2. **Orchestrated draft 例外**：仅在本 workflow 的 fast 步骤 1→2→3 链式执行中，允许消费上一步刚生成、尚未批量确认的 `DRAFT` 文档；直接调用 sub-skill 或进入步骤 4 后均不适用。
+3. 步骤 3 全部完成后：汇总 summarized / design / plan 列表、open questions、门禁结果；**等待用户确认**；确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
+4. 步骤 4 仍遵循 `frontend-implement` 的 per-task 验证与可选 commit 询问；步骤 5–7 每步结束等待确认。
+5. `STALE` / `BLOCKED`、门禁失败、open questions 阻塞实现 → **不论模式均停止**，不自动推进。
+6. 用户可在任意确认点说 `strict`，后续改按 strict 执行。
 
 **strict 模式**：等同原「一步一确认」，每步完成后等待用户说「继续」或指定下一步。
 
@@ -94,10 +95,10 @@ disable-model-invocation: true
 2. **交互模式**：按 Interaction Mode 执行。默认 **fast**；用户指定 `strict` 时每步均须确认。fast 下步骤 1–3 连续执行，步骤 3 结束后批量确认一次；步骤 4–7 逐步确认。
 3. **显式加载 sub-skill**：执行任一步骤前，必须先按 Skill Path Resolution 读取并遵循对应 sub-skill 的 `SKILL.md`。不得凭记忆执行；均不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
 4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。
-5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。
+5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 模式步骤 1→2→3 的 orchestrated draft。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
 7. **产出校验**：每步结束前对照 `references/step-gates.md` 逐项核对，在 `docs/vX.Y.Z/progress.md` 记录结果，并向用户展示通过 / 未通过项。
-8. **工作流所有权**：通过 `frontend-iteration` 调用时，本 workflow 拥有需求、设计、计划、实现、测试、审查、发布生命周期；除非用户显式要求，不再额外调用通用 planning / TDD / verification / review skill 来重复编排。fast 模式下步骤 1–3 的确认由编排器批量接管，sub-skill 内「等待确认」在步骤 1–3 间暂不触发。
+8. **工作流所有权**：通过 `frontend-iteration` 调用时，本 workflow 拥有需求、设计、计划、实现、测试、审查、发布生命周期；除非用户显式要求，不再额外调用通用 planning / TDD / verification / review skill 来重复编排。fast 模式下步骤 1–3 的确认由编排器批量接管，sub-skill 内「等待确认」与「仅消费 ACTIVE」规则在 orchestrated draft 范围内暂不触发。
 
 ## Sub-skill Loading
 
@@ -121,7 +122,7 @@ disable-model-invocation: true
 | 4 | `frontend-implement` | 代码变更 | 严格 TDD；仅改 plan 范围内文件；遵循 technical-architecture |
 | 5 | `frontend-test` | `docs/vX.Y.Z/test-report.md` | 全量回归；单元 / 集成 / E2E 按 plan 覆盖；命令 exit 0 |
 | 6 | `frontend-review` | `docs/vX.Y.Z/review/*.md` | 无 🔴 未解决项 |
-| 7 | `frontend-release` | CHANGELOG + PR 描述 | 文档与代码一致；合并清单完成 |
+| 7 | `frontend-release` | `docs/vX.Y.Z/release/changelog-entry.md` + `docs/vX.Y.Z/release/pr-description.md` | 文档与代码一致；合并清单完成 |
 
 ## Execution Flow
 
@@ -159,7 +160,7 @@ strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
 2. **Bootstrap**（缺失则自动创建，并告知用户）：
    - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制到 `docs/`。
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制到 `docs/vX.Y.Z/`，并将 `progress.md` 内 `vX.Y.Z` 替换为实际版本号。
-3. 读取 `docs/technical-architecture.md`。
+3. 读取 `docs/technical-architecture.md`；若仍是模板占位或缺少项目事实（技术栈、命令、目录、测试配置），停止并提示用户补齐。空项目可先调用 `frontend-project-init`。
 4. 列出 `docs/vX.Y.Z/prd/origin/*.md`（及 UI 图若有）。
 5. 读取或修复 `docs/vX.Y.Z/progress.md`；若 resume，先按其中状态判断起点。
 6. 报告 Bootstrap 结果、模式、Prerequisites 与 progress 状态。

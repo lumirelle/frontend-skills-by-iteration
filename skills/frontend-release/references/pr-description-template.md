@@ -44,12 +44,14 @@
 - 方案：`docs/vX.Y.Z/design/*.md`
 - 计划：`docs/vX.Y.Z/plans/*.md`
 - 审查：`docs/vX.Y.Z/review/*.md`
+- 发布草稿：`docs/vX.Y.Z/release/changelog-entry.md`
 
 ## 合并前确认
 
 - [ ] review 无未解决 🔴
 - [ ] 测试通过 / 已记录手动验收
-- [ ] CHANGELOG 已更新
+- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
+- [ ] 项目级 CHANGELOG / release notes 如需更新，已确认并处理
 - [ ] 无未解决冲突
 ```
 

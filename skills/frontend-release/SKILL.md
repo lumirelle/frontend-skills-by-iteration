@@ -25,19 +25,27 @@ disable-model-invocation: true
 
 ## Output
 
-- 变更记录：`CHANGELOG.md`（或项目等效文件）追加 vX.Y.Z 条目
-- PR 描述：[pr-description-template.md](references/pr-description-template.md)
+- `docs/vX.Y.Z/release/changelog-entry.md`：本迭代 changelog 草稿
+- `docs/vX.Y.Z/release/pr-description.md`：PR 描述，按 [pr-description-template.md](references/pr-description-template.md)
+- 项目根 `CHANGELOG.md`（或等效文件）追加 vX.Y.Z 条目：仅在项目已有约定或用户确认后执行
 - 合并前清单结果
+
+## Invocation Contract
+
+- 由 `frontend-iteration` 调用：遵循编排器的 step 7 流程、progress 更新与发布确认规则。
+- 直接调用：自行校验输入；仅消费 `ACTIVE` review / test-report / summarized / plan，并确认无 blocker。
+- 本 skill 只准备发布材料；merge / push / tag 必须等待用户显式确认。
 
 ## Workflow
 
 1. 确认 review 结论无未解决 🔴，test-report 无阻塞项，输入文档状态均为 `ACTIVE`。
 2. 汇总本迭代变更：从 summarized、plans、git 历史归纳。
-3. 写 / 追加 CHANGELOG vX.Y.Z 条目（用户视角，分类列出）。
-4. 生成 PR 描述（背景、改动摘要、测试说明、风险、关联文档）。
-5. 执行合并前清单。
-6. 按 Done Checklist 自检。
-7. 向用户展示摘要，**等待用户确认后再执行合并/push**。
+3. 生成 `docs/vX.Y.Z/release/changelog-entry.md`（用户视角，分类列出）。
+4. 生成 `docs/vX.Y.Z/release/pr-description.md`（背景、改动摘要、测试说明、风险、关联文档）。
+5. 若项目已有根 `CHANGELOG.md` 或用户要求追加，确认后再写入项目级变更记录。
+6. 执行合并前清单。
+7. 按 Done Checklist 自检。
+8. 向用户展示摘要，**等待用户确认后再执行合并/push/tag**。
 
 ## Rules
 
@@ -48,7 +56,7 @@ disable-model-invocation: true
 5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
 6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现。
 7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
-8. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` review / test-report / summarized / plan；`progress.md` 有 blocker 或 Step 5 为 `blocked` 时不得发布。
+8. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；review / test-report / summarized / plan 不可用时停止。`progress.md` 有 blocker 或 Step 5 为 `blocked` 时不得发布。
 
 ## Changelog Convention
 
@@ -64,7 +72,7 @@ disable-model-invocation: true
 | review 有条件通过（仅 🟡） | 可发布；PR 中列出 🟡 待办与计划 |
 | 存在未解决 🔴 | 停止，不发布 |
 | 上游文档为 STALE 或 BLOCKED | 停止，回对应上游步骤 |
-| 项目无 CHANGELOG | 创建，或按项目约定改用 release notes |
+| 项目无 CHANGELOG | 仍生成 `release/changelog-entry.md`；是否创建根 CHANGELOG 需用户确认 |
 | 多 plan / 多页面 | CHANGELOG 合并归类；PR 描述分模块列出 |
 | 后端未就绪用了 mock | 在风险/已知问题中标注切换点 |
 | E2E 降级为手动验收 | 在测试说明中如实写明 |
@@ -77,7 +85,7 @@ disable-model-invocation: true
 - [ ] test-report 无阻塞项，关键命令 exit 0
 - [ ] review / test-report / summarized / plan 状态均为 `ACTIVE`
 - [ ] `progress.md` 无 blocker
-- [ ] CHANGELOG vX.Y.Z 条目已添加
+- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
 - [ ] PR 描述完整（背景 / 改动 / 测试 / 风险 / 关联文档）
 - [ ] 提交信息符合 Conventional Commits（仅英文）
 - [ ] 分支与目标分支无未解决冲突
@@ -85,8 +93,8 @@ disable-model-invocation: true
 
 ## Done Checklist
 
-- [ ] CHANGELOG 已更新
-- [ ] PR 描述已生成
+- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
+- [ ] `docs/vX.Y.Z/release/pr-description.md` 已生成
 - [ ] Pre-Merge Checklist 全部满足
 - [ ] 文档与代码一致
 - [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）

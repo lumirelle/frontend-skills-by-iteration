@@ -29,6 +29,12 @@ disable-model-invocation: true
 - 测试代码：plan 要求的部分一并提交
 - 无额外设计/计划文档；偏离须先回到 `frontend-design` 或 `frontend-plan`
 
+## Invocation Contract
+
+- 由 `frontend-iteration` 调用：遵循编排器的 step 4 流程、progress 更新、per-task 验证与可选 commit 询问。
+- 直接调用：自行校验输入；仅消费 `ACTIVE` plan / design / summarized，并从 `progress.md` 或用户指定 task 确定范围。
+- 本 skill 只执行 plan 内实现；发现方案或计划缺口时停止并回上游，不现场补设计。
+
 ## Workflow
 
 1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认无未关闭 open questions。
@@ -51,7 +57,7 @@ disable-model-invocation: true
 8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
 9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
 10. **进度落盘**：不得只在聊天中记录 TDD 证据；`progress.md` 是 resume 与 step 5 的输入。
-11. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` plan / design / summarized；发现后停止并回上游。
+11. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；plan / design / summarized 不可用时停止并回上游。
 
 ## Commit Message
 

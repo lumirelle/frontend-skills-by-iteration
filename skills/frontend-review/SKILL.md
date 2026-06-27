@@ -30,6 +30,12 @@ disable-model-invocation: true
 - 命名：与 `plans/` 同名，或单份 `review.md`（多页面迭代时优先按 plan 拆分）
 - 模板：[review-template.md](references/review-template.md)
 
+## Invocation Contract
+
+- 由 `frontend-iteration` 调用：遵循编排器的 step 6 流程、progress 更新与确认规则。
+- 直接调用：自行校验输入；仅消费 `ACTIVE` summarized / design / plan / test-report，并确认步骤 4–5 已完成。
+- 本 skill 只产出审查记录；发现问题时给出回到 `frontend-implement` 或 `frontend-test` 的建议，不擅自修代码。
+
 ## Workflow
 
 1. 读取 summarized、design、plans，明确预期行为与改动边界。
@@ -51,7 +57,7 @@ disable-model-invocation: true
 6. **最小改动视角**：标记 plan 外改动、多余抽象、可合并的重复逻辑。
 7. **测试交叉验证**：test-report 声称通过但代码审查发现明显缺口 → 标为 🔴 或 🟡。
 8. **进度交叉验证**：`progress.md` 中未完成、blocked 或缺少 VERIFY 的 task，不得给出「通过」结论。
-9. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` summarized / design / plan / test-report；`progress.md` Step 4 task 未完成或 Step 5 为 `blocked` 时不得给出「通过」结论。
+9. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；summarized / design / plan / test-report 不可用时停止。`progress.md` Step 4 task 未完成或 Step 5 为 `blocked` 时不得给出「通过」结论。
 
 ## Review Dimensions
 

@@ -55,6 +55,17 @@
 | `STALE` | 上游变更后失效 | No |
 | `BLOCKED` | 有未关闭阻塞项 | No |
 
+## Agent Decision Table
+
+| 读到的状态 | 默认动作 | 例外 |
+|------------|----------|------|
+| `ACTIVE` | 可作为下游输入继续执行 | 无 |
+| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | `frontend-iteration fast` 的步骤 1→2→3 可消费本轮刚生成的 orchestrated draft；步骤 3 批量确认前不得进入步骤 4 |
+| `STALE` | 停止，回到对应上游步骤更新，并传播下游失效状态 | 无 |
+| `BLOCKED` | 停止，报告阻塞项，等待用户处理或回上游修复 | 无 |
+
+直接调用任一 sub-skill 时没有 orchestrated draft 例外：输入必须为 `ACTIVE`，否则停止。通过 `frontend-iteration` 调用时，交互模式与例外范围由编排器决定。
+
 ## test-report.md 专约
 
 | 字段 | 体系 | 规则 |
@@ -87,7 +98,7 @@
 ## Agent Behavior
 
 1. 读取输入文档时先检查 `Status`。
-2. 遇到 `DRAFT`、`STALE`、`BLOCKED` 时停止，并向用户说明需要回到哪个上游步骤。
+2. 遇到 `DRAFT`、`STALE`、`BLOCKED` 时按 Agent Decision Table 处理，并向用户说明需要回到哪个上游步骤。
 3. 更新文档时同步更新 `Updated` 日期。
 4. 标记 `STALE` 时写清 `Stale reason`，例如 `origin PRD updated` 或 `design decision changed`。
 5. 不为保持兼容而叠加过期方案；应替换失效文档或回到上游重做。

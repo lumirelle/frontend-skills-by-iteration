@@ -29,6 +29,12 @@ disable-model-invocation: true
 - 模板：[test-report-template.md](references/test-report-template.md)
 - 用例指南：[test-writing-guide.md](references/test-writing-guide.md)
 
+## Invocation Contract
+
+- 由 `frontend-iteration` 调用：遵循编排器的 step 5 流程、progress 更新与确认规则。
+- 直接调用：自行校验输入；仅消费 `ACTIVE` plan / summarized / design（若使用），并确认步骤 4 已完成。
+- 本 skill 只做验证与报告；发现测试缺口或实现问题时停止并回 `frontend-implement`，不顺手改代码。
+
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确认单元 / 集成 / E2E 命令与环境。
@@ -52,7 +58,7 @@ disable-model-invocation: true
 7. **状态一致**：用户确认通过后，文首 `Status` → `ACTIVE`，`结论` → `可进入 review`，Step 5 → `passed`（见 document-status「test-report 专约」）。
 8. **框架用法不过度沉淀**：具体测试 API 从项目既有示例或官方文档获取。
 9. **证据来源明确**：TDD 证据与命令结果以 `progress.md` 为准；test-report 汇总引用。
-10. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` plan / summarized / design；发现后停止并回上游。
+10. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`；plan / summarized / design 不可用时停止并回上游。
 
 ## Test Layers
 

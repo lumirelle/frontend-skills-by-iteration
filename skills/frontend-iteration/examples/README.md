@@ -30,7 +30,7 @@ feedback-form-v0.1.0/docs/
     ├── test-report.md                      # 步骤 5 产出
     ├── review/feedback-form.md             # 步骤 6 产出
     └── release/                            # 步骤 7 产出
-        ├── CHANGELOG.md                    # 样例片段（真实项目追加到根 CHANGELOG）
+        ├── changelog-entry.md              # 样例片段（真实项目可追加到根 CHANGELOG）
         └── pr-description.md
 ```
 
@@ -44,7 +44,7 @@ feedback-form-v0.1.0/docs/
 | 4 实现 | `frontend-implement` | 体现在 `progress.md` 的 TDD 证据与 commit 记录 |
 | 5 自测 | `frontend-test` | `test-report.md` |
 | 6 审查 | `frontend-review` | `review/feedback-form.md` |
-| 7 发布 | `frontend-release` | `release/CHANGELOG.md`、`release/pr-description.md` |
+| 7 发布 | `frontend-release` | `release/changelog-entry.md`、`release/pr-description.md` |
 
 ### 这条路径「黄金」在哪
 

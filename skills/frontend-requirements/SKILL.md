@@ -27,6 +27,12 @@ disable-model-invocation: true
 - 模板：[summarized-prd-template.md](references/summarized-prd-template.md)
 - 状态：初次产出为 `DRAFT`；用户确认后标记为 `ACTIVE`
 
+## Invocation Contract
+
+- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与批量确认规则。
+- 直接调用：自行校验输入；产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE`。
+- 本 skill 只处理需求归纳，不执行设计、计划、实现、测试、审查或发布。
+
 ## Workflow
 
 1. 读取 `technical-architecture.md`，提取与本次相关的平台、组件库、路由、状态管理等约束。

@@ -38,10 +38,12 @@
 - 方案：`docs/v0.1.0/design/feedback-form.md`
 - 计划：`docs/v0.1.0/plans/feedback-form.md`
 - 审查：`docs/v0.1.0/review/feedback-form.md`
+- 发布草稿：`docs/v0.1.0/release/changelog-entry.md`
 
 ## 合并前确认
 
 - [x] review 无未解决 🔴
 - [x] 测试通过 / 已记录手动验收
-- [x] CHANGELOG 已更新
+- [x] `docs/v0.1.0/release/changelog-entry.md` 已生成
+- [x] 项目级 CHANGELOG / release notes 如需更新，已确认并处理
 - [x] 无未解决冲突

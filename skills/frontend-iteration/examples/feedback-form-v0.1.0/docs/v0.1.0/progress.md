@@ -14,7 +14,7 @@
 | 4 | implement | passed | passed | 3 个 task 均 RED→GREEN→(REFACTOR)→VERIFY |
 | 5 | test | passed | passed | 单元/集成/E2E exit 0 |
 | 6 | review | passed | passed | 结论「通过」，无 🔴 |
-| 7 | release | passed | passed | CHANGELOG + PR 描述就绪 |
+| 7 | release | passed | passed | changelog-entry + PR 描述就绪 |
 
 ## Plan Task Status
 

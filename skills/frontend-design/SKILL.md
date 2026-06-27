@@ -28,10 +28,16 @@ disable-model-invocation: true
 - 模板：[technical-design-template.md](references/technical-design-template.md)
 - 状态：初次产出为 `DRAFT`；用户确认后标记为 `ACTIVE`
 
+## Invocation Contract
+
+- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与批量确认规则。
+- 直接调用：自行校验输入；仅消费 `ACTIVE` summarized，产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE`。
+- 本 skill 只处理技术方案，不执行计划、实现、测试、审查或发布。
+
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
-2. 读取 summarized 状态；仅 `ACTIVE` summarized 可作为输入，`DRAFT` / `STALE` / `BLOCKED` 须停止。
+2. 读取 summarized 状态；直接调用时仅 `ACTIVE` 可作为输入。由 `frontend-iteration fast` 步骤 2 调用时，可消费本轮步骤 1 刚生成的 orchestrated draft。
 3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
 4. 有 UI 稿时，参考 `frontend-requirements` 的 ui-reading-guide（路径见 `frontend-iteration` → Skill Path Resolution），按组件清单/层级/重复单元确认组件拆分与复用。
 5. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
@@ -49,7 +55,7 @@ disable-model-invocation: true
 6. **可追溯**：每条设计决策能对应到 summarized 的某项需求或验收标准。
 7. **测试前置**：方案须包含测试策略（单元/集成/E2E 各覆盖什么），供步骤 3 拆解。
 8. **不写代码**：本步产出设计文档，不落实现代码（伪代码/接口签名可用）。
-9. **状态门禁**：不得消费 `DRAFT`、`STALE`、`BLOCKED` summarized；有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
+9. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`。直接调用时不得消费 `DRAFT`、`STALE`、`BLOCKED` summarized；由 `frontend-iteration fast` 调用时，仅步骤 1→2 的 orchestrated draft 例外可用。有阻塞 open questions 的 design 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## Design Coverage
 

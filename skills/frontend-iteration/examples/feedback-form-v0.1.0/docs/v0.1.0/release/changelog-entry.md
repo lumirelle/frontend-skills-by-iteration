@@ -1,6 +1,6 @@
-# Changelog
+# Changelog Entry
 
-> 样例片段：真实项目中此条目追加到项目根 `CHANGELOG.md`。
+> 样例片段：真实项目中此条目可在用户确认后追加到项目根 `CHANGELOG.md`。
 
 ## v0.1.0 - 2026-06-27
 

@@ -19,6 +19,7 @@ docs/
     ├── design/                    # 步骤 2 产出
     ├── plans/                     # 步骤 3 产出
     ├── review/                    # 步骤 6 产出
+    ├── release/                   # 步骤 7 产出
     ├── progress.md                # 迭代进度与 resume 事实源
     └── test-report.md             # 步骤 5 产出
 ```
@@ -31,6 +32,7 @@ docs/
 | summarized | 与 origin 同名 | `user-profile.md` |
 | design | 与 summarized 同名 | `user-profile.md` |
 | plan | 与 summarized 同名 | `user-profile.md` |
+| release | 固定文件名 | `release/changelog-entry.md`、`release/pr-description.md` |
 | UI 图 | 页面或板块名 | `user-profile.*`、`user-profile-header.*`（任意常见图片格式） |
 
 多文件迭代：一个功能/页面一套 origin → summarized → design → plan，禁止混在一个文件里。
@@ -59,4 +61,4 @@ docs/
 
 ## Document Status
 
-`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。`DRAFT`、`STALE`、`BLOCKED` 文档不能作为下游输入。`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。
+`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。状态取值、orchestrated draft 例外、`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。
