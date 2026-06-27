@@ -33,10 +33,11 @@ disable-model-invocation: true
 1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
 2. 读取 summarized 状态；仅 `ACTIVE` summarized 可作为输入，`DRAFT` / `STALE` / `BLOCKED` 须停止。
 3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
-4. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
-5. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
-6. 按 Done Checklist 自检。
-7. 向用户展示摘要（每页方案选型、改动文件清单、风险、open questions），等待确认；确认后将对应 design 状态更新为 `ACTIVE`。
+4. 有 UI 稿时，参考 `frontend-requirements` 的 ui-reading-guide（路径见 `frontend-iteration` → Skill Path Resolution），按组件清单/层级/重复单元确认组件拆分与复用。
+5. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
+6. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
+7. 按 Done Checklist 自检。
+8. 向用户展示摘要（每页方案选型、改动文件清单、风险、open questions），等待确认；确认后将对应 design 状态更新为 `ACTIVE`。
 
 ## Rules
 
@@ -94,3 +95,4 @@ disable-model-invocation: true
 ## References
 
 - 产出模板：[technical-design-template.md](references/technical-design-template.md)
+- UI 读图指引：`frontend-requirements` 的 `references/ui-reading-guide.md`（路径见 `frontend-iteration` → Skill Path Resolution）

@@ -31,9 +31,10 @@ disable-model-invocation: true
 
 1. 读取 `technical-architecture.md`，提取与本次相关的平台、组件库、路由、状态管理等约束。
 2. 列出 `origin/*.md` 与 `ui/*`（若有），建立 UI → 页面/板块映射表。
-3. 逐份 origin PRD 生成 summarized；有 UI 稿的页面必须对照设计稿。
-4. 按 Done Checklist 自检。
-5. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认；确认后将对应 summarized 状态更新为 `ACTIVE`。
+3. 有 UI 稿时，先读 [ui-reading-guide.md](references/ui-reading-guide.md)，按提取维度逐图读图。
+4. 逐份 origin PRD 生成 summarized；有 UI 稿的页面必须对照设计稿。
+5. 按 Done Checklist 自检。
+6. 向用户展示摘要（文件列表、映射表、open questions、自检结果），等待确认；确认后将对应 summarized 状态更新为 `ACTIVE`。
 
 ## Rules
 
@@ -51,10 +52,13 @@ disable-model-invocation: true
 |------------|------|
 | `page-name.*` | 整页 |
 | `page-name-section.*` | 该页某板块 |
+| `page-name-<state>.*` | 该页某状态稿（如 `-empty`、`-error`） |
 
 - 扫描 `ui/` 下所有常见图片格式（png、jpg、jpeg、webp、gif、svg 等）。
 - 无法映射的文件 → open questions。
 - 无 `ui/` 或为空 → summarized 头部标注「无 UI 稿」，交互细节标为 open questions 或假设。
+
+读图方法（提取维度、多状态稿、确定 vs 不确定、反模式）见 [ui-reading-guide.md](references/ui-reading-guide.md)。
 
 ## Common Scenarios
 
@@ -83,3 +87,4 @@ disable-model-invocation: true
 ## References
 
 - 产出模板：[summarized-prd-template.md](references/summarized-prd-template.md)
+- UI 读图指引：[ui-reading-guide.md](references/ui-reading-guide.md)
