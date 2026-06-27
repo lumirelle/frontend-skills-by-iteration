@@ -1,6 +1,6 @@
 ---
 name: frontend-release
-description: Use when finalizing a versioned frontend iteration (vX.Y.Z) for merge and release. Requires passing docs/vX.Y.Z/review/*.md and test-report.md. Produces changelog entry and PR description. Invoked by frontend-iteration step 7 or directly.
+description: Use when preparing release materials after docs/vX.Y.Z/review/*.md and test-report.md pass.
 disable-model-invocation: true
 ---
 
@@ -32,7 +32,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 step 7 流程、progress 更新与发布确认规则。
+- 由 `frontend-iteration` 调用：遵循编排器 step 7、progress 更新与发布确认规则。
 - 直接调用：自行校验输入；仅消费 `ACTIVE` review / test-report / summarized / plan，并确认无 blocker。
 - 本 skill 只准备发布材料；merge / push / tag 必须等待用户显式确认。
 

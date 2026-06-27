@@ -1,6 +1,6 @@
 ---
 name: frontend-plan
-description: Use when decomposing frontend technical designs for a versioned iteration (vX.Y.Z) into implementation tasks. Requires docs/technical-architecture.md, docs/vX.Y.Z/prd/summarized/*.md, and docs/vX.Y.Z/design/*.md. Produces docs/vX.Y.Z/plans/*.md. Invoked by frontend-iteration step 3 or directly.
+description: Use when turning docs/vX.Y.Z/design/*.md into TDD implementation plans for a versioned frontend iteration.
 disable-model-invocation: true
 ---
 
@@ -30,14 +30,14 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与批量确认规则。
+- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与确认规则。
 - 直接调用：自行校验输入；仅消费 `ACTIVE` summarized / design，产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE`。
 - 本 skill 只处理实施计划，不修改业务代码、不运行实现步骤。
 
 ## Workflow
 
 1. 读取 `technical-architecture.md`，确认构建、测试、目录、代码风格约定。
-2. 读取对应 summarized 与 design，确认状态可用：直接调用时必须均为 `ACTIVE`；由 `frontend-iteration fast` 步骤 3 调用时，可消费本轮步骤 1–2 刚生成的 orchestrated draft。
+2. 读取对应 summarized 与 design，确认状态可用：直接调用时必须均为 `ACTIVE`；由 `frontend-iteration fast` 步骤 3 调用时，可消费本轮步骤 1–2 生成的编排草稿。
 3. 探查现有代码路径，校正 design 中的文件位置与测试位置。
 4. 将 design 拆成 TDD task：RED（失败测试）→ GREEN（最小实现）→ REFACTOR（保持通过下清理）→ VERIFY（验证命令）。
 5. 填写测试矩阵时，参考 `frontend-test` 的 test-writing-guide 确定测试维度。
@@ -53,7 +53,7 @@ disable-model-invocation: true
 5. **顺序明确**：标出依赖关系；能并行的任务可标注，但默认顺序执行。
 6. **不重新设计**：发现 design 缺口或不合理时，停止并回到 `frontend-design` 修正，不在 plan 中暗改方案。
 7. **不写代码**：本步只写实施计划，不改业务代码。
-8. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`。直接调用时不得消费 `DRAFT`、`STALE`、`BLOCKED` summarized 或 design；由 `frontend-iteration fast` 调用时，仅步骤 1→2→3 的 orchestrated draft 例外可用。有阻塞 open questions 的 plan 保持 `DRAFT` 或标记 `BLOCKED`。
+8. **状态门禁**：遵循 `frontend-iteration/references/document-status.md`。直接调用时不得消费不可用 summarized 或 design；由 `frontend-iteration fast` 调用时，仅步骤 1→2→3 的编排草稿例外可用。有阻塞 open questions 的 plan 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## Task Shape
 

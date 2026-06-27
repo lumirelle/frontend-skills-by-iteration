@@ -1,6 +1,6 @@
 ---
 name: frontend-requirements
-description: Use when summarizing frontend PRD for a versioned iteration (vX.Y.Z). Requires docs/technical-architecture.md and docs/vX.Y.Z/prd/origin/*.md. Produces docs/vX.Y.Z/prd/summarized/*.md. Invoked by frontend-iteration step 1 or directly.
+description: Use when turning docs/vX.Y.Z/prd/origin/*.md into frontend-focused summarized PRDs for a versioned iteration.
 disable-model-invocation: true
 ---
 
@@ -29,7 +29,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与批量确认规则。
+- 由 `frontend-iteration` 调用：遵循编排器的 fast / strict 模式、progress 更新与确认规则。
 - 直接调用：自行校验输入；产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE`。
 - 本 skill 只处理需求归纳，不执行设计、计划、实现、测试、审查或发布。
 

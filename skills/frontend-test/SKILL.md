@@ -1,6 +1,6 @@
 ---
 name: frontend-test
-description: Use when running and completing frontend self-tests for a versioned iteration (vX.Y.Z). Requires docs/technical-architecture.md, docs/vX.Y.Z/plans/*.md, and implemented code. Produces docs/vX.Y.Z/test-report.md. Invoked by frontend-iteration step 5 or directly.
+description: Use when verifying implemented frontend iteration work and producing docs/vX.Y.Z/test-report.md.
 disable-model-invocation: true
 ---
 
@@ -31,9 +31,9 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 step 5 流程、progress 更新与确认规则。
+- 由 `frontend-iteration` 调用：遵循编排器 step 5、progress 更新与确认规则。
 - 直接调用：自行校验输入；仅消费 `ACTIVE` plan / summarized / design（若使用），并确认步骤 4 已完成。
-- 本 skill 只做验证与报告；发现测试缺口或实现问题时停止并回 `frontend-implement`，不顺手改代码。
+- 本 skill 只做验证与报告；发现测试缺口或实现问题时停止并回 `frontend-implement`，不得在本步改代码。
 
 ## Workflow
 

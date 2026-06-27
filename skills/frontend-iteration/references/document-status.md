@@ -1,6 +1,6 @@
 # Document Status
 
-迭代产物必须标注状态，防止下游消费过期需求、方案或计划。
+所有迭代产物都必须标注状态，防止下游消费未确认、过期或阻塞的文档。
 
 ## 两套状态（勿混用）
 
@@ -9,7 +9,7 @@
 | **文档生命周期** | `summarized/`、`design/`、`plans/`、`review/`、`test-report.md` 的**文首 Status 头** | `DRAFT` / `ACTIVE` / `STALE` / `BLOCKED` | 该文档能否作为下游输入 |
 | **执行进度** | 仅 `progress.md` 内 **Step Status / Plan Task Status 表** | `pending` / `in_progress` / `passed` / `blocked` | 某 step 或 task 跑到哪了 |
 
-**对应关系（易混点）**
+**常见对应关系**
 
 | 场景 | 文档生命周期（文首 Status） | 执行进度（progress 表） |
 |------|---------------------------|-------------------------|
@@ -18,7 +18,7 @@
 | plan 变更需重跑测试 | `test-report.md` → `STALE` | Step 5 → `pending` 或 `in_progress` |
 | 步骤 4 某 task 失败 | （无单独文档） | 该 task → `blocked`；Step 4 → `blocked` 或 `in_progress` |
 
-`progress.md` **文首 `Status` 恒为 `ACTIVE`**（表示本文件是当前有效的 resume 事实源），**不**表示「迭代已完成」；完成与否看 Step Status 表。
+`progress.md` 文首 `Status` 恒为 `ACTIVE`，只表示它是当前 resume 事实源；迭代完成与否看 Step Status 表。
 
 ## Header
 
@@ -60,20 +60,20 @@
 | 读到的状态 | 默认动作 | 例外 |
 |------------|----------|------|
 | `ACTIVE` | 可作为下游输入继续执行 | 无 |
-| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | `frontend-iteration fast` 的步骤 1→2→3 可消费本轮刚生成的 orchestrated draft；步骤 3 批量确认前不得进入步骤 4 |
+| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | `frontend-iteration fast` 的步骤 1→2→3 可消费本轮编排草稿；步骤 3 批量确认前不得进入步骤 4 |
 | `STALE` | 停止，回到对应上游步骤更新，并传播下游失效状态 | 无 |
 | `BLOCKED` | 停止，报告阻塞项，等待用户处理或回上游修复 | 无 |
 
-直接调用任一 sub-skill 时没有 orchestrated draft 例外：输入必须为 `ACTIVE`，否则停止。通过 `frontend-iteration` 调用时，交互模式与例外范围由编排器决定。
+直接调用 sub-skill 时没有编排草稿例外：输入必须为 `ACTIVE`，否则停止。通过 `frontend-iteration` 调用时，交互模式与例外范围由编排器决定。
 
 ## test-report.md 专约
 
 | 字段 | 体系 | 规则 |
 |------|------|------|
-| 文首 `Status` | 文档生命周期 | 同上文；下游 review 仅消费 `ACTIVE` |
+| 文首 `Status` | 文档生命周期 | 下游 review 仅消费 `ACTIVE` |
 | `摘要.结论` | 报告内容 | `可进入 review` / `阻塞`；**不是** Status 取值 |
 | `阻塞项` 章节 | 报告内容 | 非空 → 文首 `Status` 须为 `BLOCKED` 或 `DRAFT`，且 `结论` 为 `阻塞` |
-| 与 progress 分工 | — | TDD 证据、命令 exit code 以 `progress.md` Verification Log 为准；test-report 引用并汇总，不替代落盘 |
+| 与 progress 分工 | — | TDD 证据、命令 exit code 以 `progress.md` Verification Log 为准；test-report 只汇总 |
 
 步骤 5 完成且用户确认后：文首 `Status` → `ACTIVE`，`结论` → `可进入 review`，Step 5 → `passed`。
 

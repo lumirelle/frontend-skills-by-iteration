@@ -1,6 +1,6 @@
 ---
 name: frontend-implement
-description: Use when implementing frontend code for a versioned iteration (vX.Y.Z) according to approved plans. Requires docs/technical-architecture.md and docs/vX.Y.Z/plans/*.md. Produces code changes within plan boundaries. Invoked by frontend-iteration step 4 or directly.
+description: Use when implementing approved docs/vX.Y.Z/plans/*.md tasks with frontend TDD.
 disable-model-invocation: true
 ---
 
@@ -31,7 +31,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 step 4 流程、progress 更新、per-task 验证与可选 commit 询问。
+- 由 `frontend-iteration` 调用：遵循编排器 step 4、progress 更新、逐 task 验证与可选 commit 询问。
 - 直接调用：自行校验输入；仅消费 `ACTIVE` plan / design / summarized，并从 `progress.md` 或用户指定 task 确定范围。
 - 本 skill 只执行 plan 内实现；发现方案或计划缺口时停止并回上游，不现场补设计。
 
@@ -48,7 +48,7 @@ disable-model-invocation: true
 ## Rules
 
 1. **严守 plan**：只改 plan 列出的文件；不新增 plan 外文件，除非任务明确要求。
-2. **最小改动**：能改现有实现就不新建；能局部改就不重构；不为「顺手优化」扩 scope。
+2. **最小改动**：能改现有实现就不新建；能局部改就不重构；不为「顺手优化」扩大范围。
 3. **TDD 铁律**：行为变更必须先写失败测试并观察到正确失败；没有 RED 不写生产代码。
 4. **不重新设计**：实现中发现 plan/design 不足 → **停止**，说明缺口，回上游修正，不边写边改方案。
 5. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致。

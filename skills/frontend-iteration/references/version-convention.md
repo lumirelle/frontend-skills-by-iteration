@@ -61,4 +61,4 @@ docs/
 
 ## Document Status
 
-`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。状态取值、orchestrated draft 例外、`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。
+`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。状态取值、编排草稿例外、`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。

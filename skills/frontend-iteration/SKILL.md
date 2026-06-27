@@ -1,6 +1,6 @@
 ---
 name: frontend-iteration
-description: Use when starting or continuing a versioned frontend iteration (vX.Y.Z). Requires docs/technical-architecture.md and docs/vX.Y.Z/prd/origin/*.md. Orchestrates requirements, design, plan, implementation, testing, review, and release.
+description: Use when starting, resuming, or continuing a versioned frontend iteration with docs/vX.Y.Z/ inputs.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## Goal
 
-按版本迭代执行前端开发全流程。
+按版本推进前端迭代，从需求归纳到发布材料。
 
 ## Scope
 
@@ -35,7 +35,7 @@ disable-model-invocation: true
 
 ## Interaction Mode
 
-未指定时默认 **`fast`**。从 invocation 解析：`strict` → strict；否则 → fast。
+未指定时默认 **`fast`**：只要 invocation 未出现 `strict`，即按 fast 执行。
 
 | 模式 | 步骤 1–3（文档类） | 步骤 4–7（实现 / 测试 / 审查 / 发布） |
 |------|-------------------|----------------------------------------|
@@ -44,9 +44,9 @@ disable-model-invocation: true
 
 **fast 模式细则**
 
-1. 步骤 1–3 产出保持 `DRAFT`，不在各 sub-skill 内单独等用户确认；门禁通过后自动进入下一步。
-2. **Orchestrated draft 例外**：仅在本 workflow 的 fast 步骤 1→2→3 链式执行中，允许消费上一步刚生成、尚未批量确认的 `DRAFT` 文档；直接调用 sub-skill 或进入步骤 4 后均不适用。
-3. 步骤 3 全部完成后：汇总 summarized / design / plan 列表、open questions、门禁结果；**等待用户确认**；确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
+1. 步骤 1–3 产出保持 `DRAFT`，不在 sub-skill 内单步确认；门禁通过后自动进入下一步。
+2. **编排草稿例外**：仅在 fast 步骤 1→2→3 链式执行中，允许消费本轮刚生成、尚未批量确认的 `DRAFT`。直接调用 sub-skill 或进入步骤 4 后不适用。
+3. 步骤 3 完成后，汇总 summarized / design / plan、open questions 与门禁结果；等待用户确认。确认后将对应文档标为 `ACTIVE`，再进入步骤 4。
 4. 步骤 4 仍遵循 `frontend-implement` 的 per-task 验证与可选 commit 询问；步骤 5–7 每步结束等待确认。
 5. `STALE` / `BLOCKED`、门禁失败、open questions 阻塞实现 → **不论模式均停止**，不自动推进。
 6. 用户可在任意确认点说 `strict`，后续改按 strict 执行。
@@ -55,7 +55,7 @@ disable-model-invocation: true
 
 ## Skill Path Resolution
 
-读取本 workflow 的 skill 或 reference 时，按顺序尝试（命中即用）：
+读取本工作流的 skill 或 reference 时，按顺序尝试（命中即用）：
 
 | 资源 | 路径 1（`npx skills add`） | 路径 2（源码仓库） |
 |------|------------------------------|---------------------|
@@ -95,10 +95,10 @@ disable-model-invocation: true
 2. **交互模式**：按 Interaction Mode 执行。默认 **fast**；用户指定 `strict` 时每步均须确认。fast 下步骤 1–3 连续执行，步骤 3 结束后批量确认一次；步骤 4–7 逐步确认。
 3. **显式加载 sub-skill**：执行任一步骤前，必须先按 Skill Path Resolution 读取并遵循对应 sub-skill 的 `SKILL.md`。不得凭记忆执行；均不存在时提示 `npx skills add <repo> --skill <name>` 并停止。
 4. **resume 逻辑**：优先读取 `docs/vX.Y.Z/progress.md` 判断当前步骤、task 状态与阻塞项；缺失或不可信时再按 `references/version-convention.md` 的目录扫描规则兜底。
-5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 模式步骤 1→2→3 的 orchestrated draft。
+5. **状态门禁**：任何输入文档标记为 `STALE` 或 `BLOCKED` 时，不得继续消费该文档；须回到对应上游步骤更新或等待确认。`DRAFT` 默认不得作为下游输入，唯一例外是 fast 步骤 1→2→3 的编排草稿。
 6. **范围外请求**：用户要求跳步或改已完成步骤 → 说明影响，获确认后执行。
-7. **产出校验**：每步结束前对照 `references/step-gates.md` 逐项核对，在 `docs/vX.Y.Z/progress.md` 记录结果，并向用户展示通过 / 未通过项。
-8. **工作流所有权**：通过 `frontend-iteration` 调用时，本 workflow 拥有需求、设计、计划、实现、测试、审查、发布生命周期；除非用户显式要求，不再额外调用通用 planning / TDD / verification / review skill 来重复编排。fast 模式下步骤 1–3 的确认由编排器批量接管，sub-skill 内「等待确认」与「仅消费 ACTIVE」规则在 orchestrated draft 范围内暂不触发。
+7. **产出校验**：每步结束前对照 `references/step-gates.md` 核对，在 `docs/vX.Y.Z/progress.md` 记录结果，并向用户展示通过 / 未通过项。
+8. **工作流所有权**：通过 `frontend-iteration` 调用时，本工作流接管需求、设计、计划、实现、测试、审查、发布生命周期。除非用户显式要求，不额外调用通用 planning / TDD / verification / review skill 重复编排。fast 步骤 1–3 的确认由编排器批量接管，sub-skill 的「等待确认」与「仅消费 ACTIVE」规则在编排草稿范围内暂不触发。
 
 ## Sub-skill Loading
 
@@ -133,7 +133,7 @@ disable-model-invocation: true
     ↓
 读取对应 sub-skill → 执行 → 更新产出与 progress.md
     ↓
-fast 且步骤 1–3：门禁通过 → 自动下一步（步骤 3 完成后批量摘要 → 等待确认 → ACTIVE）
+fast 且步骤 1–3：门禁通过 → 自动下一步（步骤 3 后批量摘要 → 等待确认 → ACTIVE）
 strict 或步骤 4–7：校验产出 → 摘要 → 等待确认
     ↓
 下一步 / 结束

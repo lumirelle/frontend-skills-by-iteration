@@ -1,12 +1,12 @@
 # Step Gates
 
-每步结束前的检查清单。编排器在读取并调用 sub-skill 后逐项核对，并把结果写入 `docs/vX.Y.Z/progress.md`。
+每步结束前必须核对本清单，并把结果写入 `docs/vX.Y.Z/progress.md`。
 
 ## Global Gates
 
-- [ ] 已按 Skill Path Resolution 读取当前 step 对应 sub-skill 的 `SKILL.md`
+- [ ] 已按 Skill Path Resolution 读取当前 step 的 sub-skill `SKILL.md`
 - [ ] 输入文档没有 `STALE`、`BLOCKED` 状态
-- [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 的步骤 1→2→3 可消费本轮刚生成的 orchestrated draft
+- [ ] 输入文档没有 `DRAFT` 状态；唯一例外：`frontend-iteration fast` 步骤 1→2→3 可消费本轮编排草稿
 - [ ] 当前 step 的 gate result 已记录到 `docs/vX.Y.Z/progress.md`
 
 ## Step 1 — 需求理解
@@ -21,7 +21,7 @@
 ## Step 2 — 技术方案
 
 - [ ] `docs/vX.Y.Z/design/` 存在且非空
-- [ ] 每份 design 对应 summarized PRD（文件名一致或可追溯）
+- [ ] 每份 design 对应 summarized PRD（同名或可追溯）
 - [ ] 每份 design 状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
 - [ ] 含：方案概述、涉及模块/文件、数据流、API/类型变更、错误处理、兼容性、测试策略、风险与回滚
 - [ ] 与 `docs/technical-architecture.md` 无冲突；冲突已标注并待确认
@@ -30,7 +30,7 @@
 
 - [ ] `docs/vX.Y.Z/plans/` 存在且非空
 - [ ] 每份 plan 状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
-- [ ] 常规迭代 plan 对应 design；minimal bugfix plan 含适用性判定且均为「是」
+- [ ] 常规 plan 对应 design；minimal bugfix plan 的适用性判定均为「是」
 - [ ] 任务粒度：单步 2–5 分钟可完成
 - [ ] 每项含：目标文件路径、改动说明、测试点
 - [ ] 每个行为任务含 RED / GREEN / REFACTOR / VERIFY 步骤

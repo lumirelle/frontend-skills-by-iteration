@@ -1,6 +1,6 @@
 ---
 name: frontend-project-init
-description: Initializes docs scaffolding for frontend-workflow iterations. Use before frontend-iteration when a project lacks docs/technical-architecture.md or docs/vX.Y.Z/ structure.
+description: Use when a project lacks docs/technical-architecture.md or docs/vX.Y.Z/ before running frontend-iteration.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## Goal
 
-为使用 `frontend-iteration` 的项目创建最小 `docs/` 脚手架，并提示用户补齐项目事实。
+创建最小 `docs/` 脚手架，并提示用户补齐项目事实。
 
 ## Input
 

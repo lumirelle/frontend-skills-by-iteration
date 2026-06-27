@@ -1,6 +1,6 @@
 ---
 name: frontend-review
-description: Use when reviewing frontend code for a versioned iteration (vX.Y.Z) before release. Requires docs/vX.Y.Z/test-report.md, plans, design, summarized, and implemented code. Produces docs/vX.Y.Z/review/*.md. Invoked by frontend-iteration step 6 or directly.
+description: Use when reviewing implemented frontend iteration work against docs/vX.Y.Z/ requirements, design, plans, and test report.
 disable-model-invocation: true
 ---
 
@@ -32,7 +32,7 @@ disable-model-invocation: true
 
 ## Invocation Contract
 
-- 由 `frontend-iteration` 调用：遵循编排器的 step 6 流程、progress 更新与确认规则。
+- 由 `frontend-iteration` 调用：遵循编排器 step 6、progress 更新与确认规则。
 - 直接调用：自行校验输入；仅消费 `ACTIVE` summarized / design / plan / test-report，并确认步骤 4–5 已完成。
 - 本 skill 只产出审查记录；发现问题时给出回到 `frontend-implement` 或 `frontend-test` 的建议，不擅自修代码。
 
@@ -94,7 +94,7 @@ disable-model-invocation: true
 | 仅 🟡/🟢 | 结论「有条件通过」，列待办 |
 | 有 🔴 | 结论「不通过」，指明回步骤 4 或 5 |
 | 多份 plan | 每份 plan 对应 review，或汇总 + 分文件 |
-| 审查中发现需求歧义 | 标 open question，不擅自扩 scope |
+| 审查中发现需求歧义 | 标 open question，不擅自扩大范围 |
 
 ## Done Checklist
 
