@@ -99,7 +99,7 @@ disable-model-invocation: true
 - [ ] 无未解决 🔴（通过或有条件通过时）
 - [ ] 与 test-report、plan、design 交叉核对完成
 - [ ] 与 `progress.md` 的 task 状态和 TDD 证据交叉核对完成
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## Handoff to Step 7
 

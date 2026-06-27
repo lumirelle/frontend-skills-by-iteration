@@ -113,7 +113,7 @@ VERIFY：运行 task 验证命令
 - [ ] 每个行为 task 的 RED / GREEN / REFACTOR / VERIFY 已执行并写入 `progress.md`
 - [ ] 改动范围 ⊆ plan 文件边界
 - [ ] 无 plan 外重构、无未解释的新抽象
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## Handoff to Step 5
 

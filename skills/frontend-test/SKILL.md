@@ -85,7 +85,7 @@ disable-model-invocation: true
 - [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR）
 - [ ] 实际运行命令与 exit code 已写入 `progress.md`
 - [ ] 报告含：执行命令、结果、验收标准映射、未覆盖风险
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## Handoff to Step 6
 

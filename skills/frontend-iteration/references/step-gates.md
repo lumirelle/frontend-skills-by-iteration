@@ -4,7 +4,7 @@
 
 ## Global Gates
 
-- [ ] 已读取当前 step 对应的 `skills/<sub-skill>/SKILL.md`
+- [ ] 已按 Skill Path Resolution 读取当前 step 对应 sub-skill 的 `SKILL.md`
 - [ ] 输入文档没有 `DRAFT`、`STALE`、`BLOCKED` 状态
 - [ ] 当前 step 的 gate result 已记录到 `docs/vX.Y.Z/progress.md`
 

@@ -89,7 +89,7 @@ disable-model-invocation: true
 - [ ] design 覆盖方案选型、组件结构、数据流、接口契约、错误处理、兼容性、测试策略、风险回滚
 - [ ] 涉及文件已列出，且未夹带无关重构
 - [ ] 已选最小可行方案，或充分说明为何选更复杂方案
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## References
 

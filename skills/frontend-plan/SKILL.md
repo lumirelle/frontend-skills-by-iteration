@@ -94,10 +94,10 @@ disable-model-invocation: true
 - [ ] 每个任务含目标、文件、步骤、验证、依赖，以及 RED / GREEN / REFACTOR / VERIFY
 - [ ] 测试覆盖与 summarized 验收标准对应
 - [ ] 改动范围不超过 design 或 minimal plan 文件边界
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## References
 
 - 产出模板：[implementation-plan-template.md](references/implementation-plan-template.md)
 - 精简计划模板：[minimal-plan-template.md](references/minimal-plan-template.md)
-- 测试维度参考：`frontend-test` 的 `references/test-writing-guide.md`
+- 测试维度参考：`frontend-test` 的 test-writing-guide（路径见 `frontend-iteration` → Skill Path Resolution）

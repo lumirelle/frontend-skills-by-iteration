@@ -89,7 +89,7 @@ disable-model-invocation: true
 - [ ] PR 描述已生成
 - [ ] Pre-Merge Checklist 全部满足
 - [ ] 文档与代码一致
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 - [ ] 合并 / push / tag 仅在用户确认后执行
 
 ## References

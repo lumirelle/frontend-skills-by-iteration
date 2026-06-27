@@ -78,7 +78,7 @@ disable-model-invocation: true
 - [ ] summarized 覆盖页面/模块、用户流程、状态与交互、边界情况、非目标、验收标准
 - [ ] UI 已映射或 open questions 已列出
 - [ ] 未引入 origin 外功能
-- [ ] 完整门禁已按 `frontend-iteration/references/step-gates.md` 记录到 `progress.md`
+- [ ] 完整门禁已按编排器 step-gates 记录到 `progress.md`（路径见 `frontend-iteration` → Skill Path Resolution）
 
 ## References
 
