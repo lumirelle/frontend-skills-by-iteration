@@ -34,6 +34,7 @@
 
 - 🟡 …（来自 review）
 - 未覆盖风险 …（来自 test-report）
+- 接口联调待定：`TODO(vX.Y.Z): 接口联调待定` 清单（来自 test-report / 代码检索）
 - mock / 降级项 …
 
 （无则写「无」）

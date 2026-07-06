@@ -46,10 +46,11 @@ disable-model-invocation: true
 1. **忠实 origin**：不得引入 origin 未提及的功能；推断须标注「假设」。
 2. **前端聚焦**：写页面结构、交互、状态、数据展示、校验、权限、响应式/平台差异；不写后端实现细节。
 3. **可验收**：每条验收标准可测试、可判定通过/失败。
-4. **非目标明确**：origin 模糊时，主动收窄范围并写入「非目标」。
-5. **UI 优先**：有设计稿时以稿为准；与 origin 冲突时列入 open questions，不擅自裁决。
-6. **架构对齐**：与 `technical-architecture.md` 冲突的需求标注为 open question 或「待确认」。
-7. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；有阻塞 open questions 时 summarized 保持 `DRAFT` 或标记 `BLOCKED`。
+4. **接口依赖可追溯**：数据来自 API 的项在「数据与展示」标来源；origin 写「接口待定」时给默认假设并记入 Open Questions（见 api-integration-guide）。
+5. **非目标明确**：origin 模糊时，主动收窄范围并写入「非目标」。
+6. **UI 优先**：有设计稿时以稿为准；与 origin 冲突时列入 open questions，不擅自裁决。
+7. **架构对齐**：与 `technical-architecture.md` 冲突的需求标注为 open question 或「待确认」。
+8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；有阻塞 open questions 时 summarized 保持 `DRAFT` 或标记 `BLOCKED`。
 
 ## UI Mapping
 
@@ -89,3 +90,4 @@ disable-model-invocation: true
 
 - 产出模板：[summarized-prd-template.md](references/summarized-prd-template.md)
 - UI 读图指引：[ui-reading-guide.md](references/ui-reading-guide.md)
+- 接口联调指引：`frontend-iteration/references/api-integration-guide.md`

@@ -35,9 +35,9 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层等约束。
+1. 读取 `technical-architecture.md`，确定技术栈、目录结构、状态管理、路由、请求层、**Code Style** 等约束。
 2. 读取 summarized 状态；可消费状态按调用契约判断。
-3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装。
+3. 探查现有代码库：可复用的组件、hooks、工具、类型、API 封装；**接口联调**按 `frontend-iteration/references/api-integration-guide.md` 检索已有 API 与类似页面。
 4. 有 UI 稿时，参考 `frontend-requirements` 的 `ui-reading-guide.md`，按组件清单/层级/重复单元确认组件拆分与复用。
 5. 逐份 summarized 生成 design；**先列出最小改动路径**，非平凡处再比选 2–3 方案（含最小改动方案）。
 6. 标出涉及文件（新增/修改）、数据流、API/类型变更、错误处理、测试策略、风险回滚。
@@ -78,7 +78,7 @@ disable-model-invocation: true
 |------|------|
 | 复用现有组件即可 | 说明复用点与改动，避免新建 |
 | 倾向过度设计 | 回退到最小改动：删多余抽象/新建文件，在方案选型中说明为何不选复杂方案 |
-| 新增 API 依赖 | 定义前端类型与请求封装位置；后端未就绪则用 mock 并标注 |
+| 新增 API 依赖 | 先检索 `src/api/` 与类似页面；定义类型与封装位置；后端未就绪则 mock/占位 + 待定清单（见 api-integration-guide） |
 | 多页面迭代 | 每页独立 design；跨页公共部分抽到一份共享设计或在各 design 引用 |
 | 改动影响现有功能 | 列出受影响模块与回归测试范围 |
 | summarized 有 open questions | 设计中标注「依赖确认」，给出默认假设方案 |
@@ -96,3 +96,5 @@ disable-model-invocation: true
 
 - 产出模板：[technical-design-template.md](references/technical-design-template.md)
 - UI 读图指引：`frontend-requirements/references/ui-reading-guide.md`
+- 接口联调指引：`frontend-iteration/references/api-integration-guide.md`
+- 代码风格锚点：`frontend-iteration/references/code-style-enforcement.md`

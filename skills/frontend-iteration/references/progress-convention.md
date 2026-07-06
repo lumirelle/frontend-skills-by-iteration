@@ -41,6 +41,14 @@ docs/vX.Y.Z/progress.md
 |------|------|--------|-----|-------|----------|--------|--------|-------|
 | plans/<name>.md | Task 1 | pending / in_progress / passed / blocked | not run | not run | not needed | not run | no | |
 
+## Style Anchors
+
+步骤 4 开始前从 `technical-architecture.md` → Code Style 提炼 5–10 条；每 task 进入 GREEN 前重读。细则见 [code-style-enforcement.md](code-style-enforcement.md)。
+
+| # | 规则 | 来源 |
+|---|------|------|
+| 1 | | technical-architecture |
+
 ## Draft Batch
 
 | Batch | Status | Created at | Confirmed at | Files |
@@ -93,7 +101,7 @@ docs/vX.Y.Z/progress.md
 | **1** requirements | ① `Current step` → `1` ② Step 1 → `in_progress` → 完成则 `passed` ③ `Gate result` 写明 summarized 文件与 ACTIVE/DRAFT ④ fast 模式将 summarized 写入 `Draft Batch`（`open`）⑤ `Updated`、Blockers |
 | **2** design | ① `Current step` → `2` ② Step 2 状态与 `Gate result`（design 文件列表）③ Step 1 保持 `passed` ④ fast 模式把 design 追加到当前 `open` batch ⑤ `Updated`、Blockers |
 | **3** plan | ① `Current step` → `3` ② Step 3 状态与 `Gate result`（plan 文件列表）③ fast 模式把 plan 追加到当前 `open` batch ④ 批量确认后：将 summarized/design/plan 标 `ACTIVE`，`Draft Batch` → `confirmed` 并填写 `Confirmed at` ⑤ `Updated`、Blockers |
-| **4** implement | ① `Current step` → `4` ② Step 4 → `in_progress` ③ **每个 task 一行**：Plan Task Status 填 RED/GREEN/REFACTOR/VERIFY/Commit ④ Verification Log 追加该 task 验证命令与 exit ⑤ task 全完 → Step 4 `passed` |
+| **4** implement | ① `Current step` → `4` ② Step 4 → `in_progress` ③ 若无 Style Anchors 表则先提炼并写入 ④ **每个 task 一行**：Plan Task Status 填 RED/GREEN/REFACTOR/VERIFY/Commit ⑤ Verification Log 追加该 task 验证命令与 exit（含 lint/typecheck 若已配置）⑥ task 全完 → Step 4 `passed` |
 | **5** test | ① `Current step` → `5` ② Step 5 状态；失败 → `blocked` ③ Verification Log 追加全量命令与 exit ④ 同步 `test-report.md` 文首 Status 与摘要结论 ⑤ Blockers 有失败项则列出 |
 | **6** review | ① `Current step` → `6` ② Step 6 状态与 `Gate result`（结论、🔴 数）③ 有未解决 🔴 → Step 6 `blocked` ④ `Updated` ⑤ Blockers |
 | **7** release | ① `Current step` → `7` ② Step 7 状态与 `Gate result`（release 文件已生成）③ 全部 step `passed` 时迭代完成 ④ `Updated` ⑤ Blockers 清为 `None` |

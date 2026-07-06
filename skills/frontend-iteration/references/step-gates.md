@@ -24,7 +24,7 @@
 - [ ] `docs/vX.Y.Z/design/` 存在且非空
 - [ ] 每份 design 对应 summarized PRD（同名或可追溯）
 - [ ] 每份 design 状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
-- [ ] 含：方案概述、涉及模块/文件、数据流、API/类型变更、错误处理、兼容性、测试策略、风险与回滚
+- [ ] 含：方案概述、涉及模块/文件、数据流、API/类型变更（含参照与占位策略）、错误处理、兼容性、测试策略、风险与回滚
 - [ ] 与 `docs/technical-architecture.md` 无冲突；冲突已标注并待确认
 
 ## Step 3 — 实施计划
@@ -41,11 +41,14 @@
 ## Step 4 — 代码实现
 
 - [ ] 改动范围 ⊆ plan 范围
+- [ ] `progress.md` → Style Anchors 已填写（步骤 4 首 task 前）
+- [ ] 每个 task 进入 GREEN 前已重读 Style Anchors 与邻文件（见 code-style-enforcement.md）
 - [ ] 每个行为改动先观察到失败测试（RED）再写生产代码
 - [ ] 每个 task 的 RED / GREEN / REFACTOR / VERIFY 证据已记录到 `progress.md`
+- [ ] VERIFY 含 lint/typecheck（若 technical-architecture 已配置）
 - [ ] 遵循项目目录与命名约定
 - [ ] 无 plan 外大重构
-- [ ] 新增/变更 API 与 design 一致
+- [ ] 新增/变更 API 与 design 一致；待定处已标 `TODO(vX.Y.Z): 接口联调待定`（见 api-integration-guide.md）
 
 ## Step 5 — 全量自测
 
@@ -55,7 +58,7 @@
 - [ ] test-report 记录关键 TDD 证据（RED/GREEN/REFACTOR），与 `progress.md` 一致
 - [ ] `progress.md` Step 5 为 `passed` 时，test-report 文首须为 `ACTIVE`
 - [ ] 单元测试覆盖 plan 标注的核心逻辑
-- [ ] 集成测试覆盖 API / 模块协作（若适用）
+- [ ] 集成测试覆盖 API / 模块协作（若适用）；真实后端未联调须在未覆盖风险中说明
 - [ ] E2E 覆盖关键用户路径（若适用）
 - [ ] test-report 含：执行命令、结果、未覆盖风险
 - [ ] 所有相关测试命令 exit 0
@@ -65,6 +68,7 @@
 - [ ] `docs/vX.Y.Z/review/` 含审查记录
 - [ ] review 文档状态为 `ACTIVE` 或等待用户确认的 `DRAFT`
 - [ ] 问题分级：🔴 必须修复 / 🟡 建议 / 🟢 可选
+- [ ] 已对照 Style Anchors 与 api-integration-guide 检查风格与接口 TODO
 - [ ] 无未解决 🔴
 
 ## Step 7 — 发布

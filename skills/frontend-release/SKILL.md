@@ -53,7 +53,7 @@ disable-model-invocation: true
 3. **英文提交规范**：合并提交、tag、release commit 遵循 Conventional Commits，仅英文（与 `frontend-implement` 一致）。
 4. **CHANGELOG 用户视角**：写「用户/调用方能感知的变化」，不堆实现细节。
 5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
-6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现。
+6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现；含 `TODO(vX.Y.Z): 接口联调待定` 清单（见 api-integration-guide）。
 7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
 8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 review / test-report / summarized / plan 不可用时停止；`progress.md` 有 blocker 或 Step 5 `blocked` 时不得发布。
 
@@ -72,7 +72,7 @@ disable-model-invocation: true
 | 存在未解决 🔴 | 停止，不发布 |
 | 上游文档为 STALE 或 BLOCKED | 停止，回对应上游步骤 |
 | 项目无 CHANGELOG | 仍生成 `release/changelog-entry.md`；是否创建根 CHANGELOG 需用户确认 |
-| 后端未就绪用了 mock | 在风险/已知问题中标注切换点 |
+| 后端未就绪用了 mock | 在风险/已知问题中列出 `TODO(vX.Y.Z): 接口联调待定` 与封装切换点 |
 | E2E 降级为手动验收 | 在测试说明中如实写明 |
 | 用户要求打 tag / 发布 | 确认后用 Conventional Commits 规范执行 |
 
@@ -100,3 +100,4 @@ disable-model-invocation: true
 ## References
 
 - PR 描述模板：[pr-description-template.md](references/pr-description-template.md)
+- 接口联调：`frontend-iteration/references/api-integration-guide.md`

@@ -35,7 +35,7 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. 读取 `technical-architecture.md`，确认构建、测试、目录、代码风格约定。
+1. 读取 `technical-architecture.md`，确认构建、测试、目录、**Code Style** 约定。
 2. 读取对应 summarized 与 design，按调用契约确认状态可用。
 3. 探查现有代码路径，校正 design 中的文件位置与测试位置。
 4. 将 design 范围拆成 TDD task：RED（失败测试）→ GREEN（最小实现）→ REFACTOR（保持通过下清理）→ VERIFY（验证命令）。
@@ -81,7 +81,7 @@ disable-model-invocation: true
 |------|------|
 | design 涉及多个页面 | 每页生成独立 plan；共享改动放在最早依赖任务 |
 | 只改现有组件 | 任务聚焦修改与测试，不新增目录结构 |
-| API 未就绪 | 计划 mock/契约类型与切换点，不阻塞 UI 实施 |
+| API 未就绪 | 单独 task 实现 API 封装（占位返回 + `TODO(vX.Y.Z): 接口联调待定`）；页面 task 依赖之；见 api-integration-guide |
 | E2E 成本高 | 只覆盖关键路径；其余用单元/集成说明 |
 | design 有 open questions | 不生成受影响任务，列为阻塞项等待确认 |
 | 发现需超出最小改动 | 停止，要求回到 design 更新方案 |
@@ -100,3 +100,4 @@ disable-model-invocation: true
 
 - 产出模板：[implementation-plan-template.md](references/implementation-plan-template.md)
 - 测试维度参考：`frontend-test/references/test-writing-guide.md`
+- 接口联调指引：`frontend-iteration/references/api-integration-guide.md`

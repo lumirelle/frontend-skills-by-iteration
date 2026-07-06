@@ -38,11 +38,12 @@ disable-model-invocation: true
 
 1. 读取 `technical-architecture.md` 与目标 `plans/*.md`，确认 plan 为 `ACTIVE` 且无未关闭 open questions。
 2. 读取 `progress.md`，确定执行范围：全部 plan、用户指定 plan / task，或 resume 的首个未完成 task。
-3. 将当前 step / task 标为 `in_progress`。
-4. **按任务顺序执行 TDD**：RED → GREEN → REFACTOR → VERIFY → 询问是否提交 → 通过后再下一任务。
-5. 每完成一个 task：把 RED/GREEN/REFACTOR/VERIFY 证据与 commit 状态写入 `progress.md`，汇报结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
-6. 全部 task 完成后按 Done Checklist 与 `frontend-iteration` 的 step gate 自检。
-7. 向用户展示摘要（变更文件、未覆盖风险、待步骤 5 验证项），等待确认。
+3. **Style Anchors**：若 `progress.md` 无 Style Anchors 表，从 `technical-architecture.md` → Code Style 提炼 5–10 条并写入；细则见 `frontend-iteration/references/code-style-enforcement.md`。
+4. 将当前 step / task 标为 `in_progress`。
+5. **按任务顺序执行 TDD**：RED → **Style Reload** → GREEN → REFACTOR → VERIFY → 询问是否提交 → 通过后再下一任务。
+6. 每完成一个 task：把 RED/GREEN/REFACTOR/VERIFY 证据与 commit 状态写入 `progress.md`，汇报结果，**询问用户是否提交**；用户确认后再 commit，不自动 push。
+7. 全部 task 完成后按 Done Checklist 与 `frontend-iteration` 的 step gate 自检。
+8. 向用户展示摘要（变更文件、未覆盖风险、接口 TODO 清单、待步骤 5 验证项），等待确认。
 
 ## Rules
 
@@ -50,13 +51,14 @@ disable-model-invocation: true
 2. **最小改动**：能改现有实现就不新建；能局部改就不重构；不为「顺手优化」扩大范围。
 3. **TDD 铁律**：行为变更必须先写失败测试并观察到正确失败；没有 RED 不写生产代码。
 4. **不重新设计**：实现中发现 plan/design 不足 → **停止**，说明缺口，回上游修正，不边写边改方案。
-5. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致。
+5. **遵循现有模式**：目录、命名、状态管理、请求封装、组件风格与项目一致；每 task GREEN 前重读 `progress.md` → Style Anchors 与本 task 邻文件（见 code-style-enforcement）。
 6. **测试先行**：写测试参考 `frontend-test` 的 test-writing-guide；确认 RED 正确失败后才进入 GREEN。
-7. **单任务验证**：每个 task 完成后执行其「验证」项；失败则在本 task 内修复，不带着失败进入下一 task。
+7. **单任务验证**：每个 task 完成后执行其「验证」项；若项目已配置 Lint / Type check，纳入 VERIFY 并记录 exit code；失败则在本 task 内修复，不带着失败进入下一 task。
 8. **一任务一提交（可选）**：验证通过后询问用户是否提交；用户同意则 commit 当前 task 改动，message 对应 task 目标；用户拒绝则保持工作区变更，继续下一 task 前须知晓未提交状态。不自动 push。
 9. **提交 message 规范**：仅英文，遵循 Conventional Commits（见 Commit Message）。
 10. **进度落盘**：不得只在聊天中记录 TDD 证据；`progress.md` 是 resume 与 step 5 的输入。
-11. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 plan / design / summarized 不可用时停止并回上游。
+11. **接口联调**：新增/变更 API 按 `frontend-iteration/references/api-integration-guide.md`；封装层占位返回；待定处 `TODO(vX.Y.Z): 接口联调待定`；页面不直接 `fetch`、不写死占位数据。
+12. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 plan / design / summarized 不可用时停止并回上游。
 
 ## Commit Message
 
@@ -84,7 +86,9 @@ test(user-profile): cover avatar validation rules
     ↓
 RED：写最小失败测试并运行，确认失败原因正确
     ↓
-GREEN：写最小生产代码让测试通过
+Style Reload：重读 progress.md → Style Anchors + 本 task 将改文件的邻文件
+    ↓
+GREEN：写最小生产代码让测试通过（API 占位与 TODO 见 api-integration-guide）
     ↓
 REFACTOR：必要时清理，保持测试通过
     ↓
@@ -101,7 +105,7 @@ VERIFY：运行 task 验证命令
 |------|------|
 | 多份 plan | 按 plan 依赖与执行顺序逐个完成；共享文件注意合并冲突 |
 | 从 Task N 续做 | 优先读取 `progress.md`；确认 Task 1…N-1 已完成且验证通过 |
-| 类型/API 与后端不一致 | 停止，回 design 或列 open question |
+| 类型/API 与后端不一致 | 封装层标 `TODO(vX.Y.Z): 接口联调待定` 并用占位推进；阻塞 UI 则回 design |
 | plan / design / summarized 为 STALE | 停止，回对应上游步骤更新 |
 | 验证命令不存在 | 从 technical-architecture 查找等价命令；仍无则停止 |
 | 实现需新增 plan 外文件 | 停止，回 plan 补充任务后再做 |
@@ -113,7 +117,9 @@ VERIFY：运行 task 验证命令
 - [ ] 所有目标 task 已完成
 - [ ] 输入 plan / design / summarized 状态均为 `ACTIVE`
 - [ ] 每个行为 task 的 RED / GREEN / REFACTOR / VERIFY 已执行并写入 `progress.md`
+- [ ] Style Anchors 已维护；每 task 已 Style Reload
 - [ ] 改动范围 ⊆ plan 文件边界
+- [ ] 新增 API 有封装层占位与规范 TODO（若有待定项）
 - [ ] 无 plan 外重构、无未解释的新抽象
 - [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
 
@@ -124,3 +130,4 @@ VERIFY：运行 task 验证命令
 - 全量测试命令（来自 technical-architecture）
 - 每个 task 的 RED/GREEN/REFACTOR 证据摘要
 - 已知未覆盖风险
+- `TODO(vX.Y.Z): 接口联调待定` 清单（若有）

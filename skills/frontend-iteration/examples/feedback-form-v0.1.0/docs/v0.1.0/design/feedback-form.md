@@ -41,11 +41,26 @@
 
 ## 接口契约
 
-| API | 方法 | 入参 | 返回 | 前端类型 |
-|-----|------|------|------|----------|
-| `/api/feedback` | POST | `{ type: FeedbackType; content: string }` | `{ ok: true }` | `submitFeedback(payload): Promise<void>` |
+**参照**：
 
-后端未就绪：是。先在 `src/api/feedback.ts` 封装 `submitFeedback`，按 `{ type, content }` 约定；接口就绪后仅改封装内部，不影响页面。提交失败（非 2xx 或网络异常）统一 reject。
+| 类型 | 路径/符号 | 说明 |
+|------|-----------|------|
+| 类似页面 | （本迭代为首例，无） | — |
+| 已有 API 封装 | `src/api/` 目录约定 | 遵循 technical-architecture |
+| 已有类型 | `src/types/` | 新建 `feedback.ts` |
+
+| API | 方法 | 入参 | 返回 | 前端类型 | 已有/新增 |
+|-----|------|------|------|----------|-----------|
+| `/api/feedback`（暂定） | POST | `{ type, content }` | `{ ok: true }` | `submitFeedback(payload): Promise<void>` | 新增 |
+
+后端未就绪：是。封装 `src/api/feedback.ts`；占位返回；切换点仅改封装内部。
+
+**联调待定清单**（实现写 `TODO(v0.1.0): 接口联调待定`）：
+
+- 路径 `/api/feedback` 待后端确认
+- 入参/返回字段以后端为准
+
+先在 `src/api/feedback.ts` 封装 `submitFeedback`，按 `{ type, content }` 约定；接口就绪后仅改封装内部，不影响页面。提交失败（非 2xx 或网络异常）统一 reject。
 
 ## 路由
 

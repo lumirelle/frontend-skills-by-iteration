@@ -118,6 +118,8 @@ strict 或 step 4–7 等待逐步确认
 ## References
 
 - 步骤门禁细则：[step-gates.md](references/step-gates.md)
+- 代码风格防遗忘：[code-style-enforcement.md](references/code-style-enforcement.md)
+- 接口联调全流程：[api-integration-guide.md](references/api-integration-guide.md)
 - 版本与目录约定：[version-convention.md](references/version-convention.md)
 - 进度记录约定：[progress-convention.md](references/progress-convention.md)
 - 文档状态约定：[document-status.md](references/document-status.md)

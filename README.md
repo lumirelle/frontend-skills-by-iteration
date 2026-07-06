@@ -47,7 +47,7 @@ npx skills add lumirelle/frontend-skills-by-iteration --skill '*'
 - `templates/docs/technical-architecture.md`
 - `templates/docs/version/` → Bootstrap 复制为 `docs/vX.Y.Z/`
 - `examples/` → 黄金路径成品样例（只读参照）
-- `references/`：step-gates、progress、document-status、version、orchestrated-invocation 约定
+- `references/`：step-gates、progress、document-status、version、orchestrated-invocation、**code-style-enforcement**、**api-integration-guide** 约定
 
 路径解析见 `frontend-iteration` → **Skill Path Resolution**（兼容 `.agents/skills/` 与 `skills/` 两种布局）。
 

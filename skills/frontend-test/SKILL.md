@@ -42,7 +42,7 @@ disable-model-invocation: true
 4. 对照矩阵检查测试是否已存在；缺失则记录缺口并回到 `frontend-implement`，不在本步顺手补。
 5. 分层执行全量回归：单元 → 集成 → E2E；失败则记录并回到 `frontend-implement` 修复，不进入下一层。
 6. 将实际运行命令、exit code 与结果写入 `progress.md` 的 Verification Log。
-7. 生成 `test-report.md`（命令、结果、覆盖映射、未覆盖风险）。
+7. 生成 `test-report.md`（命令、结果、覆盖映射、未覆盖风险、接口联调/TODO 清单）。
 8. 按 Done Checklist 自检。
 9. 向用户展示摘要，等待确认。
 
@@ -64,7 +64,7 @@ disable-model-invocation: true
 | 层级 | 覆盖 | 来源 |
 |------|------|------|
 | 单元 | 纯逻辑、工具、组件渲染/交互 | plan 测试矩阵 |
-| 集成 | API 联调、模块协作、请求封装 | plan + design |
+| 集成 | API 封装与模块协作（mock 边界）；真实后端联调为未覆盖风险项 | plan + design |
 | E2E | 关键用户路径 | summarized 主流程 |
 
 项目未配置某层 → 在报告中标注「未配置」及替代覆盖方式。
@@ -80,6 +80,7 @@ disable-model-invocation: true
 | Flaky 测试 | 重跑 1 次；仍失败则按失败处理并记录 |
 | 无 E2E 框架 | 报告说明；关键路径改手动验收清单 |
 | 验收标准无自动化覆盖 | 列手动步骤与结果，标注未覆盖风险 |
+| 真实后端未联调 | 集成测 mock 封装层；报告列出 `TODO(vX.Y.Z): 接口联调待定` 与 api-integration-guide 风险项 |
 
 ## Done Checklist
 
@@ -102,3 +103,4 @@ disable-model-invocation: true
 
 - 测试报告模板：[test-report-template.md](references/test-report-template.md)
 - 用例编写指南：[test-writing-guide.md](references/test-writing-guide.md)
+- 接口联调：`frontend-iteration/references/api-integration-guide.md`

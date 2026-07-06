@@ -52,5 +52,6 @@ feedback-form-v0.1.0/docs/
 - 方案选最小改动（局部状态，不抽全局 store）。
 - 计划拆成 3 个 TDD task，依赖链清晰。
 - 测试三层全过，验收标准逐条映射。
-- 审查无 🔴，仅 1 条 🟡（接口未联调）顺延到发布说明。
+- 审查无 🔴，仅 1 条 🟡（接口未联调）顺延到发布说明；代码侧用 `TODO(v0.1.0): 接口联调待定` 标记。
+- `progress.md` 含 Style Anchors，步骤 4 每 task 重读防风格漂移。
 - 全程无回退、无 STALE/BLOCKED；`progress.md` 七步全 `passed`。

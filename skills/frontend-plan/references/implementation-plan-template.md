@@ -128,6 +128,7 @@
 
 | 风险 | 应对 |
 |------|------|
+| 后端未就绪 | API task 占位 + `TODO(vX.Y.Z): 接口联调待定`；见 api-integration-guide |
 | | |
 
 ## Open Questions

@@ -24,6 +24,15 @@
 | plans/feedback-form.md | Task 2 提交流程 | passed | observed | passed | verified | pass | yes | `feat(feedback-form): submit flow with states` |
 | plans/feedback-form.md | Task 3 入口与路由 | passed | observed | passed | not needed | pass | yes | `feat(profile): add feedback entry and route` |
 
+## Style Anchors
+
+| # | 规则 | 来源 |
+|---|------|------|
+| 1 | API 仅经 `src/api/feedback.ts`，页面不直接 `fetch` | technical-architecture → Code Style |
+| 2 | 单元测试与源码同目录 `*.test.ts` | technical-architecture → Testing |
+| 3 | 表单控件须有可访问标签 | technical-architecture → Project Conventions |
+| 4 | 接口待定用 `TODO(v0.1.0): 接口联调待定` | api-integration-guide |
+
 ## Draft Batch
 
 | Batch | Status | Created at | Confirmed at | Files |

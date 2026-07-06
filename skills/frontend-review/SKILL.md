@@ -39,8 +39,8 @@ disable-model-invocation: true
 
 1. 读取 summarized、design、plans，明确预期行为与改动边界。
 2. 读取 `progress.md` 与 `test-report.md`，确认 task 状态、TDD 证据、测试结论与未覆盖风险。
-3. 审查代码变更（diff），对照 plan 文件边界与 design 方案。
-4. 按 Review Dimensions 逐项检查，记录问题并分级。
+3. 审查代码变更（diff），对照 plan 文件边界与 design 方案；审查前重读 `progress.md` → Style Anchors。
+4. 按 Review Dimensions 逐项检查；对照 `api-integration-guide` 核对 API 封装、占位与 `TODO(vX.Y.Z): 接口联调待定`。
 5. 生成 `review/*.md`，给出结论：**通过** / **有条件通过** / **不通过**。
 6. 将 review gate 结果写入 `progress.md`。
 7. 按 Done Checklist 自检。
@@ -65,7 +65,9 @@ disable-model-invocation: true
 | 需求符合 | 行为与 summarized 验收标准一致 |
 | 方案符合 | 实现与 design 一致，无未解释的偏离 |
 | 范围符合 | 改动 ⊆ plan 文件边界，无隐藏重构 |
-| 架构一致 | 目录、命名、状态管理、请求封装符合 technical-architecture |
+| 架构一致 | 目录、命名、状态管理、请求封装符合 technical-architecture 与 Style Anchors |
+| 代码风格 | 与邻文件、Style Anchors 一致；lint 可过（若已配置） |
+| 接口联调 | 封装边界、占位、TODO 格式与 design 一致；页面无硬编码假数据 |
 | 正确性 | 逻辑、边界、错误处理、权限态 |
 | 可维护性 | 可读性、重复代码、过度抽象 |
 | 测试充分 | 与 test-report 一致；关键路径有覆盖 |
@@ -115,3 +117,5 @@ disable-model-invocation: true
 ## References
 
 - 审查模板：[review-template.md](references/review-template.md)
+- 代码风格：`frontend-iteration/references/code-style-enforcement.md`
+- 接口联调：`frontend-iteration/references/api-integration-guide.md`

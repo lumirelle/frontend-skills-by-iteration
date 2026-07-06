@@ -22,6 +22,14 @@
 |------|------|--------|-----|-------|----------|--------|--------|-------|
 | plans/<name>.md | Task 1 | pending | not run | not run | not needed | not run | no | |
 
+## Style Anchors
+
+步骤 4 开始前从 `technical-architecture.md` → Code Style 提炼 5–10 条；每 task 进入 GREEN 前重读。细则见 `code-style-enforcement.md`。
+
+| # | 规则 | 来源 |
+|---|------|------|
+| 1 | | technical-architecture |
+
 ## Draft Batch
 
 | Batch | Status | Created at | Confirmed at | Files |

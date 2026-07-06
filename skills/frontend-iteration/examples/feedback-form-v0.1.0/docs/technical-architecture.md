@@ -37,6 +37,19 @@
 | Types | `src/types/` | 共享类型 |
 | Tests | 与被测文件同目录 `*.test.ts` / `tests/e2e/` | 见下 |
 
+## Code Style
+
+| 维度 | 约定 |
+|------|------|
+| 命名 | 页面 PascalCase 目录 + 同名组件；API 函数 camelCase；类型 PascalCase |
+| 导入 | 外部库 → 别名 `@app/` → 相对路径；同组空一行 |
+| 组件 | 函数式组件；单文件单默认导出页面组件 |
+| 状态 | 表单/页面临时状态用 `useState` 等价物；无跨页共享则不建 store |
+| API 调用 | 仅 `src/api/`；页面不直接 `fetch` |
+| 错误处理 | API reject → 页面 `status='error'` + 统一文案；不在 API 层弹 UI |
+| 注释与 TODO | 接口待定：`TODO(vX.Y.Z): 接口联调待定` |
+| Lint / Format | `npm run lint`、`npm run typecheck` |
+
 ## Testing
 
 ### Frameworks
