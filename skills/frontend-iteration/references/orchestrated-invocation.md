@@ -1,57 +1,67 @@
-# Orchestrated Invocation
+# 编排调用契约
 
-本文件统一规定 sub-skill 在**两种调用方式**下的契约、Workflow 变体与门禁落盘要求，供 7 个 sub-skill 引用，避免各自重复同一段落。
+sub-skill 调用契约、Workflow 变体、门禁落盘、**User Output** 统一约定。7 个 sub-skill 引用本文。
 
-按 `frontend-iteration` → **Skill Path Resolution** 定位本文件（`frontend-iteration/references/orchestrated-invocation.md`）。
+路径：`frontend-iteration/references/orchestrated-invocation.md`（技能路径解析）。
 
-## Invocation Contract（通用）
+## 用户输出（对用户可见）
 
-| 调用方式 | 规则 |
-|----------|------|
-| **由 `frontend-iteration` 调用**（orchestrated） | 遵循编排器的 fast / strict 模式、`progress.md` 更新与确认规则。**fast 步骤 1–3**：不在 sub-skill 内单步等待确认，产出保持 `DRAFT` 并记录到 `progress.md` → `Draft Batch`，直至步骤 3 末批量确认。**步骤 4–7**：由编排器逐步确认（implement 仍逐 task 验证 + 可选 commit 询问）。`DRAFT` 消费范围见 **Workflow 变体** |
-| **直接调用**（standalone） | 自行校验输入；仅消费 `ACTIVE` 上游文档；产出 `DRAFT` 后等待用户确认，再改为 `ACTIVE` |
+汇报（摘要、gate、blocker、确认问、handoff）遵守 [agent-communication-style.md](agent-communication-style.md)：
 
-各 sub-skill 仅需在自身 Invocation Contract 补「本 skill 的职责边界」一句（处理什么、不处理什么）。
+- 去废话、不客套、不模糊
+- 技术词、代码块原样
+- 句式：`[事物] [动作] [原因]。` + 可选 `[下一步]。`
+- `docs/` 产物按模板，不受此约束
 
-## Workflow 变体（orchestrated）
+## 调用契约（通用）
 
-由 `frontend-iteration` 调用时，sub-skill 的 Workflow **末步「等待用户确认」按下表调整**，其余步骤不变。
+| 调用 | 规则 |
+|------|------|
+| **orchestrated**（`frontend-iteration`） | 跟 fast/strict、`progress.md` 确认规则。**fast 1–3**：sub-skill 内不单步等确认；产出 `DRAFT` 记入草稿批次；step 3 末批量确认。**4–7**：编排器逐步确认（implement 仍逐 task VERIFY + 可选 commit 问）。`DRAFT` 消费见 Workflow 变体 |
+| **standalone** | 自校验输入；只消费 `ACTIVE` 上游；产出 `DRAFT` 后等用户确认再 `ACTIVE` |
 
-| 步骤 | fast 模式 | strict 模式 |
-|------|-----------|-------------|
-| 1 requirements / 2 design / 3 plan | **不在 sub-skill 内单步等待确认**；产出保持 `DRAFT`，门禁通过即由编排器自动进入下一步；步骤 3 后由编排器**批量确认**并统一标 `ACTIVE` | 每步完成后由编排器等待确认 |
-| 4 implement / 5 test / 6 review / 7 release | 按编排器**逐步确认**（implement 仍逐 task 验证 + 可选 commit 询问） | 同左 |
+各 sub-skill 调用契约只补一句职责边界（做什么、不做什么）。
 
-**DRAFT 消费例外（唯一权威定义）**：仅当以下条件同时满足时，下游 sub-skill 可消费 `DRAFT`：
+## 工作流变体（orchestrated）
 
-1. 调用来自 `frontend-iteration fast` 步骤 1→2→3 链式执行。
-2. 该 `DRAFT` 文件列在 `docs/vX.Y.Z/progress.md` → `Draft Batch` 中。
-3. 对应 batch 的 `Status` 为 `open`，且 `Confirmed at` 为空。
+编排器调用时，Workflow 末步「等用户确认」按下表；其余不变。
 
-进入步骤 4 前，编排器必须展示 batch 摘要并等待用户批量确认；确认后将 batch 内文件统一标为 `ACTIVE`，把 batch 标为 `confirmed`。直接调用、strict 模式、步骤 4–7、无 batch 记录、或 batch 为 `confirmed` / `abandoned` 时，一律只消费 `ACTIVE`。本仓库其他位置出现的「编排草稿例外」均以本段为准。
+| 步骤 | fast | strict |
+|------|------|--------|
+| 1–3 | sub-skill 内不等确认；`DRAFT`；门禁过即下一步；3 后批量 `ACTIVE` | 每步完等确认 |
+| 4–7 | 编排器逐步确认（implement：逐 task + 可选 commit） | 同左 |
 
-**遗留 DRAFT 处理**：resume 或跳步时若读到 `DRAFT` 但没有 `open` batch 记录，按 `frontend-iteration` → Orchestration Rules Rule 1「遗留 DRAFT 转正」处理：先展示并请用户确认，转 `ACTIVE` 后再继续；不确认则停止。
+**DRAFT 消费例外（唯一权威）**：下游可消费 `DRAFT` 当且仅当：
 
-> **只读单个 sub-skill 时注意**：sub-skill Workflow 写的「等待确认 / 仅消费 ACTIVE」是 **standalone 默认**。由编排器调用时以本表为准——**fast 步骤 1–3** 不要因为上游是编排草稿 `DRAFT`、或本步未单步确认而停止；**步骤 4–7** 仍须在编排器层面逐步确认后再推进。
+1. `frontend-iteration fast` 链 1→2→3
+2. 文件列在 `progress.md` → **草稿批次**
+3. batch `Status` = `open` 且 `Confirmed at` 空
+
+进 step 4 前须展示 batch 摘要等批量确认；确认后 batch 内文件 `ACTIVE`，batch `confirmed`。standalone、strict、4–7、无 batch、batch `confirmed`/`abandoned` → 只消费 `ACTIVE`。
+
+**遗留 DRAFT**：resume/跳步见 `DRAFT` 无 `open` batch → 展示请用户确认转 `ACTIVE`；不确认则停。
+
+> 只读单 sub-skill：Workflow 写「等确认 / 只消费 ACTIVE」是 **standalone 默认**。编排器调用以本表为准——fast 1–3 不因上游 `DRAFT` 或本步未单步确认而停；4–7 须在编排器层面确认后再推。
 
 ## 状态门禁（通用）
 
-读取或写入任何 workflow 产物前：
+读写 workflow 产物前：
 
-1. 遵循 [document-status.md](document-status.md)（Agent Decision Table、Propagation Rules、各产物专约）。
-2. **standalone**：上游输入须为 `ACTIVE`；产出初稿为 `DRAFT`，用户确认后改为 `ACTIVE`。
-3. **orchestrated**：`DRAFT` 消费与确认时机见上文 **Workflow 变体** 与 **DRAFT 消费例外**；`STALE` / `BLOCKED` 一律停止并回上游。
+1. 跟 [document-status.md](document-status.md)
+2. **standalone**：上游 `ACTIVE`；产出初稿 `DRAFT`，确认后 `ACTIVE`
+3. **orchestrated**：`DRAFT` 见 Workflow 变体；`STALE`/`BLOCKED` → 停，回上游
 
-各 sub-skill Rules 的「状态门禁」仅补充**本 step 特异条件**；通用部分不再重复。
+sub-skill Rules「状态门禁」只补本 step 特异条件。
 
-## Done Checklist（通用项）
+## 完成检查（通用项）
 
-每个 sub-skill 的 Done Checklist 末尾共享以下一项，不再各自展开：
+各 sub-skill 完成检查末尾共享一项：
 
-- [ ] 完整门禁已按 `frontend-iteration` → [step-gates.md](step-gates.md) 核对，并按 [progress-convention.md](progress-convention.md) → **Per-Step Minimal Update** 落盘到 `docs/vX.Y.Z/progress.md`（不得只在聊天汇报）
+- [ ] 门禁按 [step-gates.md](step-gates.md) 核对；[progress-convention.md](progress-convention.md) → **每步最小落盘** 落盘 `progress.md`（不只聊天报）
 
 ## 相关
 
-- 文档状态体系：[document-status.md](document-status.md)
+- 用户输出：[agent-communication-style.md](agent-communication-style.md)
+- 文档状态：[document-status.md](document-status.md)
 - 步骤门禁：[step-gates.md](step-gates.md)
-- 进度落盘：[progress-convention.md](progress-convention.md)
+- 进度：[progress-convention.md](progress-convention.md)

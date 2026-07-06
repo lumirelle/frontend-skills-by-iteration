@@ -1,59 +1,67 @@
-# v0.1.0 Progress
+# v0.1.0 进度
 
-> Status: ACTIVE
-> Current step: 7 (done)
-> Updated: 2026-06-27
+> 状态: ACTIVE
+> 当前步骤: 7（已完成）
+> 更新于: 2026-06-27
 
-## Step Status
+## 步骤状态
 
-| Step | Name | Status | Gate result | Notes |
-|------|------|--------|-------------|-------|
-| 1 | requirements | passed | passed | summarized/feedback-form.md = ACTIVE |
-| 2 | design | passed | passed | design/feedback-form.md = ACTIVE，选方案 A |
-| 3 | plan | passed | passed | 3 个 TDD task，依赖链 1→2→3 |
-| 4 | implement | passed | passed | 3 个 task 均 RED→GREEN→(REFACTOR)→VERIFY |
-| 5 | test | passed | passed | 单元/集成/E2E exit 0 |
-| 6 | review | passed | passed | 结论「通过」，无 🔴 |
-| 7 | release | passed | passed | changelog-entry + PR 描述就绪 |
+| 步骤 | 名称 | 状态 | 门禁结果 | 备注 |
+|------|------|------|----------|------|
+| 1 | 需求 | passed | 通过 | summarized/feedback-form.md = ACTIVE |
+| 2 | 设计 | passed | 通过 | design/feedback-form.md = ACTIVE；方案 A |
+| 3 | 计划 | passed | 通过 | 4 任务；1→2→3→4 |
+| 4 | 实现 | passed | 通过 | 4 任务 RED→风格重载→GREEN→VERIFY |
+| 5 | 测试 | passed | 通过 | 单元/集成/E2E 退出码 0 |
+| 6 | 审查 | passed | 通过 | 结论通过；无 🔴 |
+| 7 | 发布 | passed | 通过 | changelog + PR 就绪 |
 
-## Plan Task Status
+## 计划任务状态
 
-| Plan | Task | Status | RED | GREEN | REFACTOR | VERIFY | Commit | Notes |
-|------|------|--------|-----|-------|----------|--------|--------|-------|
-| plans/feedback-form.md | Task 1 必填校验 | passed | observed | passed | not needed | pass | yes | `feat(feedback-form): validate required content` |
-| plans/feedback-form.md | Task 2 提交流程 | passed | observed | passed | verified | pass | yes | `feat(feedback-form): submit flow with states` |
-| plans/feedback-form.md | Task 3 入口与路由 | passed | observed | passed | not needed | pass | yes | `feat(profile): add feedback entry and route` |
+| 计划 | 任务 | 状态 | RED | GREEN | REFACTOR | VERIFY | 提交 | 备注 |
+|------|------|------|-----|-------|----------|--------|------|------|
+| plans/feedback-form.md | 任务 1 API 占位 | passed | 已观察 | 通过 | 不需要 | 通过 | 是 | `feat(feedback-form): add submitFeedback stub` |
+| plans/feedback-form.md | 任务 2 必填校验 | passed | 已观察 | 通过 | 不需要 | 通过 | 是 | `feat(feedback-form): validate required content` |
+| plans/feedback-form.md | 任务 3 提交流程 | passed | 已观察 | 通过 | 已验证 | 通过 | 是 | `feat(feedback-form): submit flow with states` |
+| plans/feedback-form.md | 任务 4 入口路由 | passed | 已观察 | 通过 | 不需要 | 通过 | 是 | `feat(profile): add feedback entry and route` |
 
-## Style Anchors
+## 风格锚点
 
-| # | 规则 | 来源 |
-|---|------|------|
-| 1 | API 仅经 `src/api/feedback.ts`，页面不直接 `fetch` | technical-architecture → Code Style |
-| 2 | 单元测试与源码同目录 `*.test.ts` | technical-architecture → Testing |
-| 3 | 表单控件须有可访问标签 | technical-architecture → Project Conventions |
-| 4 | 接口待定用 `TODO(v0.1.0): 接口联调待定` | api-integration-guide |
+| 序号 | 规则 | 来源 |
+|------|------|------|
+| 1 | API 仅 `src/api/feedback.ts`；页面不 `fetch` | 代码风格 |
+| 2 | 测试与源码同目录 `*.test.ts` | 测试 |
+| 3 | 表单控件有可访问标签 | 测试 → 项目约定 |
+| 4 | 待定 `TODO(v0.1.0): 接口联调待定` | api-integration-guide |
+| 5 | VERIFY 含 `npm run lint`、`npm run typecheck` | 代码风格 |
 
-## Draft Batch
+## 草稿批次
 
-| Batch | Status | Created at | Confirmed at | Files |
-|-------|--------|------------|--------------|-------|
-| fast-docs-20260627-0000 | confirmed | 2026-06-27 00:00 | 2026-06-27 00:00 | prd/summarized/feedback-form.md, design/feedback-form.md, plans/feedback-form.md |
+| 批次 | 状态 | 创建时间 | 确认时间 | 文件 |
+|------|------|----------|----------|------|
+| fast-docs-20260627-0000 | confirmed | 2026-06-27 00:00 | 2026-06-27 00:00 | summarized, design, plans |
 
-## Verification Log
+## 验证记录
 
-| Date | Step / Task | Command | Exit | Result |
-|------|-------------|---------|------|--------|
-| 2026-06-27 | Step 4 / Task 1 | `npm run test:unit` | 0 | pass |
-| 2026-06-27 | Step 4 / Task 2 | `npm run test:unit && npm run test:integration` | 0 | pass |
-| 2026-06-27 | Step 4 / Task 3 | `npm run test:unit` | 0 | pass |
-| 2026-06-27 | Step 5 | `npm run test:unit` | 0 | pass |
-| 2026-06-27 | Step 5 | `npm run test:integration` | 0 | pass |
-| 2026-06-27 | Step 5 | `npm run test:e2e` | 0 | pass |
+| 日期 | 步骤/任务 | 命令 | 退出码 | 结果 |
+|------|-----------|------|--------|------|
+| 2026-06-27 | 步骤 4 / 任务 1 | `npm run test:unit` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 1 | `npm run lint && npm run typecheck` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 2 | `npm run test:unit` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 2 | `npm run lint && npm run typecheck` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 3 | `npm run test:unit && npm run test:integration` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 3 | `npm run lint && npm run typecheck` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 4 | `npm run test:unit` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 4 | `npm run test:e2e` | 0 | 通过 |
+| 2026-06-27 | 步骤 4 / 任务 4 | `npm run lint && npm run typecheck` | 0 | 通过 |
+| 2026-06-27 | 步骤 5 | `npm run test:unit` | 0 | 通过 |
+| 2026-06-27 | 步骤 5 | `npm run test:integration` | 0 | 通过 |
+| 2026-06-27 | 步骤 5 | `npm run test:e2e` | 0 | 通过 |
 
-## Blockers
+## 阻塞项
 
-- None
+- 无
 
-## Notes
+## 备注
 
-- 接口字段以 mock 约定 `{ type, content }` 推进；后端就绪后补真实联调（见 test-report 未覆盖风险与 review 🟡#1）。
+- 任务 1 API 占位 + 2 处 `TODO(v0.1.0): 接口联调待定`；真联调见 test-report、review 🟡#1。

@@ -4,118 +4,116 @@ description: Use when reviewing implemented frontend iteration work against docs
 disable-model-invocation: true
 ---
 
-# Frontend Review
+# 前端审查
 
-## Goal
+## 目标
 
-对照需求、方案、计划与测试报告审查代码，分级记录问题，无 🔴 未解决项方可进入发布。
+对照需求、方案、计划、测试审代码；分级记问题。无未解决 🔴 才可发布。
 
-## Input
+## 输入
 
 | 路径 | 必需 | 说明 |
 |------|------|------|
-| `docs/technical-architecture.md` | 是 | 架构与代码约定 |
-| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 需求与验收标准 |
-| `docs/vX.Y.Z/design/*.md` | 是 | 技术方案 |
-| `docs/vX.Y.Z/plans/*.md` | 是 | 改动边界 |
-| `docs/vX.Y.Z/test-report.md` | 是 | 测试结果与未覆盖风险 |
-| `docs/vX.Y.Z/progress.md` | 是 | step / task 状态与 TDD 证据 |
-| 代码变更 | 是 | 实现 diff / 变更文件 |
+| `docs/technical-architecture.md` | 是 | 架构、约定 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收 |
+| `docs/vX.Y.Z/design/*.md` | 是 | 方案 |
+| `docs/vX.Y.Z/plans/*.md` | 是 | 边界 |
+| `docs/vX.Y.Z/test-report.md` | 是 | 结果、风险 |
+| `docs/vX.Y.Z/progress.md` | 是 | task、TDD 证据 |
+| 代码变更 | 是 | diff / 文件 |
 
-缺失必需项或 test-report 结论为「阻塞」→ **停止**，不产出 review 通过结论。
+缺必需项或 test-report「阻塞」→ **停**；不出通过结论。
 
-## Output
+## 输出
 
-- 目录：`docs/vX.Y.Z/review/`
-- 命名：与 `plans/` 同名，或单份 `review.md`（多页面迭代时优先按 plan 拆分）
+- `docs/vX.Y.Z/review/`；与 `plans/` 同名或单份 `review.md`
 - 模板：[review-template.md](references/review-template.md)
 
-## Invocation Contract
+## 调用契约
 
-- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准；直接调用时须确认步骤 4–5 已完成。
-- 本 skill 只产出审查记录；发现问题时给出回到 `frontend-implement` 或 `frontend-test` 的建议，不擅自修代码。
+- 见 `orchestrated-invocation.md`；standalone 须 step 4–5 已完成。
+- 只出审查记录；修复回 `frontend-implement` 或 `frontend-test`；不擅自改代码。
+- 对用户摘要见 `agent-communication-style.md`。
 
-## Workflow
+## 工作流
 
-1. 读取 summarized、design、plans，明确预期行为与改动边界。
-2. 读取 `progress.md` 与 `test-report.md`，确认 task 状态、TDD 证据、测试结论与未覆盖风险。
-3. 审查代码变更（diff），对照 plan 文件边界与 design 方案；审查前重读 `progress.md` → Style Anchors。
-4. 按 Review Dimensions 逐项检查；对照 `api-integration-guide` 核对 API 封装、占位与 `TODO(vX.Y.Z): 接口联调待定`。
-5. 生成 `review/*.md`，给出结论：**通过** / **有条件通过** / **不通过**。
-6. 将 review gate 结果写入 `progress.md`。
-7. 按 Done Checklist 自检。
-8. 向用户展示摘要（结论、🔴/🟡/🟢 统计、建议动作），等待确认。
+1. 读 summarized、design、plans；定预期与边界。
+2. 读 `progress.md`、`test-report.md`；task、TDD、结论、风险。
+3. 审 diff；对照 plan、design；审前重读 Style Anchors。
+4. 按审查维度；核对 API 封装、占位、`TODO(vX.Y.Z): 接口联调待定`。
+5. 出 `review/*.md`；结论：**通过** / **有条件通过** / **不通过**。
+6. gate 写 `progress.md`。
+7. 完成检查。
+8. 摘要：结论、🔴/🟡/🟢、建议；等确认。
 
-## Rules
+## 规则
 
-1. **证据导向**：每条问题须指向具体文件/行或行为，不空泛批评。
-2. **对照上游**：审查基准是 summarized + design + plan，不是 Agent 个人偏好。
-3. **分级明确**：🔴 必须修复；🟡 建议改进；🟢 可选优化。
-4. **不擅自改代码**：本步只产出审查记录；修复回到 `frontend-implement` 或 `frontend-test`。
-5. **🔴 阻断**：存在未解决 🔴 → 结论为「不通过」，不进入 `frontend-release`。
-6. **最小改动视角**：标记 plan 外改动、多余抽象、可合并的重复逻辑。
-7. **测试交叉验证**：test-report 声称通过但代码审查发现明显缺口 → 标为 🔴 或 🟡。
-8. **进度交叉验证**：`progress.md` 中未完成、blocked 或缺少 VERIFY 的 task，不得给出「通过」结论。
-9. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 summarized / design / plan / test-report 不可用时停止；Step 4 task 未完成或 Step 5 `blocked` 时不得给出「通过」。
+1. **证据导向**：问题指向文件/行/行为；不空泛。
+2. **对照上游**：基准 summarized + design + plan；非 Agent 偏好。
+3. **分级**：🔴 必修；🟡 建议；🟢 可选。
+4. **不改代码**：修复回 implement/test。
+5. **🔴 阻断**：未解决 🔴 → 不通过；不进 release。
+6. **最小改动**：标 plan 外改、多余抽象、重复逻辑。
+7. **测审交叉**：test-report 过但审查有缺口 → 🔴/🟡。
+8. **进度交叉**：task 未完/blocked/缺 VERIFY → 不得「通过」。
+9. **状态门禁**：见 `orchestrated-invocation.md`；上游不可用或 step 5 `blocked` → 不得通过。
 
-## Review Dimensions
+## 审查维度
 
-| 维度 | 检查点 |
-|------|--------|
-| 需求符合 | 行为与 summarized 验收标准一致 |
-| 方案符合 | 实现与 design 一致，无未解释的偏离 |
-| 范围符合 | 改动 ⊆ plan 文件边界，无隐藏重构 |
-| 架构一致 | 目录、命名、状态管理、请求封装符合 technical-architecture 与 Style Anchors |
-| 代码风格 | 与邻文件、Style Anchors 一致；lint 可过（若已配置） |
-| 接口联调 | 封装边界、占位、TODO 格式与 design 一致；页面无硬编码假数据 |
-| 正确性 | 逻辑、边界、错误处理、权限态 |
-| 可维护性 | 可读性、重复代码、过度抽象 |
-| 测试充分 | 与 test-report 一致；关键路径有覆盖 |
-| 安全 | XSS、敏感信息暴露、不安全 DOM 操作（适用时） |
-| 性能 | 明显不必要渲染、重复请求、大列表无优化（适用时） |
-| 回归风险 | 对既有功能的影响是否已评估 |
+| 维度 | 检查 |
+|------|------|
+| 需求符合 | 行为 = summarized 验收 |
+| 方案符合 | = design；偏离须解释 |
+| 范围符合 | ⊆ plan；无隐藏重构 |
+| 架构一致 | 目录、命名、状态、请求；architecture + Style Anchors |
+| 代码风格 | = 邻文件、Anchors；lint 可过（若配置） |
+| 接口联调 | 封装、占位、TODO = design；页面无硬编码假数据 |
+| 正确性 | 逻辑、边界、错误、权限 |
+| 可维护性 | 可读、重复、过度抽象 |
+| 测试充分 | = test-report；关键路径有覆盖 |
+| 安全 | XSS、敏感信息、不安全 DOM（适用时） |
+| 性能 | 多余渲染、重复请求、大列表（适用时） |
+| 回归风险 | 既有功能影响已评估 |
 
-## Severity Guide
+## 严重级别
 
-| 级别 | 含义 | 示例 |
-|------|------|------|
-| 🔴 | 必须修复才能发布 | 功能错误、越权、plan 外大改、测试虚假通过 |
-| 🟡 | 建议修复，可协商 | 命名不佳、缺错误处理、测试覆盖不足但可接受 |
-| 🟢 | 可选优化 | 风格、微重构、文档补充 |
+| 级别 | 含义 | 例 |
+|------|------|-----|
+| 🔴 | 发布前必修 | 功能错、越权、plan 外大改、假通过 |
+| 🟡 | 建议，可协商 | 命名差、缺错误处理、覆盖弱但可接受 |
+| 🟢 | 可选 | 风格、微重构、文档 |
 
-## Common Scenarios
+## 常见场景
 
 | 场景 | 处理 |
 |------|------|
-| 实现偏离 design 但更优 | 标 🟡，建议回 design 补记录或回滚实现 |
-| plan 外文件被修改 | 标 🔴，除非 plan 已同步更新 |
-| test-report 有未覆盖风险 | 在 review 中引用，评估是否阻塞发布 |
-| progress 与 test-report 不一致 | 标 🔴 或 open question，要求回步骤 4/5 补齐证据 |
-| 上游文档为 STALE | 停止，回对应上游步骤更新，不产出通过结论 |
-| 有 🔴 | 结论「不通过」，指明回步骤 4 或 5 |
-| 审查中发现需求歧义 | 标 open question，不擅自扩大范围 |
+| 偏离 design 但更优 | 🟡；回 design 补记或回滚 |
+| plan 外文件改 | 🔴；除非 plan 已同步 |
+| test-report 有风险 | 引用；评是否阻塞发布 |
+| progress 与 test-report 不一致 | 🔴 或待确认问题；回 4/5 补证据 |
+| 上游 STALE | 停；回上游 |
+| 有 🔴 | 不通过；指明回 4 或 5 |
+| 需求歧义 | 待确认问题；不扩范围 |
 
-## Done Checklist
+## 完成检查
 
-- [ ] `review/` 含审查记录
-- [ ] 输入 summarized / design / plan / test-report 状态均为 `ACTIVE`
-- [ ] 问题已分级：🔴 / 🟡 / 🟢
-- [ ] 结论明确：通过 / 有条件通过 / 不通过
-- [ ] 无未解决 🔴（通过或有条件通过时）
-- [ ] 与 test-report、plan、design 交叉核对完成
-- [ ] 与 `progress.md` 的 task 状态和 TDD 证据交叉核对完成
-- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
+- [ ] `review/` 有记录
+- [ ] summarized/design/plan/test-report 均 `ACTIVE`
+- [ ] 问题已分级
+- [ ] 结论明确
+- [ ] 通过/有条件通过时无未解决 🔴
+- [ ] 与 test-report、plan、design、progress 交叉完成
+- [ ] 通用门禁与 `progress.md` 落盘
 
-## Handoff to Step 7
+## 交接下游 → 步骤 7
 
-交给 `frontend-release`（仅当无 🔴 或用户接受有条件通过）：
+（无 🔴 或用户接受有条件通过）
 
-- `review/*.md`
-- `test-report.md`
-- 变更摘要与已知 🟡 项
+- `review/*.md`、`test-report.md`
+- 变更摘要、已知 🟡
 
-## References
+## 参考
 
-- 审查模板：[review-template.md](references/review-template.md)
-- 代码风格：`frontend-iteration/references/code-style-enforcement.md`
-- 接口联调：`frontend-iteration/references/api-integration-guide.md`
+- 模板：[review-template.md](references/review-template.md)
+- 风格：`frontend-iteration/references/code-style-enforcement.md`
+- 接口：`frontend-iteration/references/api-integration-guide.md`

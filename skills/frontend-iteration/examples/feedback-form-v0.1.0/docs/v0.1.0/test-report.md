@@ -1,11 +1,11 @@
 # v0.1.0 测试报告
 
-> Status: ACTIVE
-> Version: v0.1.0
-> Source: plans/feedback-form.md, progress.md
-> Updated: 2026-06-27
-> Scope: 用户反馈表单（feedback-form）
-> Stale reason:
+> 状态: ACTIVE
+> 版本: v0.1.0
+> 来源: plans/feedback-form.md, progress.md
+> 更新于: 2026-06-27
+> 范围: feedback-form
+> 失效原因:
 
 ## 摘要
 
@@ -18,28 +18,31 @@
 
 | 层级 | 命令 | 结果 | 备注 |
 |------|------|------|------|
-| 单元 | `npm run test:unit` | exit 0 | 12 passed |
+| 单元 | `npm run test:unit` | exit 0 | 14 passed（含 API 封装） |
 | 集成 | `npm run test:integration` | exit 0 | 4 passed |
-| E2E | `npm run test:e2e` | exit 0 | 1 passed（关键路径） |
+| E2E | `npm run test:e2e` | exit 0 | 1 passed |
 
-## TDD Evidence
+## TDD 证据
 
-| Task | RED observed | GREEN passed | Refactor verified | 备注 |
-|------|--------------|--------------|-------------------|------|
-| Task 1 | yes | yes | not needed | 空内容校验 |
-| Task 2 | yes | yes | yes | 文案抽常量后用例仍通过 |
-| Task 3 | yes | yes | not needed | 入口 + 路由 |
+| 任务 | RED | GREEN | REFACTOR | 备注 |
+|------|-----|-------|----------|------|
+| 任务 1 API 占位 | 已观察 | 通过 | 不需要 | `feedback.test.ts` |
+| 任务 2 校验 | 已观察 | 通过 | 不需要 | trim 判空 |
+| 任务 3 提交流程 | 已观察 | 通过 | 已验证 | 文案常量 |
+| 任务 4 入口 | 已观察 | 通过 | 不需要 | E2E 关键路径 |
+
+与 `progress.md` 计划任务状态一致。
 
 ## 验收标准覆盖
 
-| 验收标准（来自 summarized） | 覆盖方式 | 对应用例/任务 | 结果 |
-|----------------------------|----------|---------------|------|
-| 「我的」存在入口并进入表单 | 单元 + E2E | Task 3 | 通过 |
-| 类型默认「功能建议」可切换 | 单元 | Task 1 | 通过 |
-| 空内容（含空白）提交被拦截并提示 | 单元 | Task 1 | 通过 |
-| 提交中按钮 disabled 显示「提交中…」 | 集成 | Task 2 | 通过 |
-| 成功后提示并重置 | 集成 + E2E | Task 2 / Task 3 | 通过 |
-| 失败后提示并保留内容 | 集成 | Task 2 | 通过 |
+| 验收标准 | 覆盖 | 用例/任务 | 结果 |
+|----------|------|-----------|------|
+| 入口进表单 | 单元 + E2E | 任务 4 | 通过 |
+| 类型默认可切换 | 单元 | 任务 2 | 通过 |
+| 空内容拦截 | 单元 | 任务 2 | 通过 |
+| 提交中 disabled | 集成 | 任务 3 | 通过 |
+| 成功重置 | 集成 + E2E | 任务 3 / 4 | 通过 |
+| 失败保留 | 集成 | 任务 3 | 通过 |
 
 ## 测试缺口
 
@@ -47,17 +50,22 @@
 
 ## 手动验收
 
-无（关键路径已由 E2E 覆盖）。
+无（E2E 覆盖关键路径）。
 
 ## 未覆盖风险
 
-- 后端真实接口尚未联调，集成测试基于 mock；接口就绪后需补一次真实联调验证。
+- 真后端未联调；集成 mock `src/api/feedback.ts`。
+- 就绪后补一次真联调。
 
 ## 接口联调
 
-| 项 | 状态 | 代码位置 / TODO |
-|----|------|-----------------|
-| `POST /api/feedback` | 未做 | `src/api/feedback.ts` — `TODO(v0.1.0): 接口联调待定，路径与字段以后端为准` |
+| 项 | 状态 | 位置 / TODO |
+|----|------|-------------|
+| `POST /api/feedback` | 未做 | `src/api/feedback.ts` |
+| 路径待定 | 代码已标 | `TODO(v0.1.0): 接口联调待定，路径 /api/feedback 待后端确认` |
+| 字段待定 | 代码已标 | `TODO(v0.1.0): 接口联调待定，入参/返回字段以后端为准` |
+
+检索：`rg "TODO\(v0\.1\.0\): 接口联调待定"` → 2 处，均在 `feedback.ts`。
 
 ## 阻塞项
 

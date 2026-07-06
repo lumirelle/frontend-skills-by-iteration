@@ -1,4 +1,4 @@
-# PR Description Template
+# PR 描述模板
 
 复制此结构生成 PR 描述。语言与项目一致；标题遵循 Conventional Commits（仅英文）。
 

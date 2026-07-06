@@ -1,16 +1,16 @@
-# Test Report Template
+# 测试报告模板
 
 复制此结构生成 `docs/vX.Y.Z/test-report.md`。
 
 ```markdown
 # vX.Y.Z 测试报告
 
-> Status: DRAFT
-> Version: vX.Y.Z
-> Source: plans/*.md, progress.md
-> Updated: YYYY-MM-DD
-> Scope: [页面/功能列表]
-> Stale reason:
+> 状态: DRAFT
+> 版本: vX.Y.Z
+> 来源: plans/*.md, progress.md
+> 更新于: YYYY-MM-DD
+> 范围: [页面/功能列表]
+> 失效原因:
 
 ## 摘要
 
@@ -27,11 +27,11 @@
 | 集成 | `npm run test:integration` | exit 0 | |
 | E2E | `npm run test:e2e` | exit 0 | |
 
-## TDD Evidence
+## TDD 证据
 
-| Task | RED observed | GREEN passed | Refactor verified | 备注 |
-|------|--------------|--------------|-------------------|------|
-| Task N | yes/no | yes/no | yes/no/not needed | |
+| 任务 | RED 已观测 | GREEN 已通过 | Refactor 已验证 | 备注 |
+|------|------------|--------------|-------------------|------|
+| 任务 N | 是/否 | 是/否 | 是/否/不需要 | |
 
 ## 验收标准覆盖
 
@@ -80,10 +80,10 @@
 
 | 章节 | 要求 |
 |------|------|
-| 文首 `Status` | **文档生命周期**（`DRAFT`/`ACTIVE`/`STALE`/`BLOCKED`），非执行进度；下游 review 仅消费 `ACTIVE` |
-| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`；与文首 `Status` 须一致（见 document-status「test-report 专约」） |
-| `阻塞项` | 非空时文首 `Status` 为 `BLOCKED` 或 `DRAFT`，且 `结论` 为 `阻塞` |
+| 文首 `状态` | **文档生命周期**（`DRAFT`/`ACTIVE`/`STALE`/`BLOCKED`），非执行进度；下游 review 仅消费 `ACTIVE` |
+| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`；与文首 `状态` 须一致（见 document-status「test-report 专约」） |
+| `阻塞项` | 非空时文首 `状态` 为 `BLOCKED` 或 `DRAFT`，且 `结论` 为 `阻塞` |
 | 执行命令 | 写实际运行的完整命令；同步写入 `progress.md` Verification Log |
-| TDD Evidence | 引用 `progress.md` 记录，不替代落盘 |
+| TDD 证据 | 引用 `progress.md` 记录，不替代落盘 |
 | 验收标准覆盖 | 每条 summarized 验收标准至少一行 |
 | 未覆盖风险 | 诚实列出；含真实后端未联调与 TODO 清单；有阻塞项则结论为「阻塞」 |

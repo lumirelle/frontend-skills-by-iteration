@@ -1,52 +1,52 @@
-# Code Style Enforcement
+# 代码风格约束
 
-长会话中 Agent 容易「开头遵守、后面遗忘」代码风格。本约定通过**重复注入锚点**对抗上下文丢失，适用于步骤 2–7（凡涉及读/写代码或审查代码）。
+长会话易忘代码风格。用 **风格锚点 + 重复重读** 对抗上下文丢失。适用 step 2–7（读/写/审代码）。
 
-权威来源：`docs/technical-architecture.md` → **Code Style** 与 **Directory Conventions**。本文定义如何**反复加载**这些约定，而非替代项目事实。
+权威：`docs/technical-architecture.md` → **代码风格**、**目录约定**。本文管「怎么反复加载」，不替代项目事实。
 
-## Style Anchors（风格锚点）
+## 风格锚点
 
-步骤 4 开始前，从 `technical-architecture.md` 提炼 **5–10 条**与本迭代相关的可执行规则，写入 `docs/vX.Y.Z/progress.md` → **Style Anchors** 表。示例：
+step 4 前从 architecture 提炼 **5–10 条**可执行规则，写入 `progress.md` → **风格锚点**。
 
 | # | 规则 | 来源 |
 |---|------|------|
-| 1 | API 封装放 `src/api/`，页面不直接 `fetch` | technical-architecture → Directory |
-| 2 | 组件测试与被测文件同目录 `*.test.ts` | technical-architecture → Testing |
-| 3 | 表单控件须有可访问标签 | technical-architecture → Project Conventions |
+| 1 | API 仅 `src/api/`，页面不 `fetch` | 目录约定 |
+| 2 | 测试与源码同目录 `*.test.ts` | 测试 |
+| 3 | 表单控件有可访问标签 | 项目约定 |
 
-规则须**具体、可判定**（能回答「这段代码是否违反」），禁止空泛如「写好代码」。
+规则须可判定（能答「是否违反」）。禁空泛「写好代码」。
 
-步骤 4 每完成一个 task、步骤 6 审查前，**必须重读 Style Anchors**（不得凭记忆）。`technical-architecture.md` 或项目约定变更时，同步更新锚点表。
+每 task 完、step 6 审前 **重读锚点**（不凭记忆）。architecture 变则同步表。
 
-## Per-Task Style Reload（实现阶段）
+## 每任务风格重载（implement）
 
-`frontend-implement` 每个 task 进入 GREEN 前：
+每 task 进 GREEN 前：
 
-1. 重读 `progress.md` → Style Anchors。
-2. 打开本 task **将修改的文件**及**同目录最近邻 1–2 个文件**（或 plan 指定的参照文件），对齐命名、导入顺序、组件结构、错误处理模式。
-3. GREEN 完成后、VERIFY 前：若项目有 Lint / Type check 命令，纳入 VERIFY 并记录 exit code。
+1. 重读 `progress.md` → 风格锚点
+2. 开本 task 将改文件 + 同目录邻文件 1–2 个（或 plan 指定参照），对齐命名、导入、结构、错误处理
+3. GREEN 后、VERIFY 前：有 Lint/Typecheck 则跑，记 exit code
 
-REFACTOR 阶段不得引入与锚点或邻文件不一致的风格。
+REFACTOR 不得偏离锚点或邻文件风格。
 
-## Per-Step Style Reload（文档阶段）
+## 每步重载
 
-| Step | 重载时机 |
-|------|----------|
-| 2 design | 写「涉及文件」前重读 Directory Conventions + Code Style |
-| 3 plan | 写文件路径与 task 步骤前重读 Style Anchors（若已有）或 technical-architecture |
+| 步骤 | 时机 |
+|------|------|
+| 2 design | 写涉及文件前重读目录约定 + 代码风格 |
+| 3 plan | 写路径/task 前重读锚点或 architecture |
 | 4 implement | 每 task 见上 |
-| 5 test | 补测前重读 Testing 约定与锚点 |
-| 6 review | 审查 diff 前重读 Style Anchors，并抽查变更文件邻域 |
+| 5 test | 补测前重读测试约定 + 锚点 |
+| 6 review | 审 diff 前重读锚点 + 抽查邻域 |
 
-## 常见违规与处理
+## 违规处理
 
-| 违规 | 步骤 4 | 步骤 6 |
+| 违规 | step 4 | step 6 |
 |------|--------|--------|
-| 目录/命名与 architecture 不符 | 本 task 内修正 | 🔴 |
-| 与邻文件风格明显不一致 | REFACTOR 修正 | 🟡 或 🔴（视范围） |
-| 未跑 lint/typecheck 且项目已配置 | VERIFY 补跑 | 🟡 |
-| Style Anchors 未维护或过期 | 先更新锚点再继续 | open question |
+| 目录/命名不符 architecture | 本 task 修 | 🔴 |
+| 与邻文件风格差大 | REFACTOR 修 | 🟡/🔴 |
+| 未跑 lint/typecheck（已配置） | VERIFY 补跑 | 🟡 |
+| 锚点缺/过期 | 先更新再继续 | 待确认问题 |
 
-## 与 progress.md 的关系
+## progress.md
 
-Style Anchors 是 resume 时**最快恢复风格上下文**的入口。步骤 4 第一步须确保该表存在；后续 task 只读表 + 邻文件，不必每次重读整份 architecture（architecture 变更时除外）。
+锚点为 resume 最快风格入口。step 4 首步确保表存在；后续 task 读表 + 邻文件即可（architecture 变除外）。

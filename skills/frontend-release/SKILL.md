@@ -4,100 +4,100 @@ description: Use when preparing release materials after docs/vX.Y.Z/review/*.md 
 disable-model-invocation: true
 ---
 
-# Frontend Release
+# 前端发布
 
-## Goal
+## 目标
 
-在审查通过后整理变更记录与 PR 描述，完成合并前清单，使迭代可发布。
+审查通过后整理 changelog、PR 描述、合并前清单；迭代可发布。
 
-## Input
+## 输入
 
 | 路径 | 必需 | 说明 |
 |------|------|------|
-| `docs/vX.Y.Z/review/*.md` | 是 | 审查结论，须无未解决 🔴 |
-| `docs/vX.Y.Z/test-report.md` | 是 | 测试结果与未覆盖风险 |
-| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 需求摘要，写变更说明用 |
-| `docs/vX.Y.Z/plans/*.md` | 是 | 变更范围 |
-| `docs/vX.Y.Z/progress.md` | 是 | step gate 与阻塞项 |
-| 代码变更 / git 历史 | 是 | 提交记录与改动文件 |
+| `docs/vX.Y.Z/review/*.md` | 是 | 审查；无未解决 🔴 |
+| `docs/vX.Y.Z/test-report.md` | 是 | 结果、风险 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 变更说明 |
+| `docs/vX.Y.Z/plans/*.md` | 是 | 范围 |
+| `docs/vX.Y.Z/progress.md` | 是 | gate、阻塞 |
+| 代码 / git | 是 | 提交、文件 |
 
-审查未通过（存在未解决 🔴）→ **停止**，回 `frontend-review` 或上游修复。
+有未解决 🔴 → **停**；回 review 或上游。
 
-## Output
+## 输出
 
-- `docs/vX.Y.Z/release/changelog-entry.md`：本迭代 changelog 草稿
-- `docs/vX.Y.Z/release/pr-description.md`：PR 描述，按 [pr-description-template.md](references/pr-description-template.md)
-- 项目根 `CHANGELOG.md`（或等效文件）追加 vX.Y.Z 条目：仅在项目已有约定或用户确认后执行
+- `docs/vX.Y.Z/release/changelog-entry.md`
+- `docs/vX.Y.Z/release/pr-description.md`（模板 [pr-description-template.md](references/pr-description-template.md)）
+- 根 `CHANGELOG.md` 追加：仅项目已有约定或用户确认后
 - 合并前清单结果
 
-## Invocation Contract
+## 调用契约
 
-- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准；直接调用时须确认无 blocker。
-- 本 skill 只准备发布材料；merge / push / tag 必须等待用户显式确认。
+- 见 `orchestrated-invocation.md`；standalone 须无 blocker。
+- 只备发布材料；merge/push/tag 须用户显式确认。
+- 对用户摘要见 `agent-communication-style.md`。
 
-## Workflow
+## 工作流
 
-1. 确认 review 结论无未解决 🔴，test-report 无阻塞项，输入文档状态均为 `ACTIVE`。
-2. 汇总本迭代变更：从 summarized、plans、git 历史归纳。
-3. 生成 `docs/vX.Y.Z/release/changelog-entry.md`（用户视角，分类列出）。
-4. 生成 `docs/vX.Y.Z/release/pr-description.md`（背景、改动摘要、测试说明、风险、关联文档）。
-5. 若项目已有根 `CHANGELOG.md` 或用户要求追加，确认后再写入项目级变更记录。
-6. 执行合并前清单。
-7. 按 Done Checklist 自检。
-8. 向用户展示摘要，**等待用户确认后再执行合并/push/tag**。
+1. 确认 review 无 🔴、test-report 无阻塞、输入均 `ACTIVE`。
+2. 汇总变更：summarized、plans、git。
+3. 出 changelog-entry（用户视角、分类）。
+4. 出 pr-description（背景、改动、测试、风险、文档链）。
+5. 根 CHANGELOG：有约定或用户要求时，确认后写。
+6. 合并前检查。
+7. 完成检查。
+8. 摘要；**用户确认后再 merge/push/tag**。
 
-## Rules
+## 规则
 
-1. **门禁前置**：未通过 review 或有阻塞测试 → 不发布。
-2. **不自动合并/推送**：merge / push / 打 tag 须用户明确同意后执行。
-3. **英文提交规范**：合并提交、tag、release commit 遵循 Conventional Commits，仅英文（与 `frontend-implement` 一致）。
-4. **CHANGELOG 用户视角**：写「用户/调用方能感知的变化」，不堆实现细节。
-5. **文档代码一致**：变更记录、PR 描述与实际改动一致，不夸大不遗漏。
-6. **风险透明**：test-report 的未覆盖风险与 review 的 🟡 项须在 PR 中体现；含 `TODO(vX.Y.Z): 接口联调待定` 清单（见 api-integration-guide）。
-7. **可追溯**：PR 关联本迭代 docs 路径，便于回溯需求/方案/测试。
-8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；输入 review / test-report / summarized / plan 不可用时停止；`progress.md` 有 blocker 或 Step 5 `blocked` 时不得发布。
+1. **门禁前置**：review 不过或测试阻塞 → 不发布。
+2. **不自动 merge/push**：须用户同意。
+3. **commit 英文**：merge、tag、release commit 用 Conventional Commits（同 implement）。
+4. **CHANGELOG 用户视角**：可感知变化；不堆实现细节。
+5. **文档代码一致**：记录与改动一致；不夸大不遗漏。
+6. **风险透明**：test-report 风险、review 🟡、 `TODO(vX.Y.Z): 接口联调待定` 清单进 PR。
+7. **可追溯**：PR 链本迭代 docs。
+8. **状态门禁**：见 `orchestrated-invocation.md`；blocker 或 step 5 `blocked` → 不发布。
 
-## Changelog Convention
+## 变更日志
 
-- 版本标题：`## vX.Y.Z - YYYY-MM-DD`
-- 分类（仅列有内容的）：`Added` / `Changed` / `Fixed` / `Removed` / `Performance` / `Docs`
-- 每条一行，用户视角，英文或项目既定语言保持一致
-- 关联来源可选标注（如 PRD 名 / issue）
+- 标题：`## vX.Y.Z - YYYY-MM-DD`
+- 分类（有内容才列）：`Added`/`Changed`/`Fixed`/`Removed`/`Performance`/`Docs`
+- 每行用户视角；语言跟项目
+- 可标 PRD/issue
 
-## Common Scenarios
+## 常见场景
 
 | 场景 | 处理 |
 |------|------|
-| review 有条件通过（仅 🟡） | 可发布；PR 中列出 🟡 待办与计划 |
-| 存在未解决 🔴 | 停止，不发布 |
-| 上游文档为 STALE 或 BLOCKED | 停止，回对应上游步骤 |
-| 项目无 CHANGELOG | 仍生成 `release/changelog-entry.md`；是否创建根 CHANGELOG 需用户确认 |
-| 后端未就绪用了 mock | 在风险/已知问题中列出 `TODO(vX.Y.Z): 接口联调待定` 与封装切换点 |
-| E2E 降级为手动验收 | 在测试说明中如实写明 |
-| 用户要求打 tag / 发布 | 确认后用 Conventional Commits 规范执行 |
+| 有条件通过（仅 🟡） | 可发布；PR 列 🟡 待办 |
+| 未解决 🔴 | 停 |
+| 上游 STALE/BLOCKED | 停；回上游 |
+| 无根 CHANGELOG | 仍出 release/changelog-entry；建根须确认 |
+| 后端 mock | PR 列 TODO + 封装切换点 |
+| E2E 降级手动 | 测试说明如实写 |
+| 用户要打 tag | 确认后 Conventional Commits |
 
-## Pre-Merge Checklist
+## 合并前检查
 
-- [ ] review 结论无未解决 🔴
-- [ ] test-report 无阻塞项，关键命令 exit 0
-- [ ] review / test-report / summarized / plan 状态均为 `ACTIVE`
+- [ ] review 无未解决 🔴
+- [ ] test-report 无阻塞；关键命令 exit 0
+- [ ] review/test-report/summarized/plan 均 `ACTIVE`
 - [ ] `progress.md` 无 blocker
-- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
-- [ ] PR 描述完整（背景 / 改动 / 测试 / 风险 / 关联文档）
-- [ ] 提交信息符合 Conventional Commits（仅英文）
-- [ ] 分支与目标分支无未解决冲突
-- [ ] 已知 🟡 / 风险已在 PR 中体现
+- [ ] changelog-entry 已生成
+- [ ] PR 完整（背景/改动/测试/风险/文档）
+- [ ] commit 符合 Conventional Commits（英文）
+- [ ] 无未解冲突
+- [ ] 🟡/风险已在 PR
 
-## Done Checklist
+## 完成检查
 
-- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
-- [ ] `docs/vX.Y.Z/release/pr-description.md` 已生成
-- [ ] Pre-Merge Checklist 全部满足
+- [ ] changelog-entry、pr-description 已生成
+- [ ] 合并前检查全满足
 - [ ] 文档与代码一致
-- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
-- [ ] 合并 / push / tag 仅在用户确认后执行
+- [ ] 通用门禁与 `progress.md` 落盘
+- [ ] merge/push/tag 仅用户确认后
 
-## References
+## 参考
 
-- PR 描述模板：[pr-description-template.md](references/pr-description-template.md)
-- 接口联调：`frontend-iteration/references/api-integration-guide.md`
+- PR 模板：[pr-description-template.md](references/pr-description-template.md)
+- 接口：`frontend-iteration/references/api-integration-guide.md`

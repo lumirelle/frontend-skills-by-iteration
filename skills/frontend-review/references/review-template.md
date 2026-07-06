@@ -1,15 +1,15 @@
-# Review Template
+# 审查模板
 
 复制此结构生成 `docs/vX.Y.Z/review/<name>.md` 或 `review.md`。
 
 ```markdown
 # [页面/功能名] 代码审查
 
-> Status: DRAFT
-> Version: vX.Y.Z
-> Source: plans/<name>.md, test-report.md, progress.md
-> Updated: YYYY-MM-DD
-> Stale reason:
+> 状态: DRAFT
+> 版本: vX.Y.Z
+> 来源: plans/<name>.md, test-report.md, progress.md
+> 更新于: YYYY-MM-DD
+> 失效原因:
 
 ## 结论
 
@@ -75,7 +75,7 @@
 - [ ] …
 - [ ] 进入 `frontend-release`（仅无 🔴 时）
 
-## Open Questions
+## 待确认问题
 
 - …
 

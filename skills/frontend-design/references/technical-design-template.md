@@ -1,15 +1,15 @@
-# Technical Design Template
+# 技术方案模板
 
 复制此结构生成 `docs/vX.Y.Z/design/<name>.md`。删除不适用的章节，不留空占位。
 
 ```markdown
 # [页面/功能名] 技术方案
 
-> Status: DRAFT
-> Version: vX.Y.Z
-> Source: prd/summarized/<name>.md
-> Updated: YYYY-MM-DD
-> Stale reason:
+> 状态: DRAFT
+> 版本: vX.Y.Z
+> 来源: prd/summarized/<name>.md
+> 更新于: YYYY-MM-DD
+> 失效原因:
 
 ## 方案选型
 
@@ -108,7 +108,7 @@
 |------|------|-----------|
 | | | |
 
-## Open Questions
+## 待确认问题
 
 （依赖确认的设计决策）
 

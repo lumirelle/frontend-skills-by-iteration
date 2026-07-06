@@ -1,14 +1,14 @@
-# Changelog Entry
+# 变更日志条目
 
-> 样例片段：真实项目中此条目可在用户确认后追加到项目根 `CHANGELOG.md`。
+> 样例片段；用户确认后可追加根 `CHANGELOG.md`。
 
 ## v0.1.0 - 2026-06-27
 
-### Added
+### 新增
 
-- Feedback form for logged-in users: select a feedback type and submit content from the profile page.
-- "意见反馈" entry on the profile page linking to the new `/feedback` route.
+- 登录用户反馈表单：类型 + 内容，从「我的」「意见反馈」→ `/feedback`。
+- `submitFeedback` API 占位；真后端待定（`TODO(v0.1.0): 接口联调待定`）。
 
-### Notes
+### 备注
 
-- Submission uses a mocked API contract (`{ type, content }`); pending backend integration.
+- 后端就绪前 mock 契约 `{ type, content }`；切换点仅在 `src/api/feedback.ts`。

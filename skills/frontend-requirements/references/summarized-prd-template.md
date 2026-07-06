@@ -1,16 +1,16 @@
-# Summarized PRD Template
+# Summarized PRD 模板
 
 复制此结构生成 `docs/vX.Y.Z/prd/summarized/<name>.md`。删除不适用的章节，不留空占位。
 
 ```markdown
 # [页面/功能名]
 
-> Status: DRAFT
-> Version: vX.Y.Z
-> Source: prd/origin/<name>.md
-> Updated: YYYY-MM-DD
+> 状态: DRAFT
+> 版本: vX.Y.Z
+> 来源: prd/origin/<name>.md
+> 更新于: YYYY-MM-DD
 > UI: 有 / 无
-> Stale reason:
+> 失效原因:
 
 ## 概述
 
@@ -75,7 +75,7 @@
 
 - …
 
-## Open Questions
+## 待确认问题
 
 （需产品/设计确认）
 
@@ -93,4 +93,4 @@
 | 数据与展示 | 字段级；标明 API 来源（已有/新增/本地）；不写 API 实现细节 |
 | 非目标 | 防止 scope creep |
 | 验收标准 | 勾选框格式，一步一判 |
-| 假设 vs Open Questions | 假设=你可先按此推进；Open Questions=必须确认 |
+| 假设 vs 待确认问题 | 假设=你可先按此推进；待确认问题=必须确认 |

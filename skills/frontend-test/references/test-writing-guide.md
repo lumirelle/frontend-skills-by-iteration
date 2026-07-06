@@ -1,8 +1,8 @@
-# Test Writing Guide
+# 测试编写指南
 
 用于指导 Agent 设计和补写测试用例。这里放通用测试思维，不放具体框架 API。
 
-## Test Dimensions
+## 测试维度
 
 | 维度 | 说明 |
 |------|------|
@@ -16,7 +16,7 @@
 | 平台差异 | Web / H5 / 响应式 / 浏览器差异 |
 | 回归风险 | 本次改动可能影响的既有行为 |
 
-## Layer Selection
+## 层级选择
 
 | 层级 | 适合测试 | 不适合测试 |
 |------|----------|------------|
@@ -27,42 +27,42 @@
 
 优先级：主流程 E2E 少而关键；复杂逻辑单元测充分；模块协作用集成测兜底。
 
-## Feature Type Checklist
+## 功能类型检查清单
 
-### Form
+### 表单
 
 - 默认值、必填、格式校验、边界输入
-- submit 成功、submit 失败、重复提交防护
+- 提交成功、提交失败、重复提交防护
 - disabled/loading 状态
-- reset/cancel 行为
+- 重置/取消行为
 
-### List / Table
+### 列表 / 表格
 
 - loading、empty、error
 - 数据渲染、字段格式、缺失字段
-- pagination、sorting、filtering（需求包含时）
-- row action 与权限控制
+- 分页、排序、筛选（需求包含时）
+- 行操作与权限控制
 
-### Detail Page
+### 详情页
 
 - 数据加载、字段展示、缺失字段
 - loading、error、not found、unauthorized
 - 返回、跳转、编辑入口
 
-### Modal / Drawer
+### 弹窗 / 抽屉
 
-- open/close、confirm/cancel
+- 打开/关闭、确认/取消
 - 表单校验或异步提交
 - loading/error 状态
 - 键盘/焦点行为（项目要求时）
 
-### Navigation / Route
+### 导航 / 路由
 
 - 正确跳转、参数传递
 - 未登录/无权限拦截
-- deep link 与返回路径
+- 深链与返回路径
 
-## Case Design
+## 用例设计
 
 - 用用户可见行为命名，不用实现细节命名。
 - 一个用例验证一个主要行为；共享 setup 可抽，但不要为了抽象而抽象。
@@ -70,7 +70,7 @@
 - 断言用户能观察到的结果：文本、状态、URL、请求结果、可访问性状态。
 - Mock 只 mock 边界外依赖；不要 mock 被测逻辑本身。
 
-## Anti-patterns
+## 反模式
 
 - 测私有实现、内部 state 名称、组件内部方法。
 - 滥用 snapshot 覆盖交互行为。
@@ -79,7 +79,7 @@
 - 为了让测试通过修改业务行为但不回到 implementation。
 - 用固定等待替代可观察条件等待。
 
-## Framework Usage
+## 框架用法
 
 具体框架用法不写在本指南中。
 

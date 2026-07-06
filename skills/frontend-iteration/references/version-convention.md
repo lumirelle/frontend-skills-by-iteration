@@ -1,12 +1,12 @@
-# Version & Directory Convention
+# 版本与目录约定
 
-## Version Format
+## 版本格式
 
 - 格式：`vX.Y.Z`（语义化版本，前缀 `v`）
 - 示例：`v1.0.0`、`v2.1.3`
 - 路径中版本号大小写敏感，统一小写 `v`
 
-## Directory Layout
+## 目录布局
 
 ```
 docs/
@@ -24,7 +24,7 @@ docs/
     └── test-report.md             # 步骤 5 产出
 ```
 
-## File Naming
+## 文件命名
 
 | 类型 | 规则 | 示例 |
 |------|------|------|
@@ -37,11 +37,11 @@ docs/
 
 多文件迭代：一个功能/页面一套 origin → summarized → design → plan，禁止混在一个文件里。
 
-## UI Mapping
+## UI 映射
 
 UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requirements` 为权威：见其 `SKILL.md` → **UI Mapping** 与 `references/ui-reading-guide.md`。
 
-## Resume Detection
+## 恢复检测
 
 优先读取 `docs/vX.Y.Z/progress.md`。从第一个 `pending` / `in_progress` / `blocked` 的 step 或 task 继续；若存在 `blocked`，先报告阻塞项。
 
@@ -57,6 +57,6 @@ UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requir
 
 推断完成后，创建或修复 `progress.md`，并向用户说明哪些状态是自动推断的。
 
-## Document Status
+## 文档状态
 
 `docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。状态取值、编排草稿例外、`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。

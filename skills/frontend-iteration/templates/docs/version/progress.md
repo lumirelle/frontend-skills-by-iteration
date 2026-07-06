@@ -1,65 +1,65 @@
-# vX.Y.Z Progress
+# vX.Y.Z 进度
 
-> Status: ACTIVE
-> Current step: 1
-> Updated: YYYY-MM-DD
+> 状态: ACTIVE
+> 当前步骤: 1
+> 更新于: YYYY-MM-DD
 
-## Step Status
+## 步骤状态
 
-| Step | Name | Status | Gate result | Notes |
-|------|------|--------|-------------|-------|
-| 1 | requirements | pending | not checked | |
-| 2 | design | pending | not checked | |
-| 3 | plan | pending | not checked | |
-| 4 | implement | pending | not checked | |
-| 5 | test | pending | not checked | |
-| 6 | review | pending | not checked | |
-| 7 | release | pending | not checked | |
+| 步骤 | 名称 | 状态 | 门禁结果 | 备注 |
+|------|------|------|----------|------|
+| 1 | 需求 | pending | 未检查 | |
+| 2 | 设计 | pending | 未检查 | |
+| 3 | 计划 | pending | 未检查 | |
+| 4 | 实现 | pending | 未检查 | |
+| 5 | 测试 | pending | 未检查 | |
+| 6 | 审查 | pending | 未检查 | |
+| 7 | 发布 | pending | 未检查 | |
 
-## Plan Task Status
+## 计划任务状态
 
-| Plan | Task | Status | RED | GREEN | REFACTOR | VERIFY | Commit | Notes |
-|------|------|--------|-----|-------|----------|--------|--------|-------|
-| plans/<name>.md | Task 1 | pending | not run | not run | not needed | not run | no | |
+| 计划 | 任务 | 状态 | RED | GREEN | REFACTOR | VERIFY | 提交 | 备注 |
+|------|------|------|-----|-------|----------|--------|------|------|
+| plans/<name>.md | 任务 1 | pending | 未执行 | 未执行 | 不需要 | 未执行 | 否 | |
 
-## Style Anchors
+## 风格锚点
 
-步骤 4 开始前从 `technical-architecture.md` → Code Style 提炼 5–10 条；每 task 进入 GREEN 前重读。细则见 `code-style-enforcement.md`。
+步骤 4 开始前从 `technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 `code-style-enforcement.md`。
 
-| # | 规则 | 来源 |
-|---|------|------|
-| 1 | | technical-architecture |
+| 序号 | 规则 | 来源 |
+|------|------|------|
+| 1 | | 技术架构 |
 
-## Draft Batch
+## 草稿批次
 
-| Batch | Status | Created at | Confirmed at | Files |
-|-------|--------|------------|--------------|-------|
+| 批次 | 状态 | 创建时间 | 确认时间 | 文件 |
+|------|------|----------|----------|------|
 | fast-docs-YYYYMMDD-HHMM | none | YYYY-MM-DD HH:MM | — | — |
 
-## Verification Log
+## 验证记录
 
-| Date | Step / Task | Command | Exit | Result |
-|------|-------------|---------|------|--------|
-| YYYY-MM-DD | Step N | `<command>` | 0 / non-zero | pass / fail |
+| 日期 | 步骤/任务 | 命令 | 退出码 | 结果 |
+|------|-----------|------|--------|------|
+| YYYY-MM-DD | 步骤 N | `<command>` | 0 / 非零 | 通过 / 失败 |
 
-## Blockers
+## 阻塞项
 
-- None
+- 无
 
-## Notes
+## 备注
 
-- None
+- 无
 
-## Per-Step Minimal Update（Agent 每步结束前必做）
+## 每步最小落盘（Agent 每步结束前必做）
 
-| Step | 落盘清单（3–5 行） |
+| 步骤 | 落盘清单（3–5 行） |
 |------|-------------------|
-| 1 | `Current step`、Step 1 状态 + Gate result、summarized 路径、fast 时更新 Draft Batch、Updated、Blockers |
-| 2 | `Current step`、Step 2 状态 + Gate result、design 路径、fast 时追加 Draft Batch、Updated、Blockers |
-| 3 | `Current step`、Step 3 状态 + Gate result、plan 路径、fast 确认后标 ACTIVE 并将 Draft Batch 标 `confirmed`、Updated、Blockers |
-| 4 | 每 task 更新 Plan Task Status（RED/GREEN/REFACTOR/VERIFY/Commit）+ Verification Log 一行；Step 4 完成后 `passed` |
-| 5 | Step 5 状态、Verification Log 全量命令、test-report Status/结论 同步、Blockers |
-| 6 | Step 6 状态 + Gate result（结论/🔴 数）、有 🔴 则 `blocked`、Updated、Blockers |
-| 7 | Step 7 状态 + Gate result、release 文件就绪、Updated、Blockers → None |
+| 1 | 更新「当前步骤」、步骤 1 状态 + 门禁结果、summarized 路径、fast 时更新草稿批次、更新于、阻塞项 |
+| 2 | 当前步骤、步骤 2 状态 + 门禁结果、design 路径、fast 时追加草稿批次、更新于、阻塞项 |
+| 3 | 当前步骤、步骤 3 状态 + 门禁结果、plan 路径、fast 确认后标 ACTIVE 并将草稿批次标 `confirmed`、更新于、阻塞项 |
+| 4 | 每任务更新计划任务状态 + 验证记录；含 lint/typecheck（若配置）；步骤 4 完标 `passed` |
+| 5 | 步骤 5 状态、验证记录全量命令、test-report 文首状态/结论同步、阻塞项 |
+| 6 | 步骤 6 状态 + 门禁结果（结论/🔴 数）、有 🔴 则 `blocked`、更新于、阻塞项 |
+| 7 | 步骤 7 状态 + 门禁结果、release 文件就绪、更新于、阻塞项 → 无 |
 
-细则见编排器 `references/progress-convention.md` → Per-Step Minimal Update。
+细则见编排器 `references/progress-convention.md` → 每步最小落盘。

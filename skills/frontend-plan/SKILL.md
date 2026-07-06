@@ -4,100 +4,99 @@ description: Use when turning docs/vX.Y.Z/design/*.md into TDD implementation pl
 disable-model-invocation: true
 ---
 
-# Frontend Plan
+# 前端计划
 
-## Goal
+## 目标
 
-将 design 拆成最小、顺序明确、可验证的 TDD 实施计划，作为代码实现边界。
+design → 最小、有序、可验证 TDD plan；作实现边界。
 
-## Input
+## 输入
 
 | 路径 | 必需 | 说明 |
 |------|------|------|
-| `docs/technical-architecture.md` | 是 | 技术栈、目录、测试命令、工程约定 |
-| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收标准与需求边界 |
-| `docs/vX.Y.Z/design/*.md` | 是 | 技术方案与涉及文件 |
-| 现有代码库 | 是 | 确认文件路径、复用点、测试位置 |
+| `docs/technical-architecture.md` | 是 | 技术栈、测试命令、约定 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 验收、边界 |
+| `docs/vX.Y.Z/design/*.md` | 是 | 方案、文件 |
+| 代码库 | 是 | 路径、复用、测试位置 |
 
-缺失必需项 → **停止**，报告缺什么，不产出 plan。
+缺必需项 → **停**；不产出 plan。
 
-## Output
+## 输出
 
-- 目录：`docs/vX.Y.Z/plans/`
-- 命名：与 `design/` 同名（如 `design/user-profile.md` → `plans/user-profile.md`）
+- `docs/vX.Y.Z/plans/`；与 `design/` 同名
 - 模板：[implementation-plan-template.md](references/implementation-plan-template.md)
-- 状态：初次产出为 `DRAFT`；用户确认后标记为 `ACTIVE`
+- 初稿 `DRAFT`；确认后 `ACTIVE`
 
-## Invocation Contract
+## 调用契约
 
-- orchestrated / standalone 差异以 `frontend-iteration/references/orchestrated-invocation.md` 为准。
-- 本 skill 只处理实施计划，不修改业务代码、不运行实现步骤。
+- 见 `orchestrated-invocation.md`。
+- 只写 plan；不改业务代码、不跑实现。
+- 对用户摘要见 `agent-communication-style.md`。
 
-## Workflow
+## 工作流
 
-1. 读取 `technical-architecture.md`，确认构建、测试、目录、**Code Style** 约定。
-2. 读取对应 summarized 与 design，按调用契约确认状态可用。
-3. 探查现有代码路径，校正 design 中的文件位置与测试位置。
-4. 将 design 范围拆成 TDD task：RED（失败测试）→ GREEN（最小实现）→ REFACTOR（保持通过下清理）→ VERIFY（验证命令）。
-5. 填写测试矩阵时，参考 `frontend-test` 的 test-writing-guide 确定测试维度。
-6. 按 Done Checklist 自检。
-7. 向用户展示摘要（任务列表、文件边界、测试命令、风险）；确认时机按调用契约处理。
+1. 读 architecture：构建、测试、目录、**Code Style**。
+2. 读 summarized、design；状态按契约。
+3. 探路径；校正 design 文件与测试位置。
+4. design → TDD task：RED → GREEN → REFACTOR → VERIFY。
+5. 测试矩阵参考 `frontend-test` → test-writing-guide。
+6. 完成检查。
+7. 摘要：任务、文件边界、命令、风险；确认按契约。
 
-## Rules
+## 规则
 
-1. **最小任务**：计划只覆盖 design 已确认的最小方案。不得新增 design 未提到的抽象、重构或功能。
-2. **文件边界**：任务必须列出精确文件路径。未知路径先探查；仍不确定则写 open question，不猜。
-3. **可执行粒度**：每个任务应能独立完成和验证；过大的任务拆小，过细的机械步骤合并。
-4. **TDD 内置**：每个行为改动必须先写失败测试，再写最小实现；无法 TDD 的项须说明原因。
-5. **顺序明确**：标出依赖关系；能并行的任务可标注，但默认顺序执行。
-6. **不重新设计**：发现 design 缺口或不合理时，停止并回到 `frontend-design` 修正，不在 plan 中暗改方案。
-7. **不写代码**：本步只写实施计划，不改业务代码。
-8. **状态门禁**：通用规则见 `frontend-iteration/references/orchestrated-invocation.md`；有阻塞 open questions 的 plan 保持 `DRAFT` 或标记 `BLOCKED`。
+1. **最小任务**：只覆盖 design 已确认方案；不加 design 外抽象/重构/功能。
+2. **文件边界**：精确路径；未知先探；仍不确定 → 待确认问题，不猜。
+3. **可执行粒度**：每 task 独立完成+验证；过大拆小，过细合并。
+4. **TDD 内置**：行为改动先失败测试；无法 TDD 须说明。
+5. **顺序明确**：标依赖；可并行可注；默认顺序。
+6. **不重新设计**：design 缺口 → 停，回 `frontend-design`；plan 不暗改方案。
+7. **不写代码**。
+8. **状态门禁**：见 `orchestrated-invocation.md`；阻塞 待确认问题 → `DRAFT`/`BLOCKED`。
 
-## Task Shape
+## 任务结构
 
-每个任务至少包含：
+每 task 至少：
 
 | 字段 | 要求 |
 |------|------|
-| 目标 | 一句话说明完成什么 |
-| 文件 | 新增/修改/测试文件路径 |
-| 步骤 | 2–6 个可执行动作 |
-| 验证 | 相关测试命令或手动验收点 |
-| 依赖 | 依赖的前置任务；无则写「无」 |
+| 目标 | 一句话 |
+| 文件 | 新增/改/测路径 |
+| 步骤 | 2–6 动作 |
+| 验证 | 命令或手动点 |
+| 依赖 | 前置 task；无写「无」 |
 
-每个行为 task 必须包含：
+行为 task 还须：
 
 | 阶段 | 要求 |
 |------|------|
-| RED | 写一个最小失败测试，并说明预期失败原因 |
-| GREEN | 写最小生产代码让该测试通过 |
-| REFACTOR | 如需清理，只做不改变行为的调整，并保持测试通过 |
-| VERIFY | 运行相关测试命令，记录通过条件 |
+| RED | 最小失败测试 + 预期失败原因 |
+| GREEN | 最小生产代码过测 |
+| REFACTOR | 不改行为清理；测试仍过 |
+| VERIFY | 跑命令；记通过条件 |
 
-## Common Scenarios
+## 常见场景
 
 | 场景 | 处理 |
 |------|------|
-| design 涉及多个页面 | 每页生成独立 plan；共享改动放在最早依赖任务 |
-| 只改现有组件 | 任务聚焦修改与测试，不新增目录结构 |
-| API 未就绪 | 单独 task 实现 API 封装（占位返回 + `TODO(vX.Y.Z): 接口联调待定`）；页面 task 依赖之；见 api-integration-guide |
-| E2E 成本高 | 只覆盖关键路径；其余用单元/集成说明 |
-| design 有 open questions | 不生成受影响任务，列为阻塞项等待确认 |
-| 发现需超出最小改动 | 停止，要求回到 design 更新方案 |
-| design 更新 | 将对应 plan、step 4 进度、test-report、review 标记为 `STALE` 或需重跑 |
+| 多页 design | 每页独立 plan；共享放最早依赖 task |
+| 只改组件 | 聚焦改+测；不新目录 |
+| API 未就绪 | 单独 API task（占位 + `TODO(vX.Y.Z): 接口联调待定`）；页面 task 依赖；见 api-integration-guide |
+| E2E 贵 | 只关键路径；余单元/集成 |
+| design 有 待确认问题 | 受影响 task 不生成；列阻塞 |
+| 超最小改动 | 停；回 design |
+| design 更新 | plan、step 4 进度、test-report、review → `STALE` 或重跑 |
 
-## Done Checklist
+## 完成检查
 
-- [ ] 每份 design 有同名 plan
-- [ ] 每份 plan 含状态头
-- [ ] 每个任务含目标、文件、步骤、验证、依赖，以及 RED / GREEN / REFACTOR / VERIFY
-- [ ] 测试覆盖与 summarized 验收标准对应
-- [ ] 改动范围不超过 design 文件边界
-- [ ] 通用门禁与 `progress.md` 落盘已按 `frontend-iteration/references/orchestrated-invocation.md` 完成
+- [ ] 每 design 有同名 plan + 状态头
+- [ ] 每 task 含目标、文件、步骤、验证、依赖、RED/GREEN/REFACTOR/VERIFY
+- [ ] 测试矩阵对应 summarized 验收
+- [ ] 范围 ≤ design 文件边界
+- [ ] 通用门禁与 `progress.md` 落盘
 
-## References
+## 参考
 
-- 产出模板：[implementation-plan-template.md](references/implementation-plan-template.md)
-- 测试维度参考：`frontend-test/references/test-writing-guide.md`
-- 接口联调指引：`frontend-iteration/references/api-integration-guide.md`
+- 模板：[implementation-plan-template.md](references/implementation-plan-template.md)
+- 测试：`frontend-test/references/test-writing-guide.md`
+- 接口：`frontend-iteration/references/api-integration-guide.md`
