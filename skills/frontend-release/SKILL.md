@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-审查通过后整理 changelog、PR 描述、合并前清单；迭代可发布。
+审查通过后整理 changelog、PR 描述、合并前清单；迭代可发布
 
 ## 输入
 
@@ -18,10 +18,10 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/test-report.md` | 是 | 结果、风险 |
 | `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 变更说明 |
 | `docs/vX.Y.Z/plans/*.md` | 是 | 范围 |
-| `docs/vX.Y.Z/progress.md` | 是 | gate、阻塞 |
+| `docs/vX.Y.Z/progress.md` | 是 | 门禁、阻塞项 |
 | 代码 / git | 是 | 提交、文件 |
 
-有未解决 🔴 → **停**；回 review 或上游。
+有未解决 🔴 → **停**；回 review 或上游
 
 ## 输出
 
@@ -32,31 +32,31 @@ disable-model-invocation: true
 
 ## 调用契约
 
-- 见 `orchestrated-invocation.md`；standalone 须无 blocker。
-- 只备发布材料；merge/push/tag 须用户显式确认。
-- 对用户摘要见 `agent-communication-style.md`。
+- 见 `frontend-iteration/references/orchestrated-invocation.md`；standalone 须无阻塞项
+- 只备发布材料；merge/push/tag 须用户显式确认
+- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
 
 ## 工作流
 
-1. 确认 review 无 🔴、test-report 无阻塞、输入均 `ACTIVE`。
-2. 汇总变更：summarized、plans、git。
-3. 出 changelog-entry（用户视角、分类）。
-4. 出 pr-description（背景、改动、测试、风险、文档链）。
-5. 根 CHANGELOG：有约定或用户要求时，确认后写。
-6. 合并前检查。
-7. 完成检查。
-8. 摘要；**用户确认后再 merge/push/tag**。
+1. 确认 review 无 🔴、test-report 无阻塞、输入均 `ACTIVE`
+2. 汇总变更：summarized、plans、git
+3. 出 changelog-entry（用户视角、分类）
+4. 出 pr-description（背景、改动、测试、风险、文档链）
+5. 根 CHANGELOG：有约定或用户要求时，确认后写
+6. 合并前检查
+7. 完成检查
+8. 摘要；**用户确认后再 merge/push/tag**
 
 ## 规则
 
-1. **门禁前置**：review 不过或测试阻塞 → 不发布。
-2. **不自动 merge/push**：须用户同意。
-3. **commit 英文**：merge、tag、release commit 用 Conventional Commits（同 implement）。
-4. **CHANGELOG 用户视角**：可感知变化；不堆实现细节。
-5. **文档代码一致**：记录与改动一致；不夸大不遗漏。
-6. **风险透明**：test-report 风险、review 🟡、 `TODO(vX.Y.Z): 接口联调待定` 清单进 PR。
-7. **可追溯**：PR 链本迭代 docs。
-8. **状态门禁**：见 `orchestrated-invocation.md`；blocker 或 step 5 `blocked` → 不发布。
+1. **门禁前置**：review 不过或测试阻塞 → 不发布
+2. **不自动 merge/push**：须用户同意
+3. **commit 英文**：merge、tag、release commit 用 Conventional Commits（同 implement）
+4. **CHANGELOG 用户视角**：可感知变化；不堆实现细节
+5. **文档代码一致**：记录与改动一致；不夸大不遗漏
+6. **风险透明**：test-report 风险、review 🟡、`TODO(vX.Y.Z): 接口联调待定` 清单进 PR
+7. **可追溯**：PR 链本迭代 docs
+8. **状态门禁**：见 `frontend-iteration/references/orchestrated-invocation.md`；阻塞项或步骤 5 `blocked` → 不发布
 
 ## 变更日志
 
@@ -82,7 +82,7 @@ disable-model-invocation: true
 - [ ] review 无未解决 🔴
 - [ ] test-report 无阻塞；关键命令 exit 0
 - [ ] review/test-report/summarized/plan 均 `ACTIVE`
-- [ ] `progress.md` 无 blocker
+- [ ] `progress.md` 无阻塞项
 - [ ] changelog-entry 已生成
 - [ ] PR 完整（背景/改动/测试/风险/文档）
 - [ ] commit 符合 Conventional Commits（英文）
@@ -94,7 +94,8 @@ disable-model-invocation: true
 - [ ] changelog-entry、pr-description 已生成
 - [ ] 合并前检查全满足
 - [ ] 文档与代码一致
-- [ ] 通用门禁与 `progress.md` 落盘
+- [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
+- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
 - [ ] merge/push/tag 仅用户确认后
 
 ## 参考

@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-design → 最小、有序、可验证 TDD plan；作实现边界。
+design → 最小、有序、可验证 TDD plan；作实现边界
 
 ## 输入
 
@@ -19,7 +19,7 @@ design → 最小、有序、可验证 TDD plan；作实现边界。
 | `docs/vX.Y.Z/design/*.md` | 是 | 方案、文件 |
 | 代码库 | 是 | 路径、复用、测试位置 |
 
-缺必需项 → **停**；不产出 plan。
+缺必需项 → **停**；不产出 plan
 
 ## 输出
 
@@ -29,30 +29,30 @@ design → 最小、有序、可验证 TDD plan；作实现边界。
 
 ## 调用契约
 
-- 见 `orchestrated-invocation.md`。
-- 只写 plan；不改业务代码、不跑实现。
-- 对用户摘要见 `agent-communication-style.md`。
+- 见 `frontend-iteration/references/orchestrated-invocation.md`
+- 只写 plan；不改业务代码、不跑实现
+- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
 
 ## 工作流
 
-1. 读 architecture：构建、测试、目录、**Code Style**。
-2. 读 summarized、design；状态按契约。
-3. 探路径；校正 design 文件与测试位置。
-4. design → TDD task：RED → GREEN → REFACTOR → VERIFY。
-5. 测试矩阵参考 `frontend-test` → test-writing-guide。
-6. 完成检查。
-7. 摘要：任务、文件边界、命令、风险；确认按契约。
+1. 读 `docs/technical-architecture.md`：构建、测试、目录、**代码风格**
+2. 读 summarized、design；状态按契约
+3. 探路径；校正 design 文件与测试位置
+4. design → TDD task：RED → GREEN → REFACTOR → VERIFY
+5. 测试矩阵参考 `frontend-test` → test-writing-guide
+6. 完成检查
+7. 摘要：任务、文件边界、命令、风险；确认按契约
 
 ## 规则
 
-1. **最小任务**：只覆盖 design 已确认方案；不加 design 外抽象/重构/功能。
-2. **文件边界**：精确路径；未知先探；仍不确定 → 待确认问题，不猜。
-3. **可执行粒度**：每 task 独立完成+验证；过大拆小，过细合并。
-4. **TDD 内置**：行为改动先失败测试；无法 TDD 须说明。
-5. **顺序明确**：标依赖；可并行可注；默认顺序。
-6. **不重新设计**：design 缺口 → 停，回 `frontend-design`；plan 不暗改方案。
-7. **不写代码**。
-8. **状态门禁**：见 `orchestrated-invocation.md`；阻塞 待确认问题 → `DRAFT`/`BLOCKED`。
+1. **最小任务**：只覆盖 design 已确认方案；不加 design 外抽象/重构/功能
+2. **文件边界**：精确路径；未知先探；仍不确定 → 待确认问题，不猜
+3. **可执行粒度**：每 task 独立完成+验证；过大拆小，过细合并
+4. **TDD 内置**：行为改动先失败测试；无法 TDD 须说明
+5. **顺序明确**：标依赖；可并行可注；默认顺序
+6. **不重新设计**：design 缺口 → 停，回 `frontend-design`；plan 不暗改方案
+7. **不写代码**
+8. **状态门禁**：见 `frontend-iteration/references/orchestrated-invocation.md`；阻塞待确认问题 → `DRAFT`/`BLOCKED`
 
 ## 任务结构
 
@@ -81,11 +81,11 @@ design → 最小、有序、可验证 TDD plan；作实现边界。
 |------|------|
 | 多页 design | 每页独立 plan；共享放最早依赖 task |
 | 只改组件 | 聚焦改+测；不新目录 |
-| API 未就绪 | 单独 API task（占位 + `TODO(vX.Y.Z): 接口联调待定`）；页面 task 依赖；见 api-integration-guide |
+| API 未就绪 | 单独 API task（占位 + `TODO(vX.Y.Z): 接口联调待定`）；页面 task 依赖；见 `frontend-iteration/references/api-integration-guide.md` |
 | E2E 贵 | 只关键路径；余单元/集成 |
-| design 有 待确认问题 | 受影响 task 不生成；列阻塞 |
+| design 有待确认问题 | 受影响 task 不生成；列阻塞 |
 | 超最小改动 | 停；回 design |
-| design 更新 | plan、step 4 进度、test-report、review → `STALE` 或重跑 |
+| design 更新 | plan、步骤 4 进度、test-report、review → `STALE` 或重跑 |
 
 ## 完成检查
 
@@ -93,7 +93,8 @@ design → 最小、有序、可验证 TDD plan；作实现边界。
 - [ ] 每 task 含目标、文件、步骤、验证、依赖、RED/GREEN/REFACTOR/VERIFY
 - [ ] 测试矩阵对应 summarized 验收
 - [ ] 范围 ≤ design 文件边界
-- [ ] 通用门禁与 `progress.md` 落盘
+- [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
+- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
 
 ## 参考
 

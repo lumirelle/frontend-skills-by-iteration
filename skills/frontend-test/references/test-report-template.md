@@ -1,6 +1,6 @@
 # 测试报告模板
 
-复制此结构生成 `docs/vX.Y.Z/test-report.md`。
+复制此结构生成 `docs/vX.Y.Z/test-report.md`
 
 ```markdown
 # vX.Y.Z 测试报告
@@ -29,8 +29,8 @@
 
 ## TDD 证据
 
-| 任务 | RED 已观测 | GREEN 已通过 | Refactor 已验证 | 备注 |
-|------|------------|--------------|-------------------|------|
+| 任务 | RED 已观测 | GREEN 已通过 | REFACTOR 已验证 | 备注 |
+|------|------------|--------------|-----------------|------|
 | 任务 N | 是/否 | 是/否 | 是/否/不需要 | |
 
 ## 验收标准覆盖
@@ -80,10 +80,10 @@
 
 | 章节 | 要求 |
 |------|------|
-| 文首 `状态` | **文档生命周期**（`DRAFT`/`ACTIVE`/`STALE`/`BLOCKED`），非执行进度；下游 review 仅消费 `ACTIVE` |
-| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`；与文首 `状态` 须一致（见 document-status「test-report 专约」） |
+| 文首 `状态` | **文档状态**（`DRAFT`/`ACTIVE`/`STALE`/`BLOCKED`），非执行进度；下游 review 仅消费 `ACTIVE` |
+| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`；与文首 `状态` 须一致（见 `frontend-iteration/references/document-status.md` → test-report 专约） |
 | `阻塞项` | 非空时文首 `状态` 为 `BLOCKED` 或 `DRAFT`，且 `结论` 为 `阻塞` |
-| 执行命令 | 写实际运行的完整命令；同步写入 `progress.md` Verification Log |
+| 执行命令 | 写实际运行完整命令；同步写入 `progress.md` → **验证记录** |
 | TDD 证据 | 引用 `progress.md` 记录，不替代落盘 |
 | 验收标准覆盖 | 每条 summarized 验收标准至少一行 |
 | 未覆盖风险 | 诚实列出；含真实后端未联调与 TODO 清单；有阻塞项则结论为「阻塞」 |

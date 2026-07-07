@@ -1,6 +1,6 @@
 # 审查模板
 
-复制此结构生成 `docs/vX.Y.Z/review/<name>.md` 或 `review.md`。
+复制此结构生成 `docs/vX.Y.Z/review/<name>.md` 或 `review.md`
 
 ```markdown
 # [页面/功能名] 代码审查
