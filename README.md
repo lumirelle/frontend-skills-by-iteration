@@ -13,6 +13,8 @@ npx skills add lumirelle/frontend-skills-by-iteration --skill '*'
 1. 原始 PRD → `docs/vX.Y.Z/prd/origin/*.md`
 2. （可选）UI 稿 → `docs/vX.Y.Z/ui/*`
 
+`docs/technical-architecture.md` 首次启动自动建模板；空模板时可 **自动探库** 或 **手动填写**。
+
 ## 用法
 
 ```

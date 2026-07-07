@@ -54,7 +54,7 @@ disable-model-invocation: true
 ```
 解析版本、模式、起始 step
     ↓
-初始化缺 docs → 校验架构与输入
+初始化缺 docs → 校验 technical-architecture 与 PRD → 读 progress
     ↓
 读 progress.md → 起点 / 阻塞项 / 草稿批次
     ↓
@@ -72,9 +72,12 @@ strict 模式或步骤 4–7 逐步确认
 2. 初始化（缺则建，告知用户）：
    - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制
    - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制；`progress.md` 内版本号替换
-3. 若本次执行了步骤 2 初始化 → 停，提示补 `technical-architecture` 与 `prd/origin/*.md`
-4. `technical-architecture` 可在用户确认后修改；`prd/origin/*.md` 须用户提供，缺则停
-5. 读 `technical-architecture.md`，仍模板或缺技术栈/命令/目录/测试 → 停
+3. `technical-architecture.md` 仍空模板（含 `` `...` `` 或缺技术栈/命令/目录/测试）：
+   - 用户未选方式 → 问 **自动探库** 或 **手动填写**
+   - **自动**：读 `package.json`、构建/测试配置、`src/` 目录，按模板填项目事实；摘要后问确认；未确认则停
+   - **手动**：停，提示手填后重跑
+4. 仍空模板 → 停
+5. `prd/origin/*.md` 须用户提供，缺则停
 6. 列 `prd/origin/*.md`、`ui/*`
 7. 读/修 `progress.md`，报起点、阻塞项、草稿批次状态
 8. 读目标子 skill，格式疑义参考 [examples/README.md](examples/README.md)
@@ -102,7 +105,7 @@ strict 模式或步骤 4–7 逐步确认
 
 | 文件 / 目录 | 必需 | 说明 |
 |-------------|------|------|
-| `docs/technical-architecture.md` | 若不存在则自动 | 须填项目事实 |
+| `docs/technical-architecture.md` | 若不存在则自动建模板 | 空模板可自动探库或手动填写 |
 | `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD |
 | `docs/vX.Y.Z/progress.md` | 自动 | 自动建 |
 | `docs/vX.Y.Z/ui/*` | 否 | 有则对照；无则标「无 UI 稿」 |

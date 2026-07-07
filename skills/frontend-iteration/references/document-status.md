@@ -8,7 +8,7 @@
 
 | 体系 | 适用文件 | 取值 | 含义 |
 |------|----------|------|------|
-| **文档状态** | `summarized/`、`design/`、`plans/`、`review/`、`test-report.md` 的**文首 Status 头** | `DRAFT` / `ACTIVE` / `STALE` / `BLOCKED` | 该文档能否作为下游输入 |
+| **文档状态** | `summarized/`、`design/`、`plans/`、`review/`、`test-report.md` 的**文首状态头** | `DRAFT` / `ACTIVE` / `STALE` / `BLOCKED` | 该文档能否作为下游输入 |
 | **执行进度** | 仅 `progress.md` 内 **步骤状态 / 计划任务状态** 表 | `pending` / `in_progress` / `passed` / `blocked` | 某步骤或任务跑到哪了 |
 
 常见对应关系：
