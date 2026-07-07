@@ -1,8 +1,8 @@
 # 技术架构
 
-项目环境、目标平台、工程约定、测试配置。只写事实；不抄框架文档。
+项目环境、目标平台、工程约定、测试配置；只写事实，不抄框架文档
 
-> 黄金路径虚构项目；技术栈中性；命令占位。
+> 黄金路径虚构项目；技术栈中性；命令占位
 
 ## 项目
 
@@ -39,7 +39,7 @@
 
 ## 代码风格
 
-步骤 4 前从此节提炼 **风格锚点** 写入 `progress.md`（见 `code-style-enforcement.md`）。
+步骤 4 前从此节提炼 **风格锚点** 写入 `progress.md`（见 `frontend-iteration/references/code-style-enforcement.md`）
 
 | 维度 | 约定 |
 |------|------|
@@ -49,7 +49,7 @@
 | 状态 | 表单/页面临时状态用局部 state；无跨页共享则不建 store |
 | API 调用 | 仅 `src/api/`；页面不直接 `fetch` |
 | 错误处理 | API reject → 页面 `status='error'` + 统一文案；不在 API 层弹 UI |
-| 注释与 TODO | 接口待定：`TODO(vX.Y.Z): 接口联调待定`（见 `api-integration-guide`） |
+| 注释与 TODO | 接口待定：`TODO(vX.Y.Z): 接口联调待定`（见 `frontend-iteration/references/api-integration-guide.md`） |
 | 检查与格式化 | `npm run lint`、`npm run typecheck` |
 
 ## 测试
@@ -90,15 +90,15 @@
 
 ### 框架 API 用法
 
-不在此重复框架 API 文档。
+不在此重复框架 API 文档
 
 需要框架语法或行为时：
 
-1. 优先读项目内既有测试示例。
-2. 查阅当前官方框架文档。
-3. 遵循本文件声明的版本。
-4. 不凭过期记忆写 API 细节。
+1. 优先读项目内既有测试示例
+2. 查阅当前官方框架文档
+3. 遵循本文件声明的版本
+4. 不凭过期记忆写 API 细节
 
 ## 备注
 
-- 演示用虚构项目；真实项目请替换框架、版本与命令。
+- 演示用虚构项目；真实项目请替换框架、版本与命令

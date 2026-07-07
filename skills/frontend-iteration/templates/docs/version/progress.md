@@ -4,6 +4,8 @@
 > 当前步骤: 1
 > 更新于: YYYY-MM-DD
 
+<!-- 文首状态恒为 ACTIVE，见 frontend-iteration/references/document-status.md「progress.md 专约」 -->
+
 ## 步骤状态
 
 | 步骤 | 名称 | 状态 | 门禁结果 | 备注 |
@@ -24,7 +26,7 @@
 
 ## 风格锚点
 
-步骤 4 开始前从 `technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 `code-style-enforcement.md`。
+步骤 4 开始前从 `docs/technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 `frontend-iteration/references/code-style-enforcement.md`
 
 | 序号 | 规则 | 来源 |
 |------|------|------|
@@ -40,7 +42,7 @@
 
 | 日期 | 步骤/任务 | 命令 | 退出码 | 结果 |
 |------|-----------|------|--------|------|
-| YYYY-MM-DD | 步骤 N | `<command>` | 0 / 非零 | 通过 / 失败 |
+| YYYY-MM-DD | 步骤 4 / 任务 1 | `<command>` | 0 / 非零 | 通过 / 失败 |
 
 ## 阻塞项
 
@@ -50,16 +52,4 @@
 
 - 无
 
-## 每步最小落盘（Agent 每步结束前必做）
-
-| 步骤 | 落盘清单（3–5 行） |
-|------|-------------------|
-| 1 | 更新「当前步骤」、步骤 1 状态 + 门禁结果、summarized 路径、fast 时更新草稿批次、更新于、阻塞项 |
-| 2 | 当前步骤、步骤 2 状态 + 门禁结果、design 路径、fast 时追加草稿批次、更新于、阻塞项 |
-| 3 | 当前步骤、步骤 3 状态 + 门禁结果、plan 路径、fast 确认后标 ACTIVE 并将草稿批次标 `confirmed`、更新于、阻塞项 |
-| 4 | 每任务更新计划任务状态 + 验证记录；含 lint/typecheck（若配置）；步骤 4 完标 `passed` |
-| 5 | 步骤 5 状态、验证记录全量命令、test-report 文首状态/结论同步、阻塞项 |
-| 6 | 步骤 6 状态 + 门禁结果（结论/🔴 数）、有 🔴 则 `blocked`、更新于、阻塞项 |
-| 7 | 步骤 7 状态 + 门禁结果、release 文件就绪、更新于、阻塞项 → 无 |
-
-细则见编排器 `references/progress-convention.md` → 每步最小落盘。
+<!-- 每步落盘清单见 frontend-iteration/references/progress-convention.md → 每步最小落盘 -->

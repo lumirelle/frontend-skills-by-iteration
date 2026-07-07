@@ -32,7 +32,7 @@
 | 1 | API 仅 `src/api/feedback.ts`；页面不 `fetch` | 代码风格 |
 | 2 | 测试与源码同目录 `*.test.ts` | 测试 |
 | 3 | 表单控件有可访问标签 | 测试 → 项目约定 |
-| 4 | 待定 `TODO(v0.1.0): 接口联调待定` | api-integration-guide |
+| 4 | 待定 `TODO(v0.1.0): 接口联调待定` | `frontend-iteration/references/api-integration-guide.md` |
 | 5 | VERIFY 含 `npm run lint`、`npm run typecheck` | 代码风格 |
 
 ## 草稿批次
@@ -64,4 +64,4 @@
 
 ## 备注
 
-- 任务 1 API 占位 + 2 处 `TODO(v0.1.0): 接口联调待定`；真联调见 test-report、review 🟡#1。
+- 任务 1 API 占位 + 2 处 `TODO(v0.1.0): 接口联调待定`；真联调见 test-report、review 🟡#1

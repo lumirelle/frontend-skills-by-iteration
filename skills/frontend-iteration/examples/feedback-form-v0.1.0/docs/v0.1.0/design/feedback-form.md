@@ -45,7 +45,7 @@
 | 类型 | 路径 | 说明 |
 |------|------|------|
 | 类似页面 | — | 本迭代首例 |
-| API 目录 | `src/api/` | architecture 约定 |
+| API 目录 | `src/api/` | `docs/technical-architecture.md` 目录约定 |
 | 类型 | `src/types/` | 新建 `feedback.ts` |
 
 | API | 方法 | 入参 | 返回 | 前端 | 已有/新增 |
