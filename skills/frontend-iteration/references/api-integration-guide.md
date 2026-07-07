@@ -1,13 +1,13 @@
 # 接口联调指引
 
-接口联调：获取信息 → 设计 → 实现 → 验证 → 发布。后端未就绪不阻塞 UI；待定项可追溯、可检索。
+接口联调：获取信息 → 设计 → 实现 → 验证 → 发布。后端未就绪不阻塞 UI；待定项可追溯、可检索
 
-`vX.Y.Z` = 当前 `docs/vX.Y.Z/`。
+`vX.Y.Z` = 当前 `docs/vX.Y.Z/`
 
 ## 原则
 
 1. **先找参照**：已有 API 封装、类型、错误处理 → 类似页面类似接口
-2. **封装边界**：页面/组件只调 `src/api/`（或 architecture 路径），不散 `fetch`
+2. **封装边界**：参考 `docs/technical-architecture.md` 约定或已有实现
 3. **占位推进**：新接口可先占位返回，UI/测试走通；待定用统一 TODO
 4. **单点切换**：后端就绪优先只改封装层
 
@@ -24,21 +24,20 @@
 - 前缀固定：`TODO(vX.Y.Z): 接口联调待定`
 - 逗号后 xxx 可选
 - 一行一事
-- 禁 `FIXME`、`待确认` 等替代
 
 ## 分步
 
 ### 步骤 1 — 需求
 
-summarized → **数据与展示** 标来源：已有 API / 新增 API / 本地 / 用户输入。
+summarized → **数据与展示** 标来源：已有 API / 新增 API / 本地 / 用户输入
 
-有接口依赖：列能力（查增改删提交等），不要求最终路径/字段。origin 写「接口待定」→ 待确认问题 + **默认假设**。
+有接口依赖：列能力（查增改删提交等），不要求最终路径/字段。origin 写「接口待定」→ 待确认问题 + **默认假设**
 
 ### 步骤 2 — 设计
 
 **获取信息（必做）**：
 
-1. 搜同资源、`src/api/`、同类型请求
+1. 搜同资源、同类型请求
 2. 找类似页面，记封装与类型路径
 3. 写入 design → 接口契约 → 参照（见模板）
 
@@ -67,8 +66,8 @@ summarized → **数据与展示** 标来源：已有 API / 新增 API / 本地 
 ```ts
 export async function submitFeedback(payload: FeedbackPayload): Promise<void> {
   // TODO(v0.1.0): 接口联调待定，路径 /api/feedback 待后端确认
-  await Promise.resolve();
-  return;
+  await Promise.resolve()
+  return
 }
 ```
 

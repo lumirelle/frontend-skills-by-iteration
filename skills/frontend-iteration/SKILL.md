@@ -8,21 +8,23 @@ disable-model-invocation: true
 
 ## 目标
 
-按版本推进：需求 → 设计 → TDD 计划 → 实现 → 测试 → 审查 → 发布。
+按版本推进的步骤：1 需求 → 2 设计 → 3 TDD 计划 → 4 实现 → 5 测试 → 6 审查 → 7 发布
 
-本工作流接管同迭代内计划、实现、验证、审查、发布门禁。勿叠同职责 Superpowers skill。测试失败用 `systematic-debugging`；人工 review 反馈用 `receiving-code-review`。
+本工作流接管同迭代内计划、实现、验证、审查、发布门禁
 
-## 范围
+如果用户安装了 Superpowers skill：忽略同职责的 Superpowers skill；测试失败可用 `systematic-debugging`；人工 review 反馈可用 `receiving-code-review`
 
-| Step | Skill | Output |
-|------|-------|--------|
-| 1 | `frontend-requirements` | `prd/summarized/*.md` |
-| 2 | `frontend-design` | `design/*.md` |
-| 3 | `frontend-plan` | `plans/*.md` |
-| 4 | `frontend-implement` | 代码与测试 |
-| 5 | `frontend-test` | `test-report.md` |
-| 6 | `frontend-review` | `review/*.md` |
-| 7 | `frontend-release` | `release/changelog-entry.md`、`release/pr-description.md` |
+## 步骤与子 skill 对应
+
+| 步骤 | 子 Skill |
+|------|-------|
+| 1 | `frontend-requirements` |
+| 2 | `frontend-design` |
+| 3 | `frontend-plan` |
+| 4 | `frontend-implement` |
+| 5 | `frontend-test` |
+| 6 | `frontend-review` |
+| 7 | `frontend-release` |
 
 ## 调用方式
 
@@ -33,86 +35,79 @@ disable-model-invocation: true
 /frontend-iteration v1.2.0 step 3
 /frontend-iteration v1.2.0 strict step 3
 /frontend-iteration v1.2.0 resume
-/frontend-iteration v1.2.0 init             # 仅 Bootstrap，不进步骤
 ```
 
-版本号 `vX.Y.Z`；产物在 `docs/vX.Y.Z/`。常规从 step 1 起，须 `prd/origin/*.md`；进实现前须有 `ACTIVE` plan。
-
-## 模式
-
-默认 `fast`：step 1–3 连续出 `DRAFT`；step 3 后批量确认转 `ACTIVE`，再进 step 4。step 4–7 逐步确认。
-
-`strict`：每步完等待确认。
-
-`STALE` / `BLOCKED`、门禁失败、阻塞待确认问题 → 停止。`DRAFT` 消费见 [orchestrated-invocation.md](references/orchestrated-invocation.md)。
-
-## 技能路径解析
-
-读 skill / reference 按序尝试（命中即用）：
-
-| 资源 | 路径 1（`npx skills add`） | 路径 2（源码） |
-|------|------------------------------|----------------|
-| 本 skill 根 | `.agents/skills/frontend-iteration/` | `skills/frontend-iteration/` |
-| sub-skill | `.agents/skills/<name>/SKILL.md` | `skills/<name>/SKILL.md` |
-| 编排 references | `.agents/skills/frontend-iteration/references/<file>` | `skills/frontend-iteration/references/<file>` |
-| 其他 references | `.agents/skills/<name>/references/<file>` | `skills/<name>/references/<file>` |
-| 样例 | `.agents/skills/frontend-iteration/examples/` | `skills/frontend-iteration/examples/` |
-
-**skill 根** = 本 `SKILL.md` 目录。内置资源：
-
-- `templates/docs/technical-architecture.md`
-- `templates/docs/version/` → `docs/vX.Y.Z/`
-- `examples/`（只读，不复制到项目）
-
-## 前置条件（硬门禁）
-
-| 文件 / 目录 | 必需 | 说明 |
-|-------------|------|------|
-| `docs/technical-architecture.md` | 是 | Bootstrap 可自动建；须填项目事实 |
-| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD |
-| `docs/vX.Y.Z/progress.md` | 自动 | Bootstrap 建 |
-| `docs/vX.Y.Z/ui/*` | 否 | 有则对照；无则标「无 UI 稿」 |
-
-缺 `origin` PRD → 停止。
+版本号 `vX.Y.Z`；产物在 `docs/vX.Y.Z/`
 
 ## 编排规则
 
-1. **顺序门禁**：默认不跳步；当前 step 未过 [step-gates.md](references/step-gates.md) 不进下一步。
-2. **显式加载**：每步前按 Path Resolution 读 sub-skill；不凭记忆执行。
-3. **状态权威**：生命周期见 [document-status.md](references/document-status.md)；编排差异见 [orchestrated-invocation.md](references/orchestrated-invocation.md)。
-4. **进度权威**：`progress.md` 为 resume 事实源；每步按 [progress-convention.md](references/progress-convention.md) → **每步最小落盘** 落盘。
-5. **resume**：先读 `progress.md`；缺/不可信则按 [version-convention.md](references/version-convention.md) → Resume Detection 修复。
-6. **跳步/返工**：先说明影响，用户确认后执行；遗留 `DRAFT` 先批量确认转 `ACTIVE`，否则停。
-7. **用户输出**：对用户摘要、gate、blocker、确认询问遵守 [agent-communication-style.md](references/agent-communication-style.md)。
+1. **显式加载**：步骤执行前重读子 skill，不凭记忆执行
+2. **顺序门禁**：不跳步，当前步骤未过 [step-gates.md](references/step-gates.md) 不进下一步
+3. **状态权威**：基于文档状态 [document-status.md](references/document-status.md) 编排步骤，编排契约见 [orchestrated-invocation.md](references/orchestrated-invocation.md)
+4. **进度权威**：`progress.md` 为 resume 事实源，每步按 [progress-convention.md](references/progress-convention.md) → **每步最小落盘** 落盘
+5. **resume**：先读 `progress.md`，缺/不可信则按 [version-convention.md](references/version-convention.md) → 恢复检测 修复
+6. **跳步/返工**：先说明影响，用户确认后执行；遗留 `DRAFT` 先批量确认转 `ACTIVE`，否则停
+7. **用户输出**：对用户摘要、门禁、阻塞项、确认询问遵守 [agent-communication-style.md](references/agent-communication-style.md)
 
 ## 执行流程
 
 ```
 解析版本、模式、起始 step
     ↓
-Bootstrap 缺 docs → 校验 architecture 与输入
+初始化缺 docs → 校验架构与输入
     ↓
 读 progress.md → 起点 / 阻塞项 / 草稿批次
     ↓
-读 sub-skill → 执行 → gate → progress.md
+读子 skill → 执行 → 门禁 → progress.md
     ↓
-fast 1–3 自动；3 后批量确认
-strict 或 4–7 逐步确认
+fast 模式步骤 1–3 自动；步骤 3 后批量确认
+strict 模式或步骤 4–7 逐步确认
     ↓
 下一步 / 结束
 ```
 
 ## 启动检查
 
-1. 确认版本、模式（默认 fast）、起始 step / resume / init。
-2. **Bootstrap**（缺则建，告知用户）：
-   - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制。
-   - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制；`progress.md` 内版本号替换。
-3. `init` 完 Bootstrap 后停；提示补 `technical-architecture` 与 `prd/origin/*.md`。
-4. 读 `technical-architecture.md`；仍模板或缺技术栈/命令/目录/测试 → 停。
-5. 列 `prd/origin/*.md`、`ui/*`。
-6. 读/修 `progress.md`；报起点、阻塞项、草稿批次状态。
-7. 读目标 sub-skill；格式疑义参考 [examples/README.md](examples/README.md)。
+1. 确认版本、模式（默认 fast）、起始 step / resume
+2. 初始化（缺则建，告知用户）：
+   - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制
+   - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制；`progress.md` 内版本号替换
+3. 若本次执行了步骤 2 初始化 → 停，提示补 `technical-architecture` 与 `prd/origin/*.md`
+4. `technical-architecture` 可在用户确认后修改；`prd/origin/*.md` 须用户提供，缺则停
+5. 读 `technical-architecture.md`，仍模板或缺技术栈/命令/目录/测试 → 停
+6. 列 `prd/origin/*.md`、`ui/*`
+7. 读/修 `progress.md`，报起点、阻塞项、草稿批次状态
+8. 读目标子 skill，格式疑义参考 [examples/README.md](examples/README.md)
+
+## 模式
+
+| 模式 | 说明 |
+| -- | -- |
+| `fast` | 默认，步骤 1–3 连续输出，统一确认；步骤 4–7 逐步确认 |
+| `strict` | 逐步确认 |
+
+## 文件路径解析
+
+读 skill / reference 按序尝试（命中即用）：
+
+| 资源 | 路径 1（`npx skills add`） | 路径 2（源码） |
+|------|------------------------------|----------------|
+| 本 `SKILL.md` 目录 | `.agents/skills/frontend-iteration/` | `skills/frontend-iteration/` |
+| 子 skill | `.agents/skills/<name>/SKILL.md` | `skills/<name>/SKILL.md` |
+| 编排 references | `.agents/skills/frontend-iteration/references/<file>` | `skills/frontend-iteration/references/<file>` |
+| 其他 references | `.agents/skills/<name>/references/<file>` | `skills/<name>/references/<file>` |
+| 样例 | `.agents/skills/frontend-iteration/examples/` | `skills/frontend-iteration/examples/` |
+
+## 前置条件
+
+| 文件 / 目录 | 必需 | 说明 |
+|-------------|------|------|
+| `docs/technical-architecture.md` | 若不存在则自动 | 须填项目事实 |
+| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD |
+| `docs/vX.Y.Z/progress.md` | 自动 | 自动建 |
+| `docs/vX.Y.Z/ui/*` | 否 | 有则对照；无则标「无 UI 稿」 |
+
+前置条件不满足 → 停止
 
 ## 参考
 

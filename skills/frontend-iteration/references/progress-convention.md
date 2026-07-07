@@ -1,8 +1,8 @@
 # 进度约定
 
-`docs/vX.Y.Z/progress.md` 是迭代 resume 的事实源。`frontend-iteration` 启动或 resume 时先读；缺失可创建；明显过期或不完整时，用目录扫描兜底并更新。
+`docs/vX.Y.Z/progress.md` 是迭代 resume 的事实源；`frontend-iteration` 启动或 resume 时先读；缺失可创建；明显过期或不完整时，用目录扫描兜底并更新
 
-状态约定见 [document-status.md](document-status.md)：**本文档用执行进度（表内「状态」列）；文首 `状态: ACTIVE` 仅表示 tracker 有效，与 summarized/design 文档生命周期不是同一套取值。**
+状态约定见 [document-status.md](document-status.md)：**本文档用执行进度体系状态（表内「状态」列），与文档状态不是同一套取值**
 
 ## 位置
 
@@ -43,7 +43,7 @@ docs/vX.Y.Z/progress.md
 
 ## 风格锚点
 
-步骤 4 开始前从 `technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 [code-style-enforcement.md](code-style-enforcement.md)。
+步骤 4 开始前从 `docs/technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 [code-style-enforcement.md](code-style-enforcement.md)
 
 | 序号 | 规则 | 来源 |
 |------|------|------|
@@ -72,7 +72,7 @@ docs/vX.Y.Z/progress.md
 
 ## 状态取值
 
-**执行进度**（步骤状态 / 计划任务状态 表内「状态」列，机器可读，勿改写法）：
+**执行进度**（步骤状态 / 计划任务状态 表内「状态」列，机器可读，勿改写法，勿与文档状态混淆）：
 
 | 取值 | 含义 |
 |------|------|
@@ -80,8 +80,6 @@ docs/vX.Y.Z/progress.md
 | `in_progress` | 正在执行 |
 | `passed` | 已通过该步骤/任务门禁 |
 | `blocked` | 有阻塞项，不得进入下游 |
-
-**勿与文档生命周期混淆**：`test-report.md` 文首 `DRAFT`/`ACTIVE`/`STALE`/`BLOCKED` 是另一套；步骤 5 `passed` 时须 `test-report.md` 文首为 `ACTIVE` 且摘要结论为「可进入 review」。
 
 **草稿批次状态**（仅 fast 步骤 1–3）：
 
@@ -102,11 +100,11 @@ docs/vX.Y.Z/progress.md
 | VERIFY | `未执行` / `通过` / `失败` |
 | 提交 | `否` / `是` |
 
-**门禁结果列**：`未检查` / `通过` / `失败` 等自然语言；与步骤「状态」列的 `passed` 不同义。
+**门禁结果列**：`未检查` / `通过` / `失败` 等自然语言；与步骤「状态」列的 `passed` 不同义
 
 ## 每步最小落盘
 
-每步结束前**必须**落盘以下字段（3–5 行）；不得只在聊天汇报。
+每步结束前**必须**落盘以下字段（3–5 行），不得只在聊天汇报
 
 | 步骤 | 最小更新清单 |
 |------|-------------|
@@ -118,23 +116,19 @@ docs/vX.Y.Z/progress.md
 | **6** 审查 | ① 当前步骤 → `6` ② 步骤 6 状态与门禁结果（结论、🔴 数）③ 有未解决 🔴 → 步骤 6 `blocked` ④ 更新于 ⑤ 阻塞项 |
 | **7** 发布 | ① 当前步骤 → `7` ② 步骤 7 状态与门禁结果（release 文件已生成）③ 全部步骤 `passed` 时迭代完成 ④ 更新于 ⑤ 阻塞项清为「无」 |
 
-**Resume 时**：先读步骤状态、计划任务状态、草稿批次，再读阻塞项；缺行按上表补全后再继续。存在 `open` 草稿批次 → 只能继续 fast 1–3 或停在步骤 3 末批量确认；不得进步骤 4。存在 `DRAFT` 文档但无 `open` 批次 → 遗留 DRAFT：展示请用户确认转 `ACTIVE` 后继续。
+**Resume 时**：先读步骤状态、计划任务状态、草稿批次，再读阻塞项；缺行按上表补全后再继续。存在 `open` 草稿批次 → 只能继续 fast 1–3 或停在步骤 3 末批量确认；不得进步骤 4。存在 `DRAFT` 文档但无 `open` 批次 → 遗留 DRAFT：展示请用户确认转 `ACTIVE` 后继续
 
 ## 更新规则
 
-1. 每步骤开始时，对应步骤状态标 `in_progress`。
-2. 每步骤完成后，记录门禁结果；通过标 `passed`，失败标 `blocked`。
-3. 步骤 4 每完成一任务，必须记录 RED/GREEN/REFACTOR/VERIFY 与提交状态。
-4. 步骤 5 必须把实际命令写入验证记录；同步 test-report 文首状态与摘要结论（见 document-status「test-report 专约」）。
-5. 任何阻塞项写入阻塞项节，停止推进下游。
-6. resume 时，从第一个 `pending` / `in_progress` / `blocked` 的步骤或任务继续。
-7. `plans/*.md` 或实现变更需重跑测试：步骤 5 → `pending` 或 `in_progress`；test-report 文首 → `STALE`（写失效原因）。
-8. fast 1–3 生成或消费 `DRAFT` 时，必须维护草稿批次；批量确认/拒绝/废弃时标 `confirmed` 或 `abandoned`。
+1. 每步落盘见 **每步最小落盘**（不得只聊天报）
+2. resume 时从第一个 `pending` / `in_progress` / `blocked` 的步骤或任务继续
+3. `plans/*.md` 或实现变更需重跑测试：步骤 5 → `pending` 或 `in_progress`；test-report 文首 → `STALE`（写失效原因）
+4. fast 1–3 生成或消费 `DRAFT` 时须维护草稿批次；批量确认/拒绝/废弃时标 `confirmed` 或 `abandoned`
 
 ## 兜底检测
 
 `progress.md` 缺失、损坏或与文件系统明显不一致时：
 
-1. 按 `version-convention.md` → Resume Detection 扫描目录。
-2. 生成或修复 `progress.md`。
-3. 向用户报告推断结果与不确定项。
+1. 按 `version-convention.md` → 恢复检测 扫描目录
+2. 生成或修复 `progress.md`
+3. 向用户报告推断结果与不确定项

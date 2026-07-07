@@ -35,28 +35,28 @@ docs/
 | release | 固定文件名 | `release/changelog-entry.md`、`release/pr-description.md` |
 | UI 图 | 页面或板块名 | `user-profile.*`、`user-profile-header.*`（任意常见图片格式） |
 
-多文件迭代：一个功能/页面一套 origin → summarized → design → plan，禁止混在一个文件里。
+多文件迭代：一个功能/页面一套 origin → summarized → design → plan，禁止混在一个文件里
 
 ## UI 映射
 
-UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requirements` 为权威：见其 `SKILL.md` → **UI Mapping** 与 `references/ui-reading-guide.md`。
+UI 文件名 → 页面/板块的映射规则与读图方法以 `frontend-requirements` 为权威：见其 `SKILL.md` → **UI Mapping** 与 `references/ui-reading-guide.md`
 
 ## 恢复检测
 
-优先读取 `docs/vX.Y.Z/progress.md`。从第一个 `pending` / `in_progress` / `blocked` 的 step 或 task 继续；若存在 `blocked`，先报告阻塞项。
+优先读取 `docs/vX.Y.Z/progress.md`；从第一个 `pending` / `in_progress` / `blocked` 的步骤或任务继续；若存在 `blocked`，先报告阻塞项
 
-`progress.md` 缺失、损坏或与文件系统明显不一致时，按顺序检查产出目录，第一个不满足 Step Gates 的步骤即为 resume 起点：
+`progress.md` 缺失、损坏或与文件系统明显不一致时，按顺序检查产出目录，第一个不满足步骤门禁的步骤即为 resume 起点：
 
-1. `prd/summarized/` 不完整 → step 1
-2. `design/` 不完整 → step 2
-3. `plans/` 不完整 → step 3
-4. 代码未按 plan 完成 → step 4
-5. 无 test-report 或测试未过 → step 5
-6. `review/` 缺失或有 🔴 → step 6
-7. 否则 → step 7
+1. `prd/summarized/` 不完整 → 步骤 1
+2. `design/` 不完整 → 步骤 2
+3. `plans/` 不完整 → 步骤 3
+4. 代码未按 plan 完成 → 步骤 4
+5. 无 test-report 或测试未过 → 步骤 5
+6. `review/` 缺失或有 🔴 → 步骤 6
+7. 否则 → 步骤 7
 
-推断完成后，创建或修复 `progress.md`，并向用户说明哪些状态是自动推断的。
+推断完成后，创建或修复 `progress.md`，并向用户说明哪些状态是自动推断的
 
 ## 文档状态
 
-`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头。状态取值、编排草稿例外、`progress.md` 与 `test-report.md` 的双套状态约定见 [document-status.md](document-status.md)。
+`docs/vX.Y.Z/` 下由 workflow 生成的 markdown 产物须包含状态头，约定见 [document-status.md](document-status.md)
