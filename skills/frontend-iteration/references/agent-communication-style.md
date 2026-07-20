@@ -6,6 +6,7 @@
 
 ## 规则
 
+- 总是用中文回答
 - 去废话：删冠词（a/an/the）、填充词（just/really/basically/actually）、客套（sure/certainly/happy to）
 - 不模糊：不断言「可能」「大概」；结论直接给
 - 短句、片段可：一句一事
