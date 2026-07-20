@@ -13,7 +13,7 @@
 | A（最小，推荐） | 1 页面 + 1 API 封装；局部 state | 逻辑暂不复用 | 单页无跨页共享 |
 | B（composable + store） | 可复用 | 无第二处使用 | 过度设计 |
 
-**结论**：A。非目标已排除历史记录；不预留 store。
+**结论**：A。非目标已排除历史记录；不预留 store
 
 ## 组件结构
 
@@ -52,14 +52,14 @@
 |-----|------|------|------|------|-----------|
 | `/api/feedback`（暂定） | POST | `{ type, content }` | `{ ok: true }` | `submitFeedback(payload): Promise<void>` | 新增 |
 
-后端未就绪：是。封装 `src/api/feedback.ts` 占位返回；切换点仅改封装。
+后端未就绪：是。封装 `src/api/feedback.ts` 占位返回；切换点仅改封装
 
 **联调待定清单**（实现 `TODO(v0.1.0): 接口联调待定`）：
 
 - 路径 `/api/feedback`
 - 入参/返回字段
 
-页面只调 `submitFeedback`；失败（非 2xx/网络）统一 reject。
+页面只调 `submitFeedback`；失败（非 2xx/网络）统一 reject
 
 ## 路由
 
@@ -110,4 +110,4 @@
 
 ## 待确认问题
 
-无阻塞。字段/路径 mock 推进，待后端确认。
+无阻塞。字段/路径 mock 推进，待后端确认

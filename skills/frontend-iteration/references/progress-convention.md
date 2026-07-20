@@ -1,8 +1,6 @@
 # 进度约定
 
-`docs/vX.Y.Z/progress.md` 是迭代 resume 的事实源；`frontend-iteration` 启动或 resume 时先读；缺失可创建；明显过期或不完整时，用目录扫描兜底并更新
-
-状态约定见 [document-status.md](document-status.md)：**本文档用执行进度体系状态（表内「状态」列），与文档状态不是同一套取值**
+`docs/vX.Y.Z/progress.md` 是迭代步骤恢复的事实源，通过 `/frontend-iteration` 启动或 resume 时先读。此文档缺失可重新创建，明显过期或不完整时，用目录扫描兜底并更新/修复。
 
 ## 位置
 
@@ -18,10 +16,9 @@ docs/vX.Y.Z/progress.md
 # vX.Y.Z 进度
 
 > 状态: ACTIVE
+> 版本: vX.Y.Z
 > 当前步骤: 1
 > 更新于: YYYY-MM-DD
-
-<!-- 文首状态恒为 ACTIVE，见 document-status.md「progress.md 专约」 -->
 
 ## 步骤状态
 
@@ -43,7 +40,9 @@ docs/vX.Y.Z/progress.md
 
 ## 风格锚点
 
-步骤 4 开始前从 `docs/technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 [code-style-enforcement.md](code-style-enforcement.md)
+步骤 4 开始前从 `docs/technical-architecture.md`“代码风格”小节提炼，每任务进入 GREEN 前重读
+
+细则见 [code-style-enforcement.md](code-style-enforcement.md)
 
 | 序号 | 规则 | 来源 |
 |------|------|------|
@@ -116,7 +115,7 @@ docs/vX.Y.Z/progress.md
 | **6** 审查 | ① 当前步骤 → `6` ② 步骤 6 状态与门禁结果（结论、🔴 数）③ 有未解决 🔴 → 步骤 6 `blocked` ④ 更新于 ⑤ 阻塞项 |
 | **7** 发布 | ① 当前步骤 → `7` ② 步骤 7 状态与门禁结果（release 文件已生成）③ 全部步骤 `passed` 时迭代完成 ④ 更新于 ⑤ 阻塞项清为「无」 |
 
-**Resume 时**：先读步骤状态、计划任务状态、草稿批次，再读阻塞项；缺行按上表补全后再继续。存在 `open` 草稿批次 → 只能继续 fast 1–3 或停在步骤 3 末批量确认；不得进步骤 4。存在 `DRAFT` 文档但无 `open` 批次 → 遗留 DRAFT：展示请用户确认转 `ACTIVE` 后继续
+**恢复执行时**：先读步骤状态、计划任务状态、草稿批次，再读阻塞项；缺行按上表补全后再继续。存在 `open` 草稿批次 → 只能继续 fast 1–3 或停在步骤 3 末批量确认；不得进步骤 4。存在 `DRAFT` 文档但无 `open` 批次 → 遗留 DRAFT：展示请用户确认转 `ACTIVE` 后继续
 
 ## 更新规则
 
@@ -125,10 +124,18 @@ docs/vX.Y.Z/progress.md
 3. `plans/*.md` 或实现变更需重跑测试：步骤 5 → `pending` 或 `in_progress`；test-report 文首 → `STALE`（写失效原因）
 4. fast 1–3 生成或消费 `DRAFT` 时须维护草稿批次；批量确认/拒绝/废弃时标 `confirmed` 或 `abandoned`
 
-## 兜底检测
+## 恢复检测
 
-`progress.md` 缺失、损坏或与文件系统明显不一致时：
+优先读取 `docs/vX.Y.Z/progress.md`；从第一个 `pending` / `in_progress` / `blocked` 的步骤或任务继续；若存在 `blocked`，先报告阻塞项
 
-1. 按 `version-convention.md` → 恢复检测 扫描目录
-2. 生成或修复 `progress.md`
-3. 向用户报告推断结果与不确定项
+`progress.md` 缺失、损坏或与文件系统明显不一致时，按顺序检查产出目录，第一个不满足步骤门禁的步骤即为 resume 起点：
+
+1. `prd/summarized/` 不完整 → 步骤 1
+2. `design/` 不完整 → 步骤 2
+3. `plans/` 不完整 → 步骤 3
+4. 代码未按 plan 完成 → 步骤 4
+5. 无 test-report 或测试未过 → 步骤 5
+6. `review/` 缺失或有 🔴 → 步骤 6
+7. 否则 → 步骤 7
+
+推断完成后，创建或修复 `progress.md`，并向用户说明哪些状态是自动推断的

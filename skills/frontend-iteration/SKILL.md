@@ -8,11 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-按版本推进的步骤：1 需求 → 2 设计 → 3 TDD 计划 → 4 实现 → 5 测试 → 6 审查 → 7 发布
-
-本工作流接管同迭代内计划、实现、验证、审查、发布门禁
-
-如果用户安装了 Superpowers skill：忽略同职责的 Superpowers skill；测试失败可用 `systematic-debugging`；人工 review 反馈可用 `receiving-code-review`
+按如下步骤完成前端迭代：1 需求分析/拆解 → 2 设计 → 3 TDD 计划 → 4 实现 → 5 测试 → 6 审查 → 7 发布准备
 
 ## 步骤与子 skill 对应
 
@@ -32,31 +28,32 @@ disable-model-invocation: true
 /frontend-iteration v1.2.0                  # fast（默认）：1–3 连续，4–7 逐步确认
 /frontend-iteration v1.2.0 strict           # 每步确认
 /frontend-iteration v1.2.0 fast
-/frontend-iteration v1.2.0 step 3
+/frontend-iteration v1.2.0 step 3           # 执行步骤 3
 /frontend-iteration v1.2.0 strict step 3
-/frontend-iteration v1.2.0 resume
+/frontend-iteration v1.2.0 resume           # 从未完成步骤恢复执行
 ```
 
-版本号 `vX.Y.Z`；产物在 `docs/vX.Y.Z/`
+版本号结构： `vX.Y.Z`
 
-## 编排规则
+产物输出到 `docs/vX.Y.Z/`
 
-1. **显式加载**：步骤执行前重读子 skill，不凭记忆执行
-2. **顺序门禁**：不跳步，当前步骤未过 [step-gates.md](references/step-gates.md) 不进下一步
-3. **状态权威**：基于文档状态 [document-status.md](references/document-status.md) 编排步骤，编排契约见 [orchestrated-invocation.md](references/orchestrated-invocation.md)
-4. **进度权威**：`progress.md` 为 resume 事实源，每步按 [progress-convention.md](references/progress-convention.md) → **每步最小落盘** 落盘
-5. **resume**：先读 `progress.md`，缺/不可信则按 [version-convention.md](references/version-convention.md) → 恢复检测 修复
-6. **跳步/返工**：先说明影响，用户确认后执行；遗留 `DRAFT` 先批量确认转 `ACTIVE`，否则停
-7. **用户输出**：对用户摘要、门禁、阻塞项、确认询问遵守 [agent-communication-style.md](references/agent-communication-style.md)
+## 步骤编排规则
+
+1. **执行前重读**：每步执行前重读子 skill，不凭记忆执行
+2. **规范版本与目录结构**：严格基于版本与目录结构约定（见 [version-convention.md](references/version-convention.md)）执行
+2. **状态驱动**：基于产物文档状态（见 [document-status.md](references/document-status.md)）判断门禁通过状态
+3. **门禁驱动**：当前步骤门禁未通过（见 [step-gates.md](references/step-gates.md)）不允许进入下一步
+4. **契约驱动**：编排契约见 [orchestrated-invocation.md](references/orchestrated-invocation.md)
+5. **进度驱动**：`progress.md` 为恢复步骤执行的事实源。每步执行时均要按 [progress-convention.md](references/progress-convention.md)“每步最小落盘”小节完成落盘
+6. **严格恢复**：先读 `progress.md`，缺少/内容不可信则按 [progress-convention.md](references/progress-convention.md)“恢复检测”小节修复
+7. **跳步**：说明影响，用户确认后执行
+8. **返工**：如有遗留的状态为 `DRAFT` 的产物文档，需用户确认批量确认转 `ACTIVE`，否则停止
+9. **用户输出**：对用户的所有文字输出遵守沟通风格（见 [agent-communication-style.md](references/agent-communication-style.md)）
 
 ## 执行流程
 
 ```
-解析版本、模式、起始 step
-    ↓
-初始化缺 docs → 校验 technical-architecture 与 PRD → 读 progress
-    ↓
-读 progress.md → 起点 / 阻塞项 / 草稿批次
+启动检查
     ↓
 读子 skill → 执行 → 门禁 → progress.md
     ↓
@@ -68,30 +65,29 @@ strict 模式或步骤 4–7 逐步确认
 
 ## 启动检查
 
-1. 确认版本、模式（默认 fast）、起始 step / resume
-2. 初始化（缺则建，告知用户）：
-   - 无 `docs/technical-architecture.md` → 从 `<skill-root>/templates/docs/technical-architecture.md` 复制
-   - 无 `docs/vX.Y.Z/` 或缺 `progress.md` → 从 `<skill-root>/templates/docs/version/` 复制；`progress.md` 内版本号替换
-3. `technical-architecture.md` 仍空模板（含 `` `...` `` 或缺技术栈/命令/目录/测试）：
-   - 用户未选方式 → 问 **自动探库** 或 **手动填写**
-   - **自动**：读 `package.json`、构建/测试配置、`src/` 目录，按模板填项目事实；摘要后问确认；未确认则停
-   - **手动**：停，提示手填后重跑
-4. 仍空模板 → 停
-5. `prd/origin/*.md` 须用户提供，缺则停
-6. 列 `prd/origin/*.md`、`ui/*`
-7. 读/修 `progress.md`，报起点、阻塞项、草稿批次状态
-8. 读目标子 skill，格式疑义参考 [examples/README.md](examples/README.md)
+1. 确认版本、模式（默认 fast）、起始步骤（step / resume）
+2. 校验 `docs/technical-architecture.md` 及 `/docs/vX.Y.Z/`：
+   1. 无 `docs/technical-architecture.md`：从 `<skill-root>/templates/docs/technical-architecture.md` 复制
+   2. `technical-architecture.md` 是模板（缺项目真实技术栈/命令/目录/测试等内容）：Agent 自动探库生成
+   3. 无 `docs/vX.Y.Z/progress.md`：从 `<skill-root>/templates/docs/version/progress.md` 复制，替换文档内版本号
+   4. `docs/vX.Y.Z/` 下缺少模板 `<skill-root>/templates/docs/version/` 下对应目录：根据模板补全
+   5. 无 `docs/vX.Y.Z/prd/origin/*.md`：要求用户提供并停止
+3. 向用户列出 `docs/vX.Y.Z/prd/origin/*.md`、`docs/vX.Y.Z/ui/*`
+4. 读/修 `progress.md`，向用户列出起点、阻塞项、草稿批次状态
+5. 读目标子 skill，格式疑义参考 [examples/README.md](examples/README.md)
+
+启动检查不通过时停止
 
 ## 模式
 
 | 模式 | 说明 |
 | -- | -- |
-| `fast` | 默认，步骤 1–3 连续输出，统一确认；步骤 4–7 逐步确认 |
-| `strict` | 逐步确认 |
+| `fast` | 默认，步骤 1–3 连续输出产物，统一确认；步骤 4–7 逐步输出产物并等待确认 |
+| `strict` | 逐步输出产物并等待确认 |
 
 ## 文件路径解析
 
-读 skill / reference 按序尝试（命中即用）：
+读 skill / reference 时按序尝试（命中即用）：
 
 | 资源 | 路径 1（`npx skills add`） | 路径 2（源码） |
 |------|------------------------------|----------------|
@@ -101,25 +97,14 @@ strict 模式或步骤 4–7 逐步确认
 | 其他 references | `.agents/skills/<name>/references/<file>` | `skills/<name>/references/<file>` |
 | 样例 | `.agents/skills/frontend-iteration/examples/` | `skills/frontend-iteration/examples/` |
 
-## 前置条件
-
-| 文件 / 目录 | 必需 | 说明 |
-|-------------|------|------|
-| `docs/technical-architecture.md` | 若不存在则自动建模板 | 空模板可自动探库或手动填写 |
-| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD |
-| `docs/vX.Y.Z/progress.md` | 自动 | 自动建 |
-| `docs/vX.Y.Z/ui/*` | 否 | 有则对照；无则标「无 UI 稿」 |
-
-前置条件不满足 → 停止
-
 ## 参考
 
-- 步骤门禁：[step-gates.md](references/step-gates.md)
-- 用户输出风格：[agent-communication-style.md](references/agent-communication-style.md)
-- 代码风格防遗忘：[code-style-enforcement.md](references/code-style-enforcement.md)
-- 接口联调：[api-integration-guide.md](references/api-integration-guide.md)
-- 版本目录：[version-convention.md](references/version-convention.md)
-- 进度：[progress-convention.md](references/progress-convention.md)
+- 版本与目录结构约定：[version-convention.md](references/version-convention.md)
 - 文档状态：[document-status.md](references/document-status.md)
+- 步骤门禁：[step-gates.md](references/step-gates.md)
 - 编排契约：[orchestrated-invocation.md](references/orchestrated-invocation.md)
-- 样例：[examples/README.md](examples/README.md)
+- 进度约定：[progress-convention.md](references/progress-convention.md)
+- Agent 沟通风格：[agent-communication-style.md](references/agent-communication-style.md)
+- 强制代码风格：[code-style-enforcement.md](references/code-style-enforcement.md)
+- 接口联调指南：[api-integration-guide.md](references/api-integration-guide.md)
+- 样例说明：[examples/README.md](examples/README.md)

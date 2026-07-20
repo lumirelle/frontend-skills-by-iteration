@@ -1,10 +1,9 @@
 # vX.Y.Z 进度
 
 > 状态: ACTIVE
+> 版本: vX.Y.Z
 > 当前步骤: 1
 > 更新于: YYYY-MM-DD
-
-<!-- 文首状态恒为 ACTIVE，见 frontend-iteration/references/document-status.md「progress.md 专约」 -->
 
 ## 步骤状态
 
@@ -26,7 +25,9 @@
 
 ## 风格锚点
 
-步骤 4 开始前从 `docs/technical-architecture.md` → **代码风格** 提炼 5–10 条；每任务进入 GREEN 前重读。细则见 `frontend-iteration/references/code-style-enforcement.md`
+步骤 4 开始前从 `docs/technical-architecture.md`“代码风格”小节提炼，每任务进入 GREEN 前重读
+
+细则见 `frontend-iteration/references/code-style-enforcement.md`
 
 | 序号 | 规则 | 来源 |
 |------|------|------|
@@ -51,5 +52,3 @@
 ## 备注
 
 - 无
-
-<!-- 每步落盘清单见 frontend-iteration/references/progress-convention.md → 每步最小落盘 -->
