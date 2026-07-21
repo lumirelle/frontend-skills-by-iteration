@@ -81,7 +81,7 @@
 | 章节 | 要求 |
 |------|------|
 | 文首 `状态` | **文档状态**（`DRAFT`/`ACTIVE`/`STALE`/`BLOCKED`），非执行进度；下游 review 仅消费 `ACTIVE` |
-| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`；与文首 `状态` 须一致（见 `frontend-iteration/references/document-status.md` → test-report 专约） |
+| `摘要.结论` | 报告内容：`可进入 review` / `阻塞`，结论需要与文首 `状态` 表达一致 |
 | `阻塞项` | 非空时文首 `状态` 为 `BLOCKED` 或 `DRAFT`，且 `结论` 为 `阻塞` |
 | 执行命令 | 写实际运行完整命令；同步写入 `progress.md` → **验证记录** |
 | TDD 证据 | 引用 `progress.md` 记录，不替代落盘 |

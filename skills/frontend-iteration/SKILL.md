@@ -47,7 +47,7 @@ disable-model-invocation: true
 6. **进度驱动**：`progress.md` 为恢复步骤执行的事实源。每步执行时均要按 [progress-convention.md](references/progress-convention.md)“每步最小落盘”小节完成落盘
 7. **严格恢复**：先读 `progress.md`，缺少/内容不可信则按 [progress-convention.md](references/progress-convention.md)“恢复检测”小节修复
 8. **跳步**：说明影响，用户确认后执行
-9. **返工**：如有遗留的状态为 `DRAFT` 的产物文档，需用户确认批量确认转 `ACTIVE`，否则停止
+9. **返工**：返工到对应步骤时，如有遗留的状态为 `DRAFT` 的输入产物文档，需用户确认批量确认转 `ACTIVE`，否则停止
 10. **用户输出**：对用户的所有文字输出遵守沟通风格（见 [agent-communication-style.md](references/agent-communication-style.md)）
 
 ## 执行流程
@@ -70,7 +70,7 @@ strict 模式或步骤 4–7 逐步确认
    1. 无 `docs/technical-architecture.md`：从 `<skill-root>/templates/docs/technical-architecture.md` 复制
    2. `technical-architecture.md` 是模板（缺项目真实技术栈/命令/目录/测试等内容）：Agent 自动探库生成
    3. 无 `docs/vX.Y.Z/progress.md`：从 `<skill-root>/templates/docs/version/progress.md` 复制，替换文档内版本号
-   4. `docs/vX.Y.Z/` 下缺少模板 `<skill-root>/templates/docs/version/` 下对应目录或文件（如 `todos.md`）：根据模板补全
+   4. `docs/vX.Y.Z/` 下缺少模板 `<skill-root>/templates/docs/version/` 下对应目录或文件：根据模板补全
    5. 无 `docs/vX.Y.Z/prd/origin/*.md`：要求用户提供并停止
 3. 向用户列出 `docs/vX.Y.Z/prd/origin/*.md`、`docs/vX.Y.Z/ui/*`
 4. 读/修 `progress.md`，向用户列出起点、阻塞项、草稿批次状态

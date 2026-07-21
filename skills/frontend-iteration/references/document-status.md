@@ -39,7 +39,7 @@
 
 | Status | 含义 | 下游可否消费 |
 |--------|------|-------------|
-| `DRAFT` | 初稿，等待用户确认 | 否 |
+| `DRAFT` | 初稿，等待用户确认 | 否，唯一例外见 [orchestrated-invocation.md](orchestrated-invocation.md)“DRAFT 消费例外”小节（总结：仅用户调用 `/frontend-iteration fast`，正在执行步骤 1–3 且该批次在 `progress.md` “草稿批次”小节中状态为 `open` 时允许，但要在进步骤 4 前批量确认转 `ACTIVE`） |
 | `ACTIVE` | 已确认，可作为下游输入 | 是 |
 | `STALE` | 上游变更后失效 | 否 |
 | `BLOCKED` | 有未关闭阻塞项 | 否 |
@@ -51,7 +51,7 @@
 | 读到的状态 | 默认动作 | 例外 |
 |------------|----------|------|
 | `ACTIVE` | 可作为下游输入继续执行 | 无 |
-| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | 唯一例外见 [orchestrated-invocation.md](orchestrated-invocation.md)“DRAFT 消费例外”小节（总结：仅 `/frontend-iteration fast` 步骤 1–3 且 `progress.md` → **草稿批次** 为 `open` 时允许，但要在进步骤 4 前批量确认转 `ACTIVE`） |
+| `DRAFT` | 停止，等待用户确认或回到产出步骤完善 | 唯一例外见 [orchestrated-invocation.md](orchestrated-invocation.md)“DRAFT 消费例外”小节（总结：仅用户调用 `/frontend-iteration fast`，正在执行步骤 1–3 且该批次在 `progress.md` “草稿批次”小节中状态为 `open` 时允许，但要在进步骤 4 前批量确认转 `ACTIVE`） |
 | `STALE` | 停止，回到对应上游步骤更新，并传播下游失效状态 | 无 |
 | `BLOCKED` | 停止，报告阻塞项，等待用户处理或回上游修复 | 无 |
 
@@ -59,9 +59,9 @@
 
 ## 状态传播
 
-1. `prd/origin/*.md` 变更后，对应 `prd/summarized/*.md` 及其下游 `design/*.md`、`plans/*.md`、`review/*.md` 状态需变为 `STALE`
-2. `prd/summarized/*.md` 变更后，对应 `design/*.md`、`plans/*.md`、`review/*.md` 状态需变为 `STALE`
-3. `design/*.md` 变更后，对应 `plans/*.md`、`review/*.md` 状态需变为 `STALE`
+1. `prd/origin/*.md` 变更后，对应 `prd/summarized/*.md` 及其下游 `design/*.md`、`plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`
+2. `prd/summarized/*.md` 变更后，对应 `design/*.md`、`plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`
+3. `design/*.md` 变更后，对应 `plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`
 4. `plans/*.md` 变更后，对应 `test-report.md`、`review/*.md` 状态需变为 `STALE`；`progress.md` 中步骤 4–7 与相关 task 回退为 `pending` / `in_progress`（见 [progress-convention.md](progress-convention.md)）
 
 ## Agent 行为

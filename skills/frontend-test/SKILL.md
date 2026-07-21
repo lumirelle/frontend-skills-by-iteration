@@ -55,7 +55,7 @@ disable-model-invocation: true
 4. **真跑**：实际执行；以 exit、输出为准；不臆断过
 5. **分层门禁**：单元不过不跑集成；集成不过不跑 E2E（无层则跳）
 6. **失败不推**：相关命令失败 → 停本步；test-report `DRAFT`/`BLOCKED`，结论「阻塞」；步骤 5 `blocked`
-7. **状态一致**：确认后 test-report `ACTIVE`，结论「可进入 review」，步骤 5 `passed`（见 `frontend-iteration/references/document-status.md` → test-report 专约）
+7. **状态一致**：确认后 test-report `ACTIVE`，结论「可进入 review」，步骤 5 `passed`
 8. **框架**：测试 API 从项目示例或官方文档取
 9. **证据**：TDD 与命令结果以 `progress.md` 为准；report 汇总引用
 10. **状态门禁**：见 `frontend-iteration/references/orchestrated-invocation.md`；上游不可用 → 停
@@ -102,5 +102,5 @@ disable-model-invocation: true
 ## 参考
 
 - 产物模板：[test-report-template.md](references/test-report-template.md)
-- 计划编写指南：[test-writing-guide.md](references/test-writing-guide.md)
+- 测试编写指南：[test-writing-guide.md](references/test-writing-guide.md)
 - 接口联调指南：`frontend-iteration/references/api-integration-guide.md`

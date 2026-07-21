@@ -99,5 +99,5 @@ disable-model-invocation: true
 ## 参考
 
 - 产物模板：[implementation-plan-template.md](references/implementation-plan-template.md)
-- 计划编写指南：`frontend-test/references/test-writing-guide.md`
+- 测试编写指南：`frontend-test/references/test-writing-guide.md`
 - 接口联调指南：`frontend-iteration/references/api-integration-guide.md`
