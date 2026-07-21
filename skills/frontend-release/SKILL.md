@@ -59,6 +59,7 @@ disable-model-invocation: true
 6. **风险透明**：test-report 风险、review 🟡、`TODO(vX.Y.Z): 接口联调待定` 汇总进 `docs/vX.Y.Z/todos.md`，并在 PR 关联
 7. **可追溯**：PR 链本迭代 docs
 8. **状态门禁**：见 `frontend-iteration/references/orchestrated-invocation.md`；阻塞项或步骤 5 `blocked` → 不发布
+9. **出口全量覆盖**：`release/*`、`todos.md` 非状态机文档；每次执行按当前 ACTIVE 输入全量重写，不读旧稿做门禁
 
 ## 变更日志
 

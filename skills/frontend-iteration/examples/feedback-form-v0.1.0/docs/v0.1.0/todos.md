@@ -1,6 +1,5 @@
 # v0.1.0 待确认问题（TODO）
 
-> 状态: ACTIVE
 > 版本: v0.1.0
 > 来源: test-report.md, review/feedback-form.md
 > 更新于: 2026-06-27

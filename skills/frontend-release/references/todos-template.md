@@ -1,6 +1,5 @@
 # vX.Y.Z 待确认问题（TODO）
 
-> 状态: DRAFT
 > 版本: vX.Y.Z
 > 来源: review/*.md, test-report.md, design/*.md, plans/*.md
 > 更新于: YYYY-MM-DD
