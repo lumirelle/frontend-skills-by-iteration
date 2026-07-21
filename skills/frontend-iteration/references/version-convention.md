@@ -36,3 +36,9 @@ docs/
 | release | 固定文件名 | `release/changelog-entry.md`、`release/pr-description.md` |
 | todos | 固定文件名 | `todos.md` |
 | UI 图 | 页面或板块名 | `user-profile.*`、`user-profile-header.*`（任意常见图片格式） |
+
+## 迭代测试代码
+
+- 本版本测试：路径或文件名须含字面量 `vX.Y.Z`
+- 形态以 `docs/technical-architecture.md` 的“测试.文件位置”小节为准
+- 跨版本/共用：路径与文件名均不含版本号

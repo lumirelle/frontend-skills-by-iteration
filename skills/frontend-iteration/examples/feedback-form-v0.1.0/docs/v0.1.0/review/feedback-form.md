@@ -20,7 +20,7 @@
 | 方案 | `design/feedback-form.md` |
 | 计划 | `plans/feedback-form.md` |
 | 测试 | `test-report.md` |
-| 变更 | `src/types/feedback.ts`、`src/api/feedback.ts`、`src/api/feedback.test.ts`、`src/pages/feedback/*`、`ProfilePage.*`、路由、`tests/e2e/feedback-form.spec.*` |
+| 变更 | `src/types/feedback.ts`、`src/api/feedback.ts`、`src/api/feedback.v0.1.0.test.unit.ts`、`src/pages/feedback/*`、`ProfilePage.*`、路由 |
 
 ## 问题清单
 

@@ -31,7 +31,7 @@
 | 序号 | 规则 | 来源 |
 |------|------|------|
 | 1 | API 仅 `src/api/feedback.ts`；页面不 `fetch` | 代码风格 |
-| 2 | 测试与源码同目录 `*.test.ts` | 测试 |
+| 2 | 测试与源码同目录 `*.v0.1.0.test*.ts` | 测试 |
 | 3 | 表单控件有可访问标签 | 测试 → 项目约定 |
 | 4 | 待定 `TODO(v0.1.0): 接口联调待定` | `frontend-iteration/references/api-integration-guide.md` |
 | 5 | VERIFY 含 `npm run lint`、`npm run typecheck` | 代码风格 |

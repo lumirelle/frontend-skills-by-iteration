@@ -96,9 +96,8 @@
 
 | 操作 | 文件 |
 |------|------|
-| 新增 | `src/types/feedback.ts`、`src/api/feedback.ts`、`src/api/feedback.test.ts` |
-| 新增 | `src/pages/feedback/FeedbackFormPage.*`、`.test.*`、`.integration.test.*` |
-| 新增 | `tests/e2e/feedback-form.spec.*` |
+| 新增 | `src/types/feedback.ts`、`src/api/feedback.ts`、`src/api/feedback.v0.1.0.test.unit.ts` |
+| 新增 | `src/pages/feedback/FeedbackFormPage.*`、`.v0.1.0.test.unit.*`、`.v0.1.0.test.integration.*`、`.v0.1.0.test.e2e.*` |
 | 修改 | `ProfilePage.*`、路由配置 |
 
 ## 风险与回滚

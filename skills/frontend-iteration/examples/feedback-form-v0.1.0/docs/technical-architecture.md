@@ -31,7 +31,7 @@
 | Hooks | `src/composables/` | 复用逻辑 |
 | API | `src/api/` | 请求封装 |
 | 类型 | `src/types/` | 共享类型 |
-| 测试 | 与被测文件同目录 `*.test.ts` / `tests/e2e/` | 见下 |
+| 测试 | 与被测文件同目录 `*.vX.Y.Z.test*.ts` / `tests/**/vX.Y.Z/` | 见下[文件位置](#文件位置) |
 
 ## 代码风格
 
@@ -69,10 +69,11 @@
 
 | 层级 | 路径 | 备注 |
 |------|------|------|
-| 单元 | `src/**/<name>.test.ts` | 与源码同目录 |
-| 集成 | `src/**/<name>.integration.test.ts` | |
-| E2E | `tests/e2e/<name>.spec.ts` | |
-| 夹具/Mock | `tests/fixtures/` | |
+| 单元 | `src/**/<name>.vX.Y.Z.test.unit.ts` / `tests/unit/vX.Y.Z/<name>.test.ts` | 本版本单测 |
+| 集成 | `src/**/<name>.vX.Y.Z.test.integration.ts` / `tests/integration/vX.Y.Z/<name>.test.ts` | 本版本集成测试 |
+| E2E | `src/**/<name>.vX.Y.Z.test.e2e.ts` / `tests/e2e/vX.Y.Z/<name>.test.ts` | 本版本 E2E 测试 |
+| 共用夹具/Mock | `tests/fixtures/` | 跨版本共用 |
+| 夹具/Mock | `tests/fixtures/vX.Y.Z/` | 仅被本版本使用 |
 
 ### 项目约定
 
