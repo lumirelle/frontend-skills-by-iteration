@@ -60,10 +60,10 @@
 
 ## 状态传播
 
-1. `prd/origin/*.md` 变更后，对应 `prd/summarized/*.md` 及其下游 `design/*.md`、`plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`
-2. `prd/summarized/*.md` 变更后，对应 `design/*.md`、`plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`
-3. `design/*.md` 变更后，对应 `plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`
-4. `plans/*.md` 变更后，对应 `test-report.md`、`review/*.md` 状态需变为 `STALE`；`progress.md` 中步骤 4–7 与相关 task 回退为 `pending` / `in_progress`（见 [progress-convention.md](progress-convention.md)）
+1. `prd/origin/*.md` 变更后，对应 `prd/summarized/*.md` 及其下游 `design/*.md`、`plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`；`progress.md` 中步骤 1–7 与相关 task 回退为 `pending` / `in_progress`（见 [progress-convention.md](progress-convention.md)）
+2. `prd/summarized/*.md` 变更后，对应 `design/*.md`、`plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`；`progress.md` 中步骤 2–7 与相关 task 回退为 `pending` / `in_progress`（见 [progress-convention.md](progress-convention.md)）
+3. `design/*.md` 变更后，对应 `plans/*.md`、`test-report.md`、`review/*.md` 状态需变为 `STALE`；`progress.md` 中步骤 3–7 与相关 task 回退为 `pending` / `in_progress`（见 [progress-convention.md](progress-convention.md)）
+4. `plans/*.md` 变更后，对应 `test-report.md`、`review/*.md` 状态需变为 `STALE`；`progress.md` 中步骤 4–7 与相关 task 回退为 `pending` / `in_progress`
 
 ## Agent 行为
 

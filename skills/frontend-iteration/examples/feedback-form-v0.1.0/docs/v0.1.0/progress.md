@@ -14,7 +14,7 @@
 | 3 | 计划 | passed | 通过 | 4 任务；1→2→3→4 |
 | 4 | 实现 | passed | 通过 | 4 任务 RED→风格重载→GREEN→VERIFY |
 | 5 | 测试 | passed | 通过 | 单元/集成/E2E 退出码 0 |
-| 6 | 审查 | passed | 通过 | 结论通过；无 🔴 |
+| 6 | 审查 | passed | 通过 | 结论有条件通过；无 🔴 |
 | 7 | 发布 | passed | 通过 | changelog + PR 就绪 |
 
 ## 计划任务状态

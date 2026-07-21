@@ -96,6 +96,17 @@ disable-model-invocation: true
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
 - [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
+## 文件路径解析
+
+读 skill / reference 时按序尝试（命中即用）：
+
+| 资源 | 路径 1（`npx skills add`） | 路径 2（源码） |
+|------|------------------------------|----------------|
+| 本子 `SKILL.md` 目录 | `.agents/skills/frontend-plan/` | `skills/frontend-plan/` |
+| 编排 references | `.agents/skills/frontend-iteration/references/<file>` | `skills/frontend-iteration/references/<file>` |
+| 其他 references | `.agents/skills/<name>/references/<file>` | `skills/<name>/references/<file>` |
+| 样例 | `.agents/skills/frontend-iteration/examples/` | `skills/frontend-iteration/examples/` |
+
 ## 参考
 
 - 产物模板：[implementation-plan-template.md](references/implementation-plan-template.md)

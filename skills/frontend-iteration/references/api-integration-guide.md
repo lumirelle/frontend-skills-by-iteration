@@ -90,4 +90,4 @@ export async function getUserInfo(): Promise<UserInfo> {
 
 ### 步骤 7 — 发布
 
-- 向用户直接报告未联调内容
+- 未联调内容转为 TODO，进入 `docs/vX.Y.Z/todos.md`

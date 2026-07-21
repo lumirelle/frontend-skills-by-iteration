@@ -127,3 +127,14 @@ VERIFY：task 验证命令（+ lint/typecheck 若配置）
 - 每 task RED/GREEN/REFACTOR 摘要
 - 未覆盖风险
 - `TODO(vX.Y.Z): 接口联调待定` 清单（若有）
+
+## 文件路径解析
+
+读 skill / reference 时按序尝试（命中即用）：
+
+| 资源 | 路径 1（`npx skills add`） | 路径 2（源码） |
+|------|------------------------------|----------------|
+| 本子 `SKILL.md` 目录 | `.agents/skills/frontend-implement/` | `skills/frontend-implement/` |
+| 编排 references | `.agents/skills/frontend-iteration/references/<file>` | `skills/frontend-iteration/references/<file>` |
+| 其他 references | `.agents/skills/<name>/references/<file>` | `skills/<name>/references/<file>` |
+| 样例 | `.agents/skills/frontend-iteration/examples/` | `skills/frontend-iteration/examples/` |
