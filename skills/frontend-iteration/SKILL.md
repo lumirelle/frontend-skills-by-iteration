@@ -41,14 +41,14 @@ disable-model-invocation: true
 
 1. **执行前重读**：每步执行前重读子 skill，不凭记忆执行
 2. **规范版本与目录结构**：严格基于版本与目录结构约定（见 [version-convention.md](references/version-convention.md)）执行
-2. **状态驱动**：基于产物文档状态（见 [document-status.md](references/document-status.md)）判断门禁通过状态
-3. **门禁驱动**：当前步骤门禁未通过（见 [step-gates.md](references/step-gates.md)）不允许进入下一步
-4. **契约驱动**：编排契约见 [orchestrated-invocation.md](references/orchestrated-invocation.md)
-5. **进度驱动**：`progress.md` 为恢复步骤执行的事实源。每步执行时均要按 [progress-convention.md](references/progress-convention.md)“每步最小落盘”小节完成落盘
-6. **严格恢复**：先读 `progress.md`，缺少/内容不可信则按 [progress-convention.md](references/progress-convention.md)“恢复检测”小节修复
-7. **跳步**：说明影响，用户确认后执行
-8. **返工**：如有遗留的状态为 `DRAFT` 的产物文档，需用户确认批量确认转 `ACTIVE`，否则停止
-9. **用户输出**：对用户的所有文字输出遵守沟通风格（见 [agent-communication-style.md](references/agent-communication-style.md)）
+3. **状态驱动**：基于产物文档状态（见 [document-status.md](references/document-status.md)）判断门禁通过状态
+4. **门禁驱动**：当前步骤门禁未通过（见 [step-gates.md](references/step-gates.md)）不允许进入下一步
+5. **契约驱动**：编排契约见 [orchestrated-invocation.md](references/orchestrated-invocation.md)
+6. **进度驱动**：`progress.md` 为恢复步骤执行的事实源。每步执行时均要按 [progress-convention.md](references/progress-convention.md)“每步最小落盘”小节完成落盘
+7. **严格恢复**：先读 `progress.md`，缺少/内容不可信则按 [progress-convention.md](references/progress-convention.md)“恢复检测”小节修复
+8. **跳步**：说明影响，用户确认后执行
+9. **返工**：如有遗留的状态为 `DRAFT` 的产物文档，需用户确认批量确认转 `ACTIVE`，否则停止
+10. **用户输出**：对用户的所有文字输出遵守沟通风格（见 [agent-communication-style.md](references/agent-communication-style.md)）
 
 ## 执行流程
 

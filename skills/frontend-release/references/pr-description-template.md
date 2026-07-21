@@ -36,6 +36,4 @@
 |------|------|
 | 标题 | Conventional Commits，仅英文 |
 | 改动摘要 | 用户视角，避免逐文件罗列 |
-| 测试说明 | 与 test-report 一致，写真实命令与结果 |
-| 风险 | review 的 🟡 与 test-report 未覆盖项必须体现 |
 | 关联文档 | 指向本迭代 docs，便于回溯 |
