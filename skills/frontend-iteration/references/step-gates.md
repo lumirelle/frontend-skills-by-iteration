@@ -76,6 +76,7 @@
 
 - [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
 - [ ] `docs/vX.Y.Z/release/pr-description.md` 含：背景、改动摘要、关联文档
+- [ ] `docs/vX.Y.Z/todos.md` 已生成，汇总所有待确认问题
 - [ ] 项目级 CHANGELOG / release notes 如需更新，已在用户确认后处理
 - [ ] 文档与代码一致
 - [ ] 合并前清单完成（见子 skill `frontend-release`）

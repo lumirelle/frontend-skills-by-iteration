@@ -27,6 +27,7 @@ disable-model-invocation: true
 
 - `docs/vX.Y.Z/release/changelog-entry.md`
 - `docs/vX.Y.Z/release/pr-description.md`（模板 [pr-description-template.md](references/pr-description-template.md)）
+- `docs/vX.Y.Z/todos.md`（模板 [todos-template.md](references/todos-template.md)，汇总本迭代待确认问题的 TODO 列表）
 - 根 `CHANGELOG.md` 追加：仅项目已有约定或用户确认后
 - 合并前清单结果
 
@@ -42,10 +43,11 @@ disable-model-invocation: true
 2. 汇总变更：summarized、plans、git
 3. 出 changelog-entry（用户视角、分类）
 4. 出 pr-description（背景、改动、文档链）
-5. 根 CHANGELOG：有约定或用户要求时，确认后写
-6. 合并前检查
-7. 完成检查
-8. 摘要，**用户确认后再 merge/push/tag，或由用户执行**
+5. 汇总待确认问题到 `docs/vX.Y.Z/todos.md`（去重，按优先级排序）
+6. 根 CHANGELOG：有约定或用户要求时，确认后写
+7. 合并前检查
+8. 完成检查
+9. 摘要，**用户确认后再 merge/push/tag，或由用户执行**
 
 ## 规则
 
@@ -54,7 +56,7 @@ disable-model-invocation: true
 3. **commit 英文**：merge、tag、release commit 用 Conventional Commits（同 implement）
 4. **CHANGELOG 用户视角**：可感知变化；不堆实现细节
 5. **文档代码一致**：记录与改动一致；不夸大不遗漏
-6. **风险透明**：test-report 风险、review 🟡、`TODO(vX.Y.Z): 接口联调待定` 清单进 PR
+6. **风险透明**：test-report 风险、review 🟡、`TODO(vX.Y.Z): 接口联调待定` 汇总进 `docs/vX.Y.Z/todos.md`，并在 PR 关联
 7. **可追溯**：PR 链本迭代 docs
 8. **状态门禁**：见 `frontend-iteration/references/orchestrated-invocation.md`；阻塞项或步骤 5 `blocked` → 不发布
 
@@ -92,6 +94,7 @@ disable-model-invocation: true
 ## 完成检查
 
 - [ ] changelog-entry、pr-description 已生成
+- [ ] `docs/vX.Y.Z/todos.md` 已生成且覆盖待确认问题
 - [ ] 合并前检查全满足
 - [ ] 文档与代码一致
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
@@ -101,4 +104,5 @@ disable-model-invocation: true
 ## 参考
 
 - PR 模板：[pr-description-template.md](references/pr-description-template.md)
+- TODO 模板：[todos-template.md](references/todos-template.md)
 - 接口联调指南：`frontend-iteration/references/api-integration-guide.md`

@@ -21,6 +21,7 @@ docs/
     ├── review/                    # 步骤 6 产出
     ├── release/                   # 步骤 7 产出
     ├── progress.md                # 迭代进度与 resume 事实源
+    ├── todos.md                   # 步骤 7 产出：待确认问题清单
     └── test-report.md             # 步骤 5 产出
 ```
 
@@ -33,4 +34,5 @@ docs/
 | design | 与 summarized 同名 | `user-profile.md` |
 | plan | 与 summarized 同名 | `user-profile.md` |
 | release | 固定文件名 | `release/changelog-entry.md`、`release/pr-description.md` |
+| todos | 固定文件名 | `todos.md` |
 | UI 图 | 页面或板块名 | `user-profile.*`、`user-profile-header.*`（任意常见图片格式） |

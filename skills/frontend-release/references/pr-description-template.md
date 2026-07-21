@@ -26,6 +26,7 @@
 - 方案：`docs/vX.Y.Z/design/*.md`
 - 计划：`docs/vX.Y.Z/plans/*.md`
 - 审查：`docs/vX.Y.Z/review/*.md`
+- 待确认问题：`docs/vX.Y.Z/todos.md`
 - 发布草稿：`docs/vX.Y.Z/release/changelog-entry.md`
 ```
 

@@ -11,6 +11,7 @@ feedback-form-v0.1.0/docs/
 ├── technical-architecture.md
 └── v0.1.0/
     ├── progress.md
+    ├── todos.md
     ├── prd/origin/、summarized/
     ├── design/、plans/
     ├── test-report.md
@@ -28,4 +29,4 @@ feedback-form-v0.1.0/docs/
 | 4 | `frontend-implement` | `progress.md` TDD + commit |
 | 5 | `frontend-test` | `test-report.md` |
 | 6 | `frontend-review` | `review/feedback-form.md` |
-| 7 | `frontend-release` | `release/*` |
+| 7 | `frontend-release` | `release/*`、`todos.md` |

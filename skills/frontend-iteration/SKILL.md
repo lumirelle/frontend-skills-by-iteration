@@ -70,7 +70,7 @@ strict 模式或步骤 4–7 逐步确认
    1. 无 `docs/technical-architecture.md`：从 `<skill-root>/templates/docs/technical-architecture.md` 复制
    2. `technical-architecture.md` 是模板（缺项目真实技术栈/命令/目录/测试等内容）：Agent 自动探库生成
    3. 无 `docs/vX.Y.Z/progress.md`：从 `<skill-root>/templates/docs/version/progress.md` 复制，替换文档内版本号
-   4. `docs/vX.Y.Z/` 下缺少模板 `<skill-root>/templates/docs/version/` 下对应目录：根据模板补全
+   4. `docs/vX.Y.Z/` 下缺少模板 `<skill-root>/templates/docs/version/` 下对应目录或文件（如 `todos.md`）：根据模板补全
    5. 无 `docs/vX.Y.Z/prd/origin/*.md`：要求用户提供并停止
 3. 向用户列出 `docs/vX.Y.Z/prd/origin/*.md`、`docs/vX.Y.Z/ui/*`
 4. 读/修 `progress.md`，向用户列出起点、阻塞项、草稿批次状态
