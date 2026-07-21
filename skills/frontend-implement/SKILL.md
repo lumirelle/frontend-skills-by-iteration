@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-按 plan TDD 实现；改动不超出已确认方案
+按 plan（TDD 计划）实现，改动不超出已确认方案
 
 ## 输入
 
@@ -21,7 +21,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/progress.md` | 是 | 步骤/task、TDD 证据、阻塞项 |
 | 代码库 | 是 | 跟既有模式 |
 
-缺必需项 → **停**；报缺什么；不写代码
+缺必需项则**停止**
 
 ## 输出
 
@@ -29,11 +29,11 @@ disable-model-invocation: true
 - 测试：plan 要求一并提交
 - 无额外设计/计划；偏离先回 `frontend-design` 或 `frontend-plan`
 
-## 调用契约
+## 调用契约与要求
 
-- orchestrated/standalone 见 `frontend-iteration/references/orchestrated-invocation.md`；步骤 4 保留逐 task VERIFY + 可选 commit 问
-- 只执行 plan；方案/计划缺口 → 停，回上游；不现场补设计
-- 对用户摘要遵守 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只执行计划，方案/计划缺口则停止，回上游，不现场改设计
 
 ## 工作流
 
@@ -119,7 +119,7 @@ VERIFY：task 验证命令（+ lint/typecheck 若配置）
 - [ ] 新 API 有封装占位 + 规范 TODO（若有待定）
 - [ ] 无 plan 外重构、无未解释抽象
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
 ## 交接下游 → 步骤 5
 

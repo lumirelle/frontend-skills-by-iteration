@@ -20,25 +20,6 @@
 |------|------|
 | | |
 
-## 测试说明
-
-| 层级 | 命令 | 结果 |
-|------|------|------|
-| 单元 | `...` | exit 0 |
-| 集成 | `...` | exit 0 |
-| E2E | `...` | exit 0 / 手动验收 |
-
-测试报告：`docs/vX.Y.Z/test-report.md`
-
-## 风险与已知问题
-
-- 🟡 …（来自 review）
-- 未覆盖风险 …（来自 test-report）
-- 接口联调待定：`TODO(vX.Y.Z): 接口联调待定` 清单（来自 test-report / 代码检索）
-- mock / 降级项 …
-
-（无则写「无」）
-
 ## 关联文档
 
 - 需求：`docs/vX.Y.Z/prd/summarized/*.md`
@@ -46,14 +27,6 @@
 - 计划：`docs/vX.Y.Z/plans/*.md`
 - 审查：`docs/vX.Y.Z/review/*.md`
 - 发布草稿：`docs/vX.Y.Z/release/changelog-entry.md`
-
-## 合并前确认
-
-- [ ] review 无未解决 🔴
-- [ ] 测试通过 / 已记录手动验收
-- [ ] `docs/vX.Y.Z/release/changelog-entry.md` 已生成
-- [ ] 项目级 CHANGELOG / release notes 如需更新，已确认并处理
-- [ ] 无未解决冲突
 ```
 
 ## 填写要点

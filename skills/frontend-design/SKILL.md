@@ -8,30 +8,30 @@ disable-model-invocation: true
 
 ## 目标
 
-summarized → 可落地技术方案；明确改动范围与测试策略
+基于 summarized PRD，做可落地的技术方案，明确改动范围与测试策略
 
 ## 输入
 
 | 路径 | 必需 | 说明 |
 |------|------|------|
 | `docs/technical-architecture.md` | 是 | 技术栈、平台、目录、约定 |
-| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 步骤 1 产出；一对一 |
+| `docs/vX.Y.Z/prd/summarized/*.md` | 是 | 步骤 1 产出，一对一 |
 | `docs/vX.Y.Z/ui/*` | 否 | 组件拆分、交互 |
 | 代码库 | 是 | 复用组件/模式 |
 
-缺必需项 → **停**；不产出 design
+缺必需项则**停止**
 
 ## 输出
 
-- `docs/vX.Y.Z/design/`；与 `summarized/` 同名
+- `docs/vX.Y.Z/design/`，与 `summarized/` 同名
 - 模板：[technical-design-template.md](references/technical-design-template.md)
-- 初稿 `DRAFT`；确认后 `ACTIVE`
+- 初稿 `DRAFT`，确认后 `ACTIVE`
 
-## 调用契约
+## 调用契约与要求
 
-- 见 `frontend-iteration/references/orchestrated-invocation.md`
-- 只做技术方案；不做计划、实现、测试、审查、发布
-- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只做技术方案，不做其它
 
 ## 工作流
 
@@ -89,11 +89,11 @@ summarized → 可落地技术方案；明确改动范围与测试策略
 - [ ] 文件已列；无无关重构
 - [ ] 最小方案或充分说明选复杂理由
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
 ## 参考
 
-- 模板：[technical-design-template.md](references/technical-design-template.md)
-- UI：`frontend-requirements/references/ui-reading-guide.md`
-- 接口：`frontend-iteration/references/api-integration-guide.md`
-- 风格：`frontend-iteration/references/code-style-enforcement.md`
+- 产物模板：[technical-design-template.md](references/technical-design-template.md)
+- UI 读取指南：`frontend-requirements/references/ui-reading-guide.md`
+- 接口联调指南：`frontend-iteration/references/api-integration-guide.md`
+- 代码风格强制：`frontend-iteration/references/code-style-enforcement.md`

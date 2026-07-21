@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-审查通过后整理 changelog、PR 描述、合并前清单；迭代可发布
+审查通过后整理 changelog、PR 描述、合并前清单，迭代可发布
 
 ## 输入
 
@@ -21,7 +21,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/progress.md` | 是 | 门禁、阻塞项 |
 | 代码 / git | 是 | 提交、文件 |
 
-有未解决 🔴 → **停**；回 review 或上游
+有未解决 🔴 则**停止**，回上游
 
 ## 输出
 
@@ -30,22 +30,22 @@ disable-model-invocation: true
 - 根 `CHANGELOG.md` 追加：仅项目已有约定或用户确认后
 - 合并前清单结果
 
-## 调用契约
+## 调用契约与要求
 
-- 见 `frontend-iteration/references/orchestrated-invocation.md`；standalone 须无阻塞项
-- 只备发布材料；merge/push/tag 须用户显式确认
-- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只备发布材料，merge/push/tag 须用户显式确认或由用户执行
 
 ## 工作流
 
 1. 确认 review 无 🔴、test-report 无阻塞、输入均 `ACTIVE`
 2. 汇总变更：summarized、plans、git
 3. 出 changelog-entry（用户视角、分类）
-4. 出 pr-description（背景、改动、测试、风险、文档链）
+4. 出 pr-description（背景、改动、文档链）
 5. 根 CHANGELOG：有约定或用户要求时，确认后写
 6. 合并前检查
 7. 完成检查
-8. 摘要；**用户确认后再 merge/push/tag**
+8. 摘要，**用户确认后再 merge/push/tag，或由用户执行**
 
 ## 规则
 
@@ -84,7 +84,7 @@ disable-model-invocation: true
 - [ ] review/test-report/summarized/plan 均 `ACTIVE`
 - [ ] `progress.md` 无阻塞项
 - [ ] changelog-entry 已生成
-- [ ] PR 完整（背景/改动/测试/风险/文档）
+- [ ] PR 完整（背景/改动/文档）
 - [ ] commit 符合 Conventional Commits（英文）
 - [ ] 无未解冲突
 - [ ] 🟡/风险已在 PR
@@ -95,10 +95,10 @@ disable-model-invocation: true
 - [ ] 合并前检查全满足
 - [ ] 文档与代码一致
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 - [ ] merge/push/tag 仅用户确认后
 
 ## 参考
 
 - PR 模板：[pr-description-template.md](references/pr-description-template.md)
-- 接口：`frontend-iteration/references/api-integration-guide.md`
+- 接口联调指南：`frontend-iteration/references/api-integration-guide.md`

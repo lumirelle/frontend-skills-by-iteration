@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-对照需求、方案、计划、测试审代码；分级记问题。无未解决 🔴 才可发布
+对照需求、方案、计划、测试审代码，分级记问题。无未解决 🔴 才可发布
 
 ## 输入
 
@@ -22,18 +22,18 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/progress.md` | 是 | task、TDD 证据 |
 | 代码变更 | 是 | diff / 文件 |
 
-缺必需项或 test-report「阻塞」→ **停**；不出通过结论
+缺必需项或 test-report「阻塞」则**停止**，回 implement/test 补 TDD、实现或测试
 
 ## 输出
 
 - `docs/vX.Y.Z/review/`；与 `plans/` 同名或单份 `review.md`
 - 模板：[review-template.md](references/review-template.md)
 
-## 调用契约
+## 调用契约与要求
 
-- 见 `frontend-iteration/references/orchestrated-invocation.md`；standalone 须步骤 4–5 已完成
-- 只出审查记录；修复回 `frontend-implement` 或 `frontend-test`；不擅自改代码
-- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只出审查记录，若要修复则回上游
 
 ## 工作流
 
@@ -104,7 +104,7 @@ disable-model-invocation: true
 - [ ] 通过/有条件通过时无未解决 🔴
 - [ ] 与 test-report、plan、design、progress 交叉完成
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
 ## 交接下游 → 步骤 7
 
@@ -115,6 +115,6 @@ disable-model-invocation: true
 
 ## 参考
 
-- 模板：[review-template.md](references/review-template.md)
-- 风格：`frontend-iteration/references/code-style-enforcement.md`
-- 接口：`frontend-iteration/references/api-integration-guide.md`
+- 产物模板：[review-template.md](references/review-template.md)
+- 代码风格强制：`frontend-iteration/references/code-style-enforcement.md`
+- 接口联调指南：`frontend-iteration/references/api-integration-guide.md`

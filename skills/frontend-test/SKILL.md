@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-按 plan、summarized 全量回归；核对覆盖；出可审计 test-report
+按 plan、summarized 全量回归，核对覆盖，出可审计的 test-report
 
 ## 输入
 
@@ -21,7 +21,7 @@ disable-model-invocation: true
 | `docs/vX.Y.Z/progress.md` | 是 | 步骤 4 TDD、验证记录 |
 | 已实现代码 | 是 | 步骤 4 产出 |
 
-缺必需项或实现未完 → **停**；不进 review
+缺必需项或实现未完则**停止**，回 implement 补 TDD 或实现
 
 ## 输出
 
@@ -29,11 +29,11 @@ disable-model-invocation: true
 - 模板：[test-report-template.md](references/test-report-template.md)
 - 指南：[test-writing-guide.md](references/test-writing-guide.md)
 
-## 调用契约
+## 调用契约与要求
 
-- 见 `frontend-iteration/references/orchestrated-invocation.md`；standalone 须步骤 4 完成
-- 只验证+报告；缺口回 `frontend-implement`；本步不改代码
-- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只验证+报告，缺口回上游改测试或实现
 
 ## 工作流
 
@@ -91,7 +91,7 @@ disable-model-invocation: true
 - [ ] 命令与 exit 已写 `progress.md`
 - [ ] 含命令、结果、验收映射、风险
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
 ## 交接下游 → 步骤 6
 
@@ -101,6 +101,6 @@ disable-model-invocation: true
 
 ## 参考
 
-- 模板：[test-report-template.md](references/test-report-template.md)
-- 指南：[test-writing-guide.md](references/test-writing-guide.md)
-- 接口：`frontend-iteration/references/api-integration-guide.md`
+- 产物模板：[test-report-template.md](references/test-report-template.md)
+- 计划编写指南：[test-writing-guide.md](references/test-writing-guide.md)
+- 接口联调指南：`frontend-iteration/references/api-integration-guide.md`

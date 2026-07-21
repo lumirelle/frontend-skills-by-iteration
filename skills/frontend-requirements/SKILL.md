@@ -8,29 +8,29 @@ disable-model-invocation: true
 
 ## 目标
 
-origin PRD → 前端视角、可实施、可验收 summarized
+读 origin PRD，以前端视角总结成可实施、可验收的 summarized PRD
 
 ## 输入
 
 | 路径 | 必需 | 说明 |
 |------|------|------|
 | `docs/technical-architecture.md` | 是 | 技术栈、平台、约定 |
-| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD；一对一 |
+| `docs/vX.Y.Z/prd/origin/*.md` | 是 | 原始 PRD，一对一 |
 | `docs/vX.Y.Z/ui/*` | 否 | 设计稿 |
 
-缺必需项 → **停**；不产出 summarized
+缺必需项则**停止**
 
 ## 输出
 
-- `docs/vX.Y.Z/prd/summarized/`；与 `origin/` 同名
+- `docs/vX.Y.Z/prd/summarized/`，与 `origin/` 同名
 - 模板：[summarized-prd-template.md](references/summarized-prd-template.md)
-- 初稿 `DRAFT`；确认后 `ACTIVE`
+- 初稿 `DRAFT`，确认后转 `ACTIVE`
 
-## 调用契约
+## 调用契约与要求
 
-- 见 `frontend-iteration/references/orchestrated-invocation.md`
-- 只做需求归纳；不做设计、计划、实现、测试、审查、发布
-- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只做需求归纳，不做其它事情
 
 ## 工作流
 
@@ -85,10 +85,10 @@ origin PRD → 前端视角、可实施、可验收 summarized
 - [ ] UI 已映射或待确认问题已列
 - [ ] 无 origin 外功能
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
 ## 参考
 
-- 模板：[summarized-prd-template.md](references/summarized-prd-template.md)
-- UI：[ui-reading-guide.md](references/ui-reading-guide.md)
-- 接口：`frontend-iteration/references/api-integration-guide.md`
+- 产物模板：[summarized-prd-template.md](references/summarized-prd-template.md)
+- UI 读取指南：[ui-reading-guide.md](references/ui-reading-guide.md)
+- 接口联调指南：`frontend-iteration/references/api-integration-guide.md`

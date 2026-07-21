@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 ## 目标
 
-design → 最小、有序、可验证 TDD plan；作实现边界
+基于 design 完成最小、有序、可验证 TDD plan，作为实现边界
 
 ## 输入
 
@@ -19,19 +19,19 @@ design → 最小、有序、可验证 TDD plan；作实现边界
 | `docs/vX.Y.Z/design/*.md` | 是 | 方案、文件 |
 | 代码库 | 是 | 路径、复用、测试位置 |
 
-缺必需项 → **停**；不产出 plan
+缺必需项则**停止**
 
 ## 输出
 
-- `docs/vX.Y.Z/plans/`；与 `design/` 同名
+- `docs/vX.Y.Z/plans/`，与 `design/` 同名
 - 模板：[implementation-plan-template.md](references/implementation-plan-template.md)
-- 初稿 `DRAFT`；确认后 `ACTIVE`
+- 初稿 `DRAFT`，确认后 `ACTIVE`
 
-## 调用契约
+## 调用契约与要求
 
-- 见 `frontend-iteration/references/orchestrated-invocation.md`
-- 只写 plan；不改业务代码、不跑实现
-- 对用户摘要见 `frontend-iteration/references/agent-communication-style.md`
+- 调用契约见 `frontend-iteration/references/orchestrated-invocation.md`
+- Agent 沟通风格见 `frontend-iteration/references/agent-communication-style.md`
+- 只写 TDD 计划，不做其它
 
 ## 工作流
 
@@ -94,10 +94,10 @@ design → 最小、有序、可验证 TDD plan；作实现边界
 - [ ] 测试矩阵对应 summarized 验收
 - [ ] 范围 ≤ design 文件边界
 - [ ] 门禁按 `frontend-iteration/references/step-gates.md` 核对
-- [ ] 按 `frontend-iteration/references/progress-convention.md` → **每步最小落盘** 落盘 `progress.md`
+- [ ] 按 `frontend-iteration/references/progress-convention.md` “每步最小落盘” 小节落盘 `progress.md`
 
 ## 参考
 
-- 模板：[implementation-plan-template.md](references/implementation-plan-template.md)
-- 测试：`frontend-test/references/test-writing-guide.md`
-- 接口：`frontend-iteration/references/api-integration-guide.md`
+- 产物模板：[implementation-plan-template.md](references/implementation-plan-template.md)
+- 计划编写指南：`frontend-test/references/test-writing-guide.md`
+- 接口联调指南：`frontend-iteration/references/api-integration-guide.md`
