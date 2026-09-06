@@ -1,5 +1,8 @@
 # frontend-skills-by-iteration
 
+> [!Note]
+> 最近我正专注于探索mattpocock的软件工程skills，我想将本skill的一些理念，如通过单一入口+按步骤、复杂度自动编排选择对应skill的方式集成matt的工作流。本项目会作为草稿留存。
+
 可分发前端迭代 Agent Skills：版本化需求、设计、计划、实现、测试、审查、发布。
 
 ## 安装
